@@ -34,11 +34,13 @@ class GuestController{
 	session_unset();
 	session_destroy();
         require_once __DIR__.'/../views/v_home.php';
+        //$app->path(dirname("../web/index.php"));
+        $app->redirect($app->path(dirname("../web/index.php")));
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     } 
     
-            public function identification(){
+            public function identification(Application $app){
                 $login = $_REQUEST['login'];
                 $pwd = $_REQUEST['password'];
                 $pdo = PdoAgisse::getPdoAgisse();
@@ -53,6 +55,8 @@ class GuestController{
                     $_SESSION['prenom'] = $user['prenom'];
                     $_SESSION['type'] = $user['type'];
                     require_once __DIR__.'/../views/v_home.php';
+                    //$app->path(dirname("../web/index.php"));
+                    $app->redirect($app->path(dirname("../web/index.php")));
                 }
         
                 require_once __DIR__.'/../views/v_footer.php';
