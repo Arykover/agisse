@@ -1,8 +1,10 @@
-
+<div class="banner-img">
+    <img src ="../util/images/banner.png">
+</div>
 
 <!--  Menu haut-->
 
-<nav class="navbar navbar-inverse" >
+    <nav class="navbar navbar-inverse" >
 
       <div class="container-fluid">
           
@@ -122,6 +124,7 @@
             </div>
         </div>
     </nav>
-
-
 <!-- Fin menu  -->
+
+    <div class="container">
+        <div class="jumbotron">
