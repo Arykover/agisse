@@ -109,6 +109,7 @@ CREATE TABLE `fiches` (
   `statut` int(11) DEFAULT NULL,
   `nationalite` varchar(5) DEFAULT NULL,
   `civilite` int(11) DEFAULT NULL,
+  `etat` int(11) DEFAULT NULL,
   `mutuelle` varchar(5) DEFAULT NULL,
   `date_effet_affiliation` date DEFAULT NULL,
   `date_inscription` date DEFAULT NULL
@@ -148,6 +149,17 @@ CREATE TABLE `mutuelle` (
 
 CREATE TABLE `nationalite` (
   `code` varchar(5) NOT NULL,
+  `libelle` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `etat`
+--
+
+CREATE TABLE `etat` (
+  `code` int(11) NOT NULL,
   `libelle` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8;
 
@@ -206,6 +218,14 @@ ALTER TABLE `comptes`
 ALTER TABLE `discipline`
   ADD PRIMARY KEY (`id`);
 
+
+--
+-- Index pour la table `etat`
+--
+ALTER TABLE `etat`
+  ADD PRIMARY KEY (`code`);
+
+--
 --
 -- Index pour la table `fiches`
 --
@@ -216,6 +236,7 @@ ALTER TABLE `fiches`
   ADD KEY `nationalite` (`nationalite`),
   ADD KEY `civilite` (`civilite`),
   ADD KEY `mutuelle` (`mutuelle`);
+  ADD KEY `etat` (`etat`);
 
 --
 -- Index pour la table `info_etablissmeent`
@@ -235,7 +256,7 @@ ALTER TABLE `mutuelle`
 ALTER TABLE `nationalite`
   ADD PRIMARY KEY (`code`);
 
---
+
 -- Index pour la table `statut`
 --
 ALTER TABLE `statut`
