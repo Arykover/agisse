@@ -1,5 +1,4 @@
 <?php 
-
 require_once __DIR__.'/../src/class.pdoAgisse.php';
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
@@ -19,6 +18,36 @@ class GuestController{
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }   
+    
+        public function login(){
+        require_once __DIR__.'/../views/v_connexion.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    } 
+    
+            public function identification(){
+                $login = $_REQUEST['login'];
+                $pwd = $_REQUEST['password'];
+                $pdo = PdoAgisse::getPdoAgisse();
+                $user = $pdo->identification($login,$pwd);
+         	if(!is_array( $user)){
+                   echo('identifiants ou mot de passe invalide.');
+                   require_once __DIR__.'/../views/v_connexion.php';
+                }
+                else{
+                    $_SESSION['id'] = $user['id'];
+                    $_SESSION['nom'] =  $user['nom'];
+                    $_SESSION['prenom'] = $user['prenom'];
+                    $_SESSION['type'] = $user['type'];
+                    require_once __DIR__.'/../views/v_home.php';
+                }
+        
+                require_once __DIR__.'/../views/v_footer.php';
+                $view = ob_get_clean();
+                return $view;          
+     
+
+    } 
 }
 //********************************************Contrôleur eleve*****************//
 class StudentController{

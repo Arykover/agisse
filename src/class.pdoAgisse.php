@@ -1,5 +1,6 @@
 
 ﻿<?php
+
 /** 
  * Classe d'accès aux données. 
  
@@ -18,11 +19,11 @@
 
 class PdoAgisse{   		
       	private static $serveur='mysql:host=localhost';
-      	private static $bdd='dbname=gsb2016';   		
+      	private static $bdd='dbname=gisse';   		
       	private static $user='root' ;    		
       	private static $mdp='root' ;	
 	private static $monPdo;
-	private static $monPdoAgisse=null;
+	private static $PdoAgisse=null;
 /**
  * Constructeur privé, crée l'instance de PDO qui sera sollicitée
  * pour toutes les méthodes de la classe
@@ -42,10 +43,32 @@ class PdoAgisse{
  * @return l'unique objet de la classe PdoGsb
  */
 	public  static function getPdoAgisse(){
-		if(PdoAgisse::$monPdoAgisse==null){
-			PdoGsb::$monPdoAgisse= new PdoAgisse();
+
+		if(PdoAgisse::$PdoAgisse==null){
+
+                        PdoAgisse::$PdoAgisse= new PdoAgisse();
 		}
-		return PdoAgisse::$monPdoAgisse;  
+		return PdoAgisse::$PdoAgisse;  
 	}
+       
+   /**
+ * Retourne les informations d'un compte
+ * @param $login 
+ * @param $mdp
+ * @return l'id, le nom et le prénom sous la forme d'un tableau associatif 
+*/
+	public function identification($login, $mdp){
+             
+            $log = htmlentities($login);
+            $m = htmlentities($mdp);
+		$req = PdoAgisse::$monPdo->prepare("select comptes.id, comptes.nom, comptes.prenom, comptes.type from comptes 
+		where comptes.login = ? and comptes.pass = ? ");
+        $req->bindParam(1, $log);
+        $req->bindParam(2, $m);
+		$req->execute();
+		$ligne = $req->fetch();
+               
+		return $ligne;       
+	}     
         
 }

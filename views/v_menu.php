@@ -1,6 +1,5 @@
 
-<?php 
-echo($_SESSION['type']) ;  ?>
+
 <!--  Menu haut-->
 
 <nav class="navbar navbar-inverse" >
@@ -11,7 +10,7 @@ echo($_SESSION['type']) ;  ?>
               <ul class="nav navbar-nav">
                   
                     <li class="smenu">
-                         <a href="home" title="Home">Accueil</a>
+                         <a href="/" title="Home">Accueil</a>
                     </li>
                     <?php if(isset($_SESSION['type'])){ 
                         switch($_SESSION['type']){
@@ -109,7 +108,7 @@ echo($_SESSION['type']) ;  ?>
                         <a href="signIn" title="Sign in">S'inscrire</a>
                     </li>
                     <li class="smenu">
-                        <a href="logIn" title="Log in">Se connecter</a>
+                        <a href="login" title="Log in">Se connecter</a>
                     </li>
                     <?php } ?>
                     
