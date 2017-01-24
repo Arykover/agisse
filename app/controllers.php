@@ -25,6 +25,19 @@ class GuestController{
         return $view;     // retourne le flux 
     } 
     
+     public function logOut(Application $app){
+         
+        if (isset($_COOKIE[session_name()])) 
+	{
+		setcookie(session_name(), '', time()-42000, '/');
+	}
+	session_unset();
+	session_destroy();
+        require_once __DIR__.'/../views/v_home.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    } 
+    
             public function identification(){
                 $login = $_REQUEST['login'];
                 $pwd = $_REQUEST['password'];
