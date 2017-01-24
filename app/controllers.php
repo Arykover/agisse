@@ -11,6 +11,7 @@ class GuestController{
     public function __construct(){
         ob_start();             // démarre le flux de sortie
         require_once __DIR__.'/../views/v_header.php';
+        require_once __DIR__.'/../views/v_menu.php';
     }
     public function home(){
         //require_once __DIR__.'/../vues/v_connexion.php';
