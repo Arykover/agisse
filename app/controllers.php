@@ -32,8 +32,8 @@ class GuestController{
     } 
     
      public function inscription(Application $app){
-                $Lname = $_REQUEST['Lname'];
-                $Fname = $_REQUEST['Fname'];
+                $Lname = strtolower($_REQUEST['Lname']);
+                $Fname = strtolower($_REQUEST['Fname']);
                 $mail = $_REQUEST['mail'];
                 $login = $_REQUEST['login'];
                 $pwd = $_REQUEST['password'];
@@ -41,7 +41,8 @@ class GuestController{
                 
                 // appel de la fonction determinant si ce mail est deja utilisé.
                 
-                $number = $pdo->insertUser($mail);
+                if($pdo->VerifMail($mail)){
+
                 // creation du login avec nom_initialePrenom 
                 // et un chiffre si un utilisateur avec le meme login existe
                 
@@ -49,16 +50,14 @@ class GuestController{
                 
                 // appel de la fonction d'insertion dans la base de données
                 $user = $pdo->insertUser($login,$pwd);
-         	if(!is_array( $user)){
-                   echo('identifiants ou mot de passe invalide.');
-                   require_once __DIR__.'/../views/v_connexion.php';
+                
+                return $app->redirect($app["url_generator"]->generate("homepage"));
                 }
+         	
                 else{
-                    $_SESSION['id'] = $user['id'];
-                    $_SESSION['nom'] =  $user['nom'];
-                    $_SESSION['prenom'] = $user['prenom'];
-                    $_SESSION['type'] = $user['type'];
-                    return $app->redirect($app["url_generator"]->generate("homepage"));
+                   echo('Cet e-mail est déjà utilisé');
+                   require_once __DIR__.'/../views/v_connexion.php';
+                    
                 }
         
                 require_once __DIR__.'/../views/v_footer.php';
