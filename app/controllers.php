@@ -31,6 +31,43 @@ class GuestController{
         return $view;     // retourne le flux 
     } 
     
+     public function inscription(Application $app){
+                $Lname = $_REQUEST['Lname'];
+                $Fname = $_REQUEST['Fname'];
+                $mail = $_REQUEST['mail'];
+                $login = $_REQUEST['login'];
+                $pwd = $_REQUEST['password'];
+                $pdo = PdoAgisse::getPdoAgisse();
+                
+                // appel de la fonction determinant si ce mail est deja utilisé.
+                
+                $number = $pdo->insertUser($mail);
+                // creation du login avec nom_initialePrenom 
+                // et un chiffre si un utilisateur avec le meme login existe
+                
+                $login = $Lname."_".$Fname[0].$pdo->insertUser($Lname,$Fname[1]);
+                
+                // appel de la fonction d'insertion dans la base de données
+                $user = $pdo->insertUser($login,$pwd);
+         	if(!is_array( $user)){
+                   echo('identifiants ou mot de passe invalide.');
+                   require_once __DIR__.'/../views/v_connexion.php';
+                }
+                else{
+                    $_SESSION['id'] = $user['id'];
+                    $_SESSION['nom'] =  $user['nom'];
+                    $_SESSION['prenom'] = $user['prenom'];
+                    $_SESSION['type'] = $user['type'];
+                    return $app->redirect($app["url_generator"]->generate("homepage"));
+                }
+        
+                require_once __DIR__.'/../views/v_footer.php';
+                $view = ob_get_clean();
+                return $view;          
+     
+
+    }
+    
      public function logOut(Application $app){
          
         if (isset($_COOKIE[session_name()])) 

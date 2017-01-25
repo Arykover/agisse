@@ -40,7 +40,7 @@ function checkMail()
 {
     var pass1 = document.getElementById('email');
     var pass2 = document.getElementById('emailConfirmation');
-    var message = document.getElementById('confirmMessagePass');
+    var message = document.getElementById('confirmMessageMail');
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
     if(pass1.value == pass2.value){
