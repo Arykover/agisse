@@ -26,7 +26,7 @@
     <input type="email" class="form-control" id="pwd" name="email">
   </div>
   <div class="form-group">
-    <label for="pwdconf">Mot de passe :</label>
+    <label for="pwdconf">Mail confirmation :</label>
     <input type="password" class="form-control" id="emailConfirmation"  onkeyup="checkMail(); return false;">
             <span id="confirmMessageMail" class="confirmMessageMail"></span>
   </div>

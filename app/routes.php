@@ -17,6 +17,7 @@ $app->match('/profile', "StudentController::profile")
         ->bind('profile');
 
 
+
 /*
  * $app->get('/redirect', function () use ($app) { 
  * return $app->redirect(dirname("../web/index.php"));

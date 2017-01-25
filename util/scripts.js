@@ -37,8 +37,8 @@ function checkPass()
 
 function checkMail()
 {
-    var pass1 = document.getElementById('email');
-    var pass2 = document.getElementById('emailConfirmation');
+    var mail1 = document.getElementById('email');
+    var mail2 = document.getElementById('emailConfirmation');
     var message = document.getElementById('confirmMessagePass');
     var goodColor = "#66cc66";
     var badColor = "#ff6666";

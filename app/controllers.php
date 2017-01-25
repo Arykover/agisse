@@ -25,6 +25,12 @@ class GuestController{
         return $view;     // retourne le flux 
     } 
     
+     public function SignIn(){
+        require_once __DIR__.'/../views/v_signin.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    } 
+    
      public function logOut(Application $app){
          
         if (isset($_COOKIE[session_name()])) 
