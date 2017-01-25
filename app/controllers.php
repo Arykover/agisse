@@ -70,9 +70,12 @@ class StudentController{
         $this->id = $_SESSION['id'];
         $this->pdo = PdoGsb::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
+        Auth();
         require_once __DIR__.'/../views/v_header.php';
         require_once __DIR__.'/../views/v_home.php';
     }
+       
+    
 }
 
 //********************************************Contrôleur Gestionnaire*****************//
@@ -83,9 +86,16 @@ class ManagerController{
         $this->id = $_SESSION['id'];
         $this->pdo = PdoGsb::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
+        Auth();
         require_once __DIR__.'/../views/v_header.php';
         require_once __DIR__.'/../views/v_home.php';
     }
+    
+                public function Auth(){
+        if($_SESSION['type']!=2 || $_SESSION['type']!=1 ){
+            return $app->redirect($app["url_generator"]->generate("logout"));
+        }    
+    } 
 }
 
 //********************************************Contrôleur Super User*****************//
@@ -96,7 +106,14 @@ class AdministratorController{
         $this->id = $_SESSION['id'];
         $this->pdo = PdoGsb::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
+        Auth();
         require_once __DIR__.'/../views/v_header.php';
         require_once __DIR__.'/../views/v_home.php';
     }
+    
+                public function Auth(){
+            if($_SESSION['type']!=1){
+            return $app->redirect($app["url_generator"]->generate("logout"));
+        }    
+    } 
 }
