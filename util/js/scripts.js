@@ -54,4 +54,15 @@ function checkMail()
         message.innerHTML = "Les e-mail ne correspondent pas"
         document.getElementById("signsubmit").disabled = true;
     }
-} 
+}
+
+
+    window.onload = function () {
+        var checkbox = document.getElementById('togPwd')
+        var expanded1 = document.getElementById("editPwd");
+        checkbox.onchange = function () {
+        expanded1.style.visibility = this.checked ? 'visible' : 'hidden';
+    };}
+    
+    
+ 
