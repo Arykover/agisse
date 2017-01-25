@@ -2,6 +2,7 @@
                     /* Définition des routes*/
 $app->match('/', "GuestController::home")
         ->bind('homepage'); 
+$app->match('/home', "GuestController::home");
 $app->match('/signIn', "GuestController::signIn")
         ->bind('signin');
 $app->match('/login', "GuestController::login")

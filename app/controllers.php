@@ -33,9 +33,7 @@ class GuestController{
 	}
 	session_unset();
 	session_destroy();
-        require_once __DIR__.'/../views/v_home.php';
-        //$app->path(dirname("../web/index.php"));
-        $app->redirect($app->path(dirname("../web/index.php")));
+        return $app->redirect($app["url_generator"]->generate("homepage"));
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     } 
@@ -54,9 +52,7 @@ class GuestController{
                     $_SESSION['nom'] =  $user['nom'];
                     $_SESSION['prenom'] = $user['prenom'];
                     $_SESSION['type'] = $user['type'];
-                    require_once __DIR__.'/../views/v_home.php';
-                    //$app->path(dirname("../web/index.php"));
-                    $app->redirect($app->path(dirname("../web/index.php")));
+                    return $app->redirect($app["url_generator"]->generate("homepage"));
                 }
         
                 require_once __DIR__.'/../views/v_footer.php';
