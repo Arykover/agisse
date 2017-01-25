@@ -15,12 +15,17 @@
     <input type="mail" class="form-control" id="mail" name="mail">
   </div>
   <div class="form-group">
+    <label for="pwdOld">Mot de passe actuel :</label>
+    <input type="password" class="form-control" id="pwdOld" name="password">
+  </div>
+  <div class="form-group">
     <label for="pwd">Nouveau mot de passe :</label>
     <input type="password" class="form-control" id="pwd" name="password">
   </div>
   <div class="form-group">
-    <label for="pwdCheck">Retaper mot de passe :</label>
-    <input type="password" class="form-control" id="pwdCheck" name="passwordCheck">
+    <label for="pwdconf">Confirmer Mot de passe :</label>
+    <input type="password" class="form-control" id="pwdConfirmation"  onkeyup="checkPass(); return false;">
+            <span id="confirmMessagePass" class="confirmMessagePass"></span>
   </div>
-  <button type="submit" class="btn btn-default">Submit</button> 
+  <button type="submit" class="btn btn-default" id="sub">Submit</button> 
 </form>

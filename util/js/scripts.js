@@ -13,7 +13,7 @@ function checkPass()
     var pass1 = document.getElementById('pwd');
     var pass2 = document.getElementById('pwdConfirmation');
     //pareil pour le message de confirmation
-    var message = document.getElementById('confirmMessage');
+    var message = document.getElementById('confirmMessagePass');
     //choix des couleurs pour validation et infirmation
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
@@ -24,15 +24,16 @@ function checkPass()
         pass2.style.backgroundColor = goodColor;
         message.style.color = goodColor;
         message.innerHTML = "Mots de passes identiques"
-        document.getElementById("signsubmit").disabled = false;
+        document.getElementById("sub").disabled = false;
     }else{
         // Les champs ne correspondent pas, changement de la couleur, message d'echec 
         // et interdiction de la validation du formulaire 
         pass2.style.backgroundColor = badColor;
         message.style.color = badColor;
         message.innerHTML = "Les mots de passe ne correspondent pas"
-        document.getElementById("signsubmit").disabled = true;
+        document.getElementById("sub").disabled = true;
     }
+    
 } 
 
 function checkMail()
