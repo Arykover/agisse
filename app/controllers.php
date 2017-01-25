@@ -45,6 +45,8 @@ class GuestController{
 
                 // creation du login avec nom_initialePrenom 
                 // et un chiffre si un utilisateur avec le meme login existe
+                    // select count(*) from comptes
+                    //where nom = "gestion" and substring(prenom,1,1) = "g"
                 
                 $login = $Lname."_".$Fname[0].$pdo->insertUser($Lname,$Fname[1]);
                 
