@@ -76,10 +76,9 @@ class StudentController{
         $this->id = $_SESSION['id'];
         $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
-        Auth();
         require_once __DIR__.'/../views/v_header.php';
-        require_once __DIR__.'/../views/v_menu.php';
-    }
+        require_once __DIR__.'/../views/v_menu.php'; 
+     }
     public function profile(){
         $this->init();
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté

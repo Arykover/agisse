@@ -9,9 +9,9 @@
     <input type="password" class="form-control" id="pwd" name="password">
   </div>
   <div class="form-group">
-    <label for="pwdconf">Mot de passe :</label>
+    <label for="pwdconf">Mot de passe :</label><span id="confirmMessagePass" class="confirmMessagePass"></span>
     <input type="password" class="form-control" id="pwdConfirmation"  onkeyup="checkPass(); return false;">
-            <span id="confirmMessagePass" class="confirmMessagePass"></span>
+            
   </div>
   <div class="form-group">
     <label for="name">Nom :</label>
