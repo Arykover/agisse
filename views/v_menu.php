@@ -12,7 +12,7 @@
               <ul class="nav navbar-nav">
                   
                     <li class="smenu">
-                         <a href="/" title="Home">Accueil</a>
+                         <a href="home" title="Home">Accueil</a>
                     </li>
                     <?php if(isset($_SESSION['type'])){ 
                         switch($_SESSION['type']){
