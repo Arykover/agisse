@@ -60,7 +60,7 @@ class GuestController{
                 return $view;          
      
 
-    } 
+    }
 }
 //********************************************Contrôleur eleve*****************//
 class StudentController{
@@ -68,10 +68,32 @@ class StudentController{
      private $pdo;
      public function init(){
         $this->id = $_SESSION['id'];
-        $this->pdo = PdoGsb::getPdoAgisse();
+        $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         require_once __DIR__.'/../views/v_header.php';
-        require_once __DIR__.'/../views/v_home.php';
+        require_once __DIR__.'/../views/v_menu.php';
+    }
+    public function profile(){
+        $this->init();
+        //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
+        //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
+        //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
+        require_once __DIR__.'/../views/v_profile.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }  
+    public function editInfosPersos()
+    {
+        //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
+        //Récup les infos des champs du formulaires
+        $lastName = $request->get('lastName');
+        $firstName = $request->get('firstName');
+        $mail = $request->get('mail');
+        $pwd = $request->get('password');
+        $pwdCheck = $request->get('passwordCheck');
+        
+        require_once __DIR__.'/../views/v_profile.php';
+        
     }
 }
 

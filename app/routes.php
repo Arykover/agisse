@@ -13,6 +13,8 @@ $app->match('/contact', "GuestController::contact")
         ->bind('contact');
 $app->match('/logOut', "GuestController::logOut")
         ->bind('logout');
+$app->match('/profile', "StudentController::profile")
+        ->bind('profile');
 
 
 /*

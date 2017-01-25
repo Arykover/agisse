@@ -79,7 +79,7 @@
                 </ul>
               </li>
                     <li class="smenu">
-                        <a href="Profile" title="Log out">Mon profil</a>
+                        <a href="profile" title="">Mon profil</a>
                     </li>
                     
                     <?php
@@ -87,10 +87,10 @@
                             case 3:  ?>
                     
                     <li class="smenu">
-                        <a href="Informations" title="Log out">Ma fiche</a>
+                        <a href="Informations" title="">Ma fiche</a>
                     </li>
                     <li class="smenu">
-                        <a href="Profile" title="Log out">Mon profil</a>
+                        <a href="profile" title="">Mon profil</a>
                     </li>
                     
                       <?php
