@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
       <label for="pwd">Nouveau mot de passe :</label>
-      <input type="password" class="form-control" id="pwd" name="password">
+      <input type="password" class="form-control" id="pwd" name="password" onkeyup="checkPass(); return false;">
     </div>
     <div class="form-group">
       <label for="pwdconf">Confirmer Mot de passe :</label>
