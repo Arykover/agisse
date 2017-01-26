@@ -116,6 +116,8 @@ class StudentController {
 
     public function profile() {
         $this->init();
+        $pdo = PdoAgisse::getPdoAgisse();
+        $userInfo = $this->pdo->getUserProfile($this->id);
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
         //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
@@ -124,8 +126,9 @@ class StudentController {
         return $view;     // retourne le flux 
     }
 
-    public function editUserProfile() {
+    public function editUserProfile(Application $app) {
         $this->init();
+        $userInfo = $this->pdo->getUserProfile($this->id);
         $lName = strtolower($_REQUEST['lastName']);
         $fName = strtolower($_REQUEST['firstName']);
         $pwdOld = $_REQUEST['passwordOld'];
@@ -147,7 +150,6 @@ class StudentController {
                 $pdo->updateUserPwd($this->id, $pwdNew);
             }
             echo('Les modifications ont bien été enregistrées !');
-            require_once __DIR__ . '/../views/v_profile.php';
         } 
         else {
             echo('Mot de passe actuel invalide !');

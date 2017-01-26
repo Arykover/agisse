@@ -189,5 +189,28 @@ class PdoAgisse {
         }
         return $checked;
     }
+    
+    
+    /**
+     * Verifie si un compte utilisant cet email existe deja
+     * @param $mail
+     * @return true si aucun compte n'existe, false sinon 
+     */
+    public function getUserProfile($id) {
+        $req = PdoAgisse::$monPdo->prepare("select nom, prenom, mail, pass from comptes where id = ?");
+        $req->bindParam(1, $id);
+        $req->execute();
+        $tab = $req->fetch();
+        return $tab;
+    }
+    
+    public function pwdEncryption($id, $pwd){
+        //getKeyUuid
+    }
+    
+    public function pwdDecryption($id, $pwd){
+        //getKeyUuid
+        
+    }
 
 }
