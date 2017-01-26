@@ -5,7 +5,7 @@
 
   <div class="form-group">
     <label for="name">Nom :</label>
-    <input type="text" class="form-control" id="name" name="name" required>
+    <input type="text" class="form-control" id="Lname" name="Lname" required>
   </div>
   <div class="form-group">
     <label for="Fname">Prenom :</label>

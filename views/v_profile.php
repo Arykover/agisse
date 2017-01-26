@@ -31,5 +31,5 @@
               <span id="confirmMessagePass" class="confirmMessagePass"></span>
     </div>
   </div>
-  <button type="submit" class="btn btn-default" id="sub">Submit</button> 
+  <button type="submit" class="btn btn-default" id="sub">Valider</button> 
 </form>

@@ -42,6 +42,7 @@ function checkPass()
                 pass2.style.backgroundColor = "#ffffff";
       message.style.color = badColor;
       message.innerHTML = "Le mot de passe doit faire entre 8 et 16 caracteres contenir une majuscule, une minuscule et un chiffre";
+      document.getElementById("sub").disabled = true;
     }
     
 } 
@@ -58,12 +59,12 @@ function checkMail()
                 pass2.style.backgroundColor = goodColor;
                 message.style.color = goodColor;
                 message.innerHTML = "e-mail identiques"
-                document.getElementById("signsubmit").disabled = false;
+                document.getElementById("sub").disabled = false;
             }else{
                 pass2.style.backgroundColor = badColor;
                 message.style.color = badColor;
                 message.innerHTML = "Les e-mail ne correspondent pas";
-                document.getElementById("signsubmit").disabled = true;
+                document.getElementById("sub").disabled = true;
             }
     
 
@@ -74,6 +75,15 @@ function checkMail()
         var checkbox = document.getElementById('togPwd')
         var expanded1 = document.getElementById("editPwd");
         checkbox.onchange = function () {
+           if( document.getElementById("sub").disabled == false){
+         document.getElementById("sub").disabled = true;
+         document.getElementById("pwdOld").required = true;
+             }
+          else{
+               document.getElementById("sub").disabled = false;
+               document.getElementById("pwdOld").required = false;
+          }
+        document.getElementById("pwdOld").required = true;
         expanded1.style.visibility = this.checked ? 'visible' : 'hidden';
     };}
     

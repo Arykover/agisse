@@ -34,8 +34,7 @@ class GuestController{
      public function inscription(Application $app){
                 $Lname = strtolower($_REQUEST['Lname']);
                 $Fname = strtolower($_REQUEST['Fname']);
-                $mail = $_REQUEST['mail'];
-                $login = $_REQUEST['login'];
+                $mail = $_REQUEST['email'];
                 $pwd = $_REQUEST['password'];
                 $pdo = PdoAgisse::getPdoAgisse();
                 
@@ -45,20 +44,19 @@ class GuestController{
 
                 // creation du login avec nom_initialePrenom 
                 // et un chiffre si un utilisateur avec le meme login existe
-                    // select count(*) from comptes
-                    //where nom = "gestion" and substring(prenom,1,1) = "g"
+                    // select count(*) from comptes where nom = "gestion" and substring(prenom,1,1) = "g"
                 
-                $login = $Lname."_".$Fname[0].$pdo->insertUser($Lname,$Fname[1]);
+                $login = $Lname."_".$Fname[0].$pdo->nbUser($Lname,$Fname[1]);
                 
                 // appel de la fonction d'insertion dans la base de données
-                $user = $pdo->insertUser($login,$pwd);
+                $pdo->insertUser($login,$pwd,$Lname,$Fname,$mail,3);
                 
                 return $app->redirect($app["url_generator"]->generate("homepage"));
                 }
          	
                 else{
                    echo('Cet e-mail est déjà utilisé');
-                   require_once __DIR__.'/../views/v_connexion.php';
+                   require_once __DIR__.'/../views/v_signIn.php';
                     
                 }
         
