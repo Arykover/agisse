@@ -75,16 +75,19 @@ function checkMail()
         var checkbox = document.getElementById('togPwd')
         var expanded1 = document.getElementById("editPwd");
         checkbox.onchange = function () {
-           if( document.getElementById("sub").disabled == false){
+           if( checkbox.checked == true ){
          document.getElementById("sub").disabled = true;
          document.getElementById("pwdOld").required = true;
+         expanded1.style.display = 'block';
+         
              }
           else{
                document.getElementById("sub").disabled = false;
                document.getElementById("pwdOld").required = false;
+               expanded1.style.display = 'none';
           }
-        document.getElementById("pwdOld").required = true;
-        expanded1.style.visibility = this.checked ? 'visible' : 'hidden';
+        //document.getElementById("pwdOld").required = true;
+       // expanded1.style.visibility = this.checked ? 'visible' : 'hidden';
     };}
     
     

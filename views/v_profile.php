@@ -16,7 +16,7 @@
   </div>
     <input type="checkbox" name="togPwd" value="editPwd" id="togPwd" >Modifier son mot de passe</p>
     
-    <div id="editPwd" style="visibility:hidden">
+    <div id="editPwd" style='display:none;'>
     <div class="form-group">
       <label for="pwdOld">Mot de passe actuel :</label>
       <input type="password" class="form-control" id="pwdOld" name="password">
