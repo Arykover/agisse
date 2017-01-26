@@ -1,7 +1,8 @@
 <?php
-                    /* Définition des routes*/
+
+/* Définition des routes */
 $app->match('/', "GuestController::home")
-        ->bind('homepage'); 
+        ->bind('homepage');
 $app->match('/home', "GuestController::home");
 $app->match('/signIn', "GuestController::signIn")
         ->bind('signin');
@@ -17,6 +18,8 @@ $app->match('/logOut', "GuestController::logOut")
         ->bind('logout');
 $app->match('/profile', "StudentController::profile")
         ->bind('profile');
+$app->match('/editUserProfile', "StudentController::editUserProfile")
+        ->bind('editUserProfile');
 
 
 

@@ -31,7 +31,7 @@ function checkPass()
                 // et autorisation de la validation du formulaire 
                 pass2.style.backgroundColor = goodColor;
                 message.style.color = goodColor;
-                message.innerHTML = "Mots de passes identiques"
+                message.innerHTML = "Mots de passes identiques";
                 document.getElementById("sub").disabled = false;
             }else{
                 // Les champs ne correspondent pas, changement de la couleur, message d'echec 
@@ -90,7 +90,6 @@ function checkMail()
            if( document.getElementById('togPwd').checked == true ){
                
          document.getElementById("sub").disabled = true;
-         document.getElementById("pwdOld").required = true;
          document.getElementById("editPwd").style.display = 'block';
          checkPass(); //relance le checkPass pour eviter un blocage accidentel de la validation apres plusieurs check/uncheck
              }
@@ -101,12 +100,25 @@ function checkMail()
         
           else{
                document.getElementById("sub").disabled = false;
-               document.getElementById("pwdOld").required = false;
                document.getElementById("editPwd").style.display = 'none';
           }
         //document.getElementById("pwdOld").required = true;
        // expanded1.style.visibility = this.checked ? 'visible' : 'hidden';
-    };}
+        };
+       
+       
+       
+       document.getElementById('togMail').onchange = function () {
+           if( document.getElementById('togMail').checked == true ){
+         document.getElementById("mail").required = true;
+         document.getElementById("editMail").style.display = 'block';
+             }
+          else{
+               document.getElementById("mail").required = false;
+               document.getElementById("editMail").style.display = 'none';
+          }
+    };
+}
     
     
  
