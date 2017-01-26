@@ -1,3 +1,5 @@
+// fonction interdisant les couper/copier/coller dans les champs de confirmation
+
 $(document).ready(function(){
       $('#pwdConfirmation').bind("cut copy paste",function(e) {
           e.preventDefault();
@@ -6,6 +8,8 @@ $(document).ready(function(){
           e.preventDefault();
       });
     });
+
+// fonction verifiant que le champ password et confirmation sont identiques
 
 function checkPass()
 {
@@ -47,6 +51,9 @@ function checkPass()
     
 } 
 
+// fonction verifiant que le champ mail et confirmation sont identiques
+// (fonctionne de maniere quasi identique a la precedente)
+
 function checkMail()
 {
     var pass1 = document.getElementById('email');
@@ -70,21 +77,32 @@ function checkMail()
 
 }
 
+// 
 
     window.onload = function () {
-        var checkbox = document.getElementById('togPwd')
-        var expanded1 = document.getElementById("editPwd");
-        checkbox.onchange = function () {
-           if( checkbox.checked == true ){
+        
+        document.getElementById('togPwd').onchange = function () {
+            
+        // si la checkbox est cochée, la validation se bloque(debloquage avec la confirmation password)
+        // l'entrée du champ ancien mot de passe devient REQUIRED
+        // et les champs de mots de passe s'affichent
+        
+           if( document.getElementById('togPwd').checked == true ){
+               
          document.getElementById("sub").disabled = true;
          document.getElementById("pwdOld").required = true;
-         expanded1.style.display = 'block';
-         
+         document.getElementById("editPwd").style.display = 'block';
+         checkPass(); //relance le checkPass pour eviter un blocage accidentel de la validation apres plusieurs check/uncheck
              }
+             
+        // si la checkbox n'est pas cochée, la validation se debloque
+        // l'entrée du champ ancien mot de passe n'est plus REQUIRED
+        // et les champs de mots de passe sont cachés
+        
           else{
                document.getElementById("sub").disabled = false;
                document.getElementById("pwdOld").required = false;
-               expanded1.style.display = 'none';
+               document.getElementById("editPwd").style.display = 'none';
           }
         //document.getElementById("pwdOld").required = true;
        // expanded1.style.visibility = this.checked ? 'visible' : 'hidden';
