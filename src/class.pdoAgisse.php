@@ -114,34 +114,33 @@ class PdoAgisse {
      * @param $mail
      * @return le nombre de compte existant utilisant ce nom et cette initiale, incrementé de 1
      */
-    public function insertUser($login, $pwd, $Lname, $Fname, $mail, $type) {
-        $Fname = htmlentities($Fname);
-        $Lname = htmlentities($Lname);
-        $mail = htmlentities($mail);
+    public function insertUser($login, $pwd, $lName, $fName, $mail, $type) {
         $login = htmlentities($login);
-        $pwd = htmlentities($pwd);
-        $req = PdoAgisse::$monPdo->prepare("insert into comptes(nom,prenom,login,pass,mail,type) values( ?, ?, ?, ?, ?, ?)");
-        $req->bindParam(1, $Lname);
-        $req->bindParam(2, $Fname);
+        $lName = htmlentities($lName);
+        $fName = htmlentities($fName);
+        $mail = htmlentities($mail);
+        $req = PdoAgisse::$monPdo->prepare("insert into comptes(nom,prenom,login,mail,type) values(?, ?, ?, ?, ?)");
+        $req->bindParam(1, $lName);
+        $req->bindParam(2, $fName);
         $req->bindParam(3, $login);
-        $req->bindParam(4, $pwd);
-        $req->bindParam(5, $mail);
-        $req->bindParam(6, $type);
+        $req->bindParam(4, $mail);
+        $req->bindParam(5, $type);
         $req->execute();
-        $result = $req->fetch();
-        return $result[0] + 1;
+        $lastId = PdoAgisse::$monPdo->lastInsertId();
+        $cryptPwd = $this->pwdEncryption($lastId, htmlentities($pwd));
+        updateUserPwd($lastId, $cryptPwd);
     }
 
     /**
      * Mets à jour le nom et le prenom
      * @param $Lname, $Fname
      */
-    public function updateUserNames($id, $Lname, $Fname) {
-        $Lname = htmlentities($Lname);
-        $Fname = htmlentities($Fname);
-        $req = PdoAgisse::$monPdo->prepare("update comptes set nom = ?, prenom = ? where id = ?");
-        $req->bindParam(1, $Lname);
-        $req->bindParam(2, $Fname);
+    public function updateUserNames($id, $lName, $fName) {
+        $lName = htmlentities($lName);
+        $fName = htmlentities($fName);
+        $req = $this->prepare("update comptes set nom = ?, prenom = ? where id = ?");
+        $req->bindParam(1, $lName);
+        $req->bindParam(2, $fName);
         $req->bindParam(3, $id);
         $req->execute();
     }
@@ -163,9 +162,9 @@ class PdoAgisse {
      * @param $pwd
      */
     public function updateUserPwd($id, $pwd) {
-        $pwd = htmlentities($pwd);
+        $cryptPwd = pwdEncryption($id, htmlentities($pwd));
         $req = PdoAgisse::$monPdo->prepare("update comptes set pass = ? where id = ?");
-        $req->bindParam(1, $pwd);
+        $req->bindParam(1, $cryptPwd);
         $req->bindParam(2, $id);
         $req->execute();
     }
@@ -177,19 +176,32 @@ class PdoAgisse {
      */
     public function checkPwd($id, $pwd) {
         $checked = false;
-        $p = htmlentities($pwd);
         $req = PdoAgisse::$monPdo->prepare("select pass from comptes
-		where id = ? and pass = ?");
+		where id = ?");
         $req->bindParam(1, $id);
-        $req->bindParam(2, $p);
         $req->execute();
-        $line = $req->fetch();
-        if ($line) {
-            $checked = true;
-        }
+        $dbPwd = $req->fetch();
+        $cryptPwd = $this->pwdEncryption($id, htmlentities($pwd));
+        if($dbPwd['pass'] == $cryptPwd)
+        {$checked = true;}
         return $checked;
     }
     
+    /**
+     * Permet de chiffrer le mot de passe passé en paramètre à l'aide de la clé unique du compte
+     * @param $pwd, $id 
+     * @return true si il y a correspondance, sinon false 
+     */
+    public function pwdEncryption($id, $pwd){
+        $req = PdoAgisse::$monPdo->prepare("select cle from comptes
+		where id = ?");
+        $req->bindParam(1, $id);
+        $req->execute();
+        $key = $req->fetch();
+        $keyPwd = (htmlentities($pwd).$key['cle']);
+        $cryptPwd = sha2($keyPwd,20);
+        return $cryptPwd;
+    }
     
     /**
      * Verifie si un compte utilisant cet email existe deja
@@ -197,20 +209,42 @@ class PdoAgisse {
      * @return true si aucun compte n'existe, false sinon 
      */
     public function getUserProfile($id) {
-        $req = PdoAgisse::$monPdo->prepare("select nom, prenom, mail, pass from comptes where id = ?");
+        $req = PdoAgisse::$monPdo->prepare("select nom, prenom, mail from comptes where id = ?");
         $req->bindParam(1, $id);
         $req->execute();
         $tab = $req->fetch();
         return $tab;
     }
     
-    public function pwdEncryption($id, $pwd){
-        //getKeyUuid
-    }
-    
-    public function pwdDecryption($id, $pwd){
-        //getKeyUuid
-        
-    }
-
+    //salt => généré et stock ds fichier htaccess, compo de login+cléDur
+//    $hash = hash("sha256", $password . $salt);
+    /**
+* Crée une clé de hachage pour un password
+*/
+//public function hashMake($password)
+//{
+//    $options = ['cost' => 12
+//              'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),];
+// 
+//    $hash = password_hash($password, PASSWORD_BCRYPT, $options);
+// 
+//    if ($hash === false) {
+//        throw new RuntimeException('Bcrypt hashing not supported.');
+//    }
+// 
+//    return $hash;
+//}
+// 
+///**
+//* Vérifie qu'un password correspond à un hachage
+//*/
+//public function hashCheck($password, $hashedPassword)
+//{
+//    if (strlen($hashedPassword) === 0) {
+//        return false;
+//    }
+// 
+//    return password_verify($password, $hashedPassword);
+//}
 }
+
