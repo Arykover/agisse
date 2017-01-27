@@ -125,6 +125,24 @@ class StudentController {
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
+    
+        public function Fiche() {
+        $this->init();
+        if($_SESSION['type'] == 3){
+            $id = $_SESSION['id'];
+        }
+        else{
+            $id = $_REQUEST['id'];
+        }
+        $pdo = PdoAgisse::getPdoAgisse();
+        $Infos = $this->pdo->getFiche($id);
+        //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
+        //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
+        //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
+        require_once __DIR__ . '/../views/v_fiche.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
 
     public function editUserProfile(Application $app) {
         $this->init();
