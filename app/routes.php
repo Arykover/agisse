@@ -16,7 +16,7 @@ $app->match('/', "GuestController::home")
 $app->match('/home', "GuestController::home");
 $app->get('/signIn', "GuestController::signIn")
         ->bind('signin');
-$app->get('/inscription', "GuestController::inscription")
+$app->match('/inscription', "GuestController::inscription")
         ->bind('inscription');
 $app->match('/login', "GuestController::login")
         ->bind('login');
@@ -34,6 +34,7 @@ $app->match('/editUserProfile', "StudentController::editUserProfile")
         ->bind('editUserProfile');
 $app->match('/fiche', "StudentController::Fiche")
         ->bind('Fiche');
+
 
 
 /*

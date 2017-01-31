@@ -235,7 +235,7 @@ ALTER TABLE `fiches`
   ADD KEY `statut` (`statut`),
   ADD KEY `nationalite` (`nationalite`),
   ADD KEY `civilite` (`civilite`),
-  ADD KEY `mutuelle` (`mutuelle`);
+  ADD KEY `mutuelle` (`mutuelle`),
   ADD KEY `etat` (`etat`);
 
 --
