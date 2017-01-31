@@ -8,7 +8,6 @@ require_once __DIR__.'/../app/services.php';
 require_once __DIR__.'/../app/routes.php';
 require_once __DIR__.'/../app/controllers.php';
 
-
 $app->run();
 $app['debug'] = true;
 

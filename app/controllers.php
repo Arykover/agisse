@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../src/class.pdoAgisse.php';
+require_once __DIR__ . '/class.pdoAgisse.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
@@ -11,25 +11,25 @@ class GuestController {
 
     public function __construct() {
         ob_start();             // démarre le flux de sortie
-        require_once __DIR__ . '/../views/v_header.php';
-        require_once __DIR__ . '/../views/v_menu.php';
+        require_once __DIR__ . '/../web/views/v_header.php';
+        require_once __DIR__ . '/../web/views/v_menu.php';
     }
 
     public function home() {
         //require_once __DIR__.'/../vues/v_connexion.php';
-        require_once __DIR__ . '/../views/v_home.php';
+        require_once __DIR__ . '/../web/views/v_home.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
 
     public function login() {
-        require_once __DIR__ . '/../views/v_connexion.php';
+        require_once __DIR__ . '/../web/views/v_connexion.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
 
     public function SignIn() {
-        require_once __DIR__ . '/../views/v_signin.php';
+        require_once __DIR__ . '/../web/views/v_signin.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
@@ -57,10 +57,10 @@ class GuestController {
             return $app->redirect($app["url_generator"]->generate("homepage"));
         } else {
             echo('Cet e-mail est déjà utilisé');
-            require_once __DIR__ . '/../views/v_signIn.php';
+            require_once __DIR__ . '/../web/views/v_signIn.php';
         }
 
-        require_once __DIR__ . '/../views/v_footer.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean();
         return $view;
     }
@@ -84,7 +84,7 @@ class GuestController {
         $user = $pdo->identification($login, $pwd);
         if (!is_array($user)) {
             echo('identifiants ou mot de passe invalide.');
-            require_once __DIR__ . '/../views/v_connexion.php';
+            require_once __DIR__ . '/../web/views/v_connexion.php';
         } else {
             $_SESSION['id'] = $user['id'];
             $_SESSION['nom'] = $user['nom'];
@@ -93,7 +93,7 @@ class GuestController {
             return $app->redirect($app["url_generator"]->generate("homepage"));
         }
 
-        require_once __DIR__ . '/../views/v_footer.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean();
         return $view;
     }
@@ -110,8 +110,8 @@ class StudentController {
         $this->id = $_SESSION['id'];
         $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
-        require_once __DIR__ . '/../views/v_header.php';
-        require_once __DIR__ . '/../views/v_menu.php';
+        require_once __DIR__ . '/../web/views/v_header.php';
+        require_once __DIR__ . '/../web/views/v_menu.php';
     }
 
     public function profile() {
@@ -121,7 +121,7 @@ class StudentController {
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
         //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
-        require_once __DIR__ . '/../views/v_profile.php';
+        require_once __DIR__ . '/../web/views/v_profile.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
@@ -139,7 +139,7 @@ class StudentController {
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
         //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
-        require_once __DIR__ . '/../views/v_fiche.php';
+        require_once __DIR__ . '/../web/views/v_fiche.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
@@ -172,7 +172,7 @@ class StudentController {
         else {
             echo('Mot de passe actuel invalide !');
         }
-        require_once __DIR__ . '/../views/v_profile.php';
+        require_once __DIR__ . '/../web/views/v_profile.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
@@ -190,8 +190,8 @@ class ManagerController {
         $this->pdo = PdoGsb::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         Auth();
-        require_once __DIR__ . '/../views/v_header.php';
-        require_once __DIR__ . '/../views/v_home.php';
+        require_once __DIR__ . '/../web/views/v_header.php';
+        require_once __DIR__ . '/../web/views/v_home.php';
     }
 
     public function Auth() {
@@ -213,8 +213,8 @@ class AdministratorController {
         $this->pdo = PdoGsb::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         Auth();
-        require_once __DIR__ . '/../views/v_header.php';
-        require_once __DIR__ . '/../views/v_home.php';
+        require_once __DIR__ . '/../web/views/v_header.php';
+        require_once __DIR__ . '/../web/views/v_home.php';
     }
 
     public function Auth() {

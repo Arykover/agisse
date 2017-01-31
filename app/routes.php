@@ -1,14 +1,22 @@
 <?php
 
 /* Définition des routes */
+//$frontend = $app['controllers_factory'];
+//$app->get('/hello/{name}', function($name) use($app) {
+$app->get('/hello/{name}', function($name) use($app) {
+
+	return 'Hello '.$app->escape($name);	
+
+})->value('name','Nobody');
+
 
 /* Routes Guest controller*/
 $app->match('/', "GuestController::home")
         ->bind('homepage');
 $app->match('/home', "GuestController::home");
-$app->match('/signIn', "GuestController::signIn")
+$app->get('/signIn', "GuestController::signIn")
         ->bind('signin');
-$app->match('/inscription', "GuestController::inscription")
+$app->get('/inscription', "GuestController::inscription")
         ->bind('inscription');
 $app->match('/login', "GuestController::login")
         ->bind('login');
