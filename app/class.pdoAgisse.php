@@ -188,6 +188,20 @@ class PdoAgisse {
     }
     
     
+        public function getFiche($id) {
+        $req = PdoAgisse::$monPdo->prepare("select * from fiches f 
+                                           inner join discipline d on f.discipline=d.id
+                                           inner join etat e on f.etat=e.code
+                                           inner join discipline d on f.discipline=d.id
+                                           
+                                           where id = ?");
+        $req->bindParam(1, $id);
+        $req->execute();
+        $tab = $req->fetch();
+        return $tab;
+    }
+    //salt => généré et stock ds fichier htaccess, compo de login+cléDur
+//    $hash = hash("sha256", $password . $salt);
     /**
 * Crée une clé de hachage pour un password
 */

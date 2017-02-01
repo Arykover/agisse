@@ -136,7 +136,7 @@ class StudentController {
             $id = $_REQUEST['id'];
         }
         $pdo = PdoAgisse::getPdoAgisse();
-        $Infos = $this->pdo->getFiche($id);
+        $fiche = $this->pdo->getFiche($id);
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
         //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
