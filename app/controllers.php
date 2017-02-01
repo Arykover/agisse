@@ -49,7 +49,7 @@ class GuestController {
             // et un chiffre si un utilisateur avec le meme login existe
             // select count(*) from comptes where nom = "gestion" and substring(prenom,1,1) = "g"
 
-            $login = $Lname . "_" . $Fname[0] . $pdo->nbUser($Lname, $Fname[1]);
+            $login = $Lname . "_" . $Fname[0] . $pdo->nbUser($Lname, $Fname[0]);
 
             // appel de la fonction d'insertion dans la base de données
             $pdo->insertUser($login, $pwd, $Lname, $Fname, $mail, 3);

@@ -132,7 +132,7 @@ class PdoAgisse {
         $req->bindParam(4, $cryptPwd);
         $req->bindParam(5, $mail);
         $req->bindParam(6, $type);
-        $req->execute() or die(print_r('errorèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèè insert'));
+        $req->execute() or die(print_r('error insert'));
     }
 
     /**
@@ -190,10 +190,11 @@ class PdoAgisse {
     
         public function getFiche($id) {
         $req = PdoAgisse::$monPdo->prepare("select * from fiches f 
-                                           inner join discipline d on f.discipline=d.id
-                                           inner join etat e on f.etat=e.code
-                                           inner join statut s on f.statut = s.id
-                                           inner join nationalite n on f.nationalite = n.code 
+                                           inner join discipline d on f.discipline=d.id_discipline
+                                           inner join etat e on f.etat=e.code_etat
+                                           inner join statut s on f.statut = s.id_statut
+                                           inner join nationalite n on f.nationalite = n.code_nationalite
+                                           inner join mutuelle m on f.mutuelle = m.code_mutuelle
                                            where f.id = ?");
         $req->bindParam(1, $id);
         $req->execute();
