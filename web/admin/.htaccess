@@ -1,14 +1,17 @@
-DirectoryIndex admin.php
+DirectoryIndex admin.php /erreurs/erreur_403.php
+ErrorDocument 403 /maintenance.php
 <Limit GET POST>	
 AuthType Basic
-AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\index.php\.htpasswd
+AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
 AuthName "Administrator required"
 require valid-user
+#Require ip 192.168.100.160
+#order allow
+#allow from 192.168.100.160
 </Limit>		
-<Files .htaccess>
-order allow,deny
-deny from all
-allow from 192.168.0.41
-</Files>
 #log: admin
 #mdp: Arykover
+<FilesMatch "\.(htaccess|htpasswd)$">
+order allow,deny
+deny from all
+<FilesMatch>
