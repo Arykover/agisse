@@ -36,6 +36,7 @@ $app->match('/fiche', "StudentController::Fiche")
         ->bind('Fiche');
 
 
+
 /*
  * $app->get('/redirect', function () use ($app) { 
  * return $app->redirect(dirname("../web/index.php"));
