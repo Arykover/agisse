@@ -1,5 +1,5 @@
 <div class="banner-img">
-    <img src ="../util/images/banner.png">
+    <img src ="../web/images/banner.png">
 </div>
 
 <!--  Menu haut-->
