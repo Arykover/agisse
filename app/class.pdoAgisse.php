@@ -190,11 +190,11 @@ class PdoAgisse {
     
         public function getFiche($id) {
         $req = PdoAgisse::$monPdo->prepare("select * from fiches f 
-                                           inner join discipline d on f.discipline=d.id_discipline
-                                           inner join etat e on f.etat=e.code_etat
-                                           inner join statut s on f.statut = s.id_statut
-                                           inner join nationalite n on f.nationalite = n.code_nationalite
-                                           inner join mutuelle m on f.mutuelle = m.code_mutuelle
+                                           left join discipline d on f.discipline=d.id_discipline
+                                           left join etat e on f.etat=e.code_etat
+                                           left join statut s on f.statut = s.id_statut
+                                           left join nationalite n on f.nationalite = n.code_nationalite
+                                           left join mutuelle m on f.mutuelle = m.code_mutuelle
                                            where f.id = ?");
         $req->bindParam(1, $id);
         $req->execute();

@@ -87,7 +87,7 @@
                             case 3:  ?>
                     
                     <li class="smenu">
-                        <a href="Informations" title="">Ma fiche</a>
+                        <a href="Fiche" title="">Ma fiche</a>
                     </li>
                     <li class="smenu">
                         <a href="profile" title="">Mon profil</a>
