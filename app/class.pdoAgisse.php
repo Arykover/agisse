@@ -192,9 +192,9 @@ class PdoAgisse {
         $req = PdoAgisse::$monPdo->prepare("select * from fiches f 
                                            inner join discipline d on f.discipline=d.id
                                            inner join etat e on f.etat=e.code
-                                           inner join discipline d on f.discipline=d.id
-                                           
-                                           where id = ?");
+                                           inner join statut s on f.statut = s.id
+                                           inner join nationalite n on f.nationalite = n.code 
+                                           where f.id = ?");
         $req->bindParam(1, $id);
         $req->execute();
         $tab = $req->fetch();

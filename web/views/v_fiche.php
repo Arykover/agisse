@@ -47,25 +47,28 @@
     
     <tr>
         <td>Adresse : </td>
-        <td><?php if(!empty($fiche[''])){echo($adresse);}; ?></td>
+        <td><?php if(!empty($fiche['adresse'])){echo($fiche['adresse']);}; ?></td>
+    </tr>
+    
+    <tr>
+        <td>Complement d'adresse : </td>
+        <td><?php if(!empty($fiche['comp_adresse'])){echo($fiche['comp_adresse']);}; ?></td>
     </tr>
     
     <tr>
         <td>Code postal :</td>
-        <td><?php if(!empty($fiche[''])){echo($codePostal);}; ?></td>
+        <td><?php if(!empty($fiche['cp'])){echo($fiche['cp']);}; ?></td>
         <td>Ville :</td>
-        <td><?php if(!empty($fiche[''])){echo($ville);}; ?></td>
+        <td><?php if(!empty($fiche['ville'])){echo($fiche['ville']);}; ?></td>
     </tr>
     
     <tr>
         <td>Numero de securité sociale :</td>
-        <td><?php if(!empty($fiche[''])){echo($numSecu);}; ?></td>
+        <td><?php if(!empty($fiche['num_secu'])){echo($fiche['num_secu']);}; ?></td>
     </tr>
     <tr>
         <td>Telephone :</td>
-        <td><?php if(!empty($fiche[''])){echo($telephone);}; ?></td>
-        <td>Mail :</td>
-        <td><?php if(!empty($fiche[''])){echo($mail);}; ?></td>
+        <td><?php if(!empty($fiche['telephone'])){echo($fiche['telephone']);}; ?></td>
     </tr>
     
 </table>
@@ -76,11 +79,11 @@
     </tr>
     <tr>
         <td>Centre payeur :</td>
-        <td><?php if(!empty($fiche[''])){echo($affiliation);}; ?></td>
+        <td><?php if(!empty($fiche['code_mutuelle'])){echo($fiche['code_mutuelle']." - ".$fiche['libelle_mutuelle']);}; ?></td>
     </tr>
     <tr>
         <td>Statut :</td>
-        <td><?php if(!empty($fiche[''])){echo($statut);}; ?></td>
+        <td><?php if(!empty($fiche['libelle_statut'])){echo($fiche['libelle_statut']);}; ?></td>
     </tr>
 </table>
 
@@ -90,10 +93,19 @@
     </tr>
     <tr>
         <td>Commentaire etudiant : </td>
-        <td><?php if(!empty($fiche[''])){echo($commentEtudiant);}; ?></td>
+        <td><?php if(!empty($fiche['observations_eleve'])){echo($fiche['observations_eleve']);}; ?></td>
     </tr>
     <tr>
         <td>Commentaire gestionnaire : </td>
-        <td><?php if(!empty($fiche[''])){echo($commentGestion);}; ?></td>
+        <td><?php if(!empty($fiche['observations_gest'])){echo($fiche['observations_gest']);}; ?></td>
     </tr>
 </table>
+
+<form  id='EtatFicheForm' method='POST' action='/remplirFiche'>
+    Etat de la fiche : <?php if($_SESSION['type'] == 'ETUDIANT' ){ 
+                                                                    echo($fiche['libelle_etat']); }
+                        if($_SESSION['type'] == 'GESTIONNAIRE' ){ ?>
+                            
+                       <?php } ?>
+
+</form>
