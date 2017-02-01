@@ -118,7 +118,6 @@ class StudentController {
 
     public function profile() {
         $this->init();
-        $pdo = PdoAgisse::getPdoAgisse();
         $userInfo = $this->pdo->getUserProfile($this->id);
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
         //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
@@ -148,13 +147,13 @@ class StudentController {
 
     public function editUserProfile(Application $app) {
         $this->init();
-//        $userInfo = $this->pdo->getUserProfile($this->id);
+        $userInfo = $this->pdo->getUserProfile($this->id);
         $lName = strtolower($_REQUEST['lastName']);
         $fName = strtolower($_REQUEST['firstName']);
         $pwdOld = $_REQUEST['passwordOld'];
         $pdo = PdoAgisse::getPdoAgisse();
         // appel de la fonction determinant si l'ancien mdp correspond au compte connecté
-        if ($pdo->checkPwd($this->id, $pwdOld)) {
+        if ($pdo->hashCheck($this->login, $pwdOld)) {
             //mise à jour du nom et du prénom
             $pdo->updateUserNames($this->id, $lName, $fName);
             //verifier que le checkbox pour modifier le mail est coché,

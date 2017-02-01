@@ -63,17 +63,20 @@ class PdoAgisse {
     public function identification($login, $mdp) {
 
         $log = htmlentities($login);
-        $m = $this->hashMake($log, htmlentities($mdp));
-        if($this->hashCheck($log, $m))
-        $req = PdoAgisse::$monPdo->prepare("select comptes.id, comptes.nom, comptes.prenom, comptes.type from comptes 
+//        $m = $this->hashMake($log, htmlentities($mdp));
+        echo $mdp;
+        if($this->hashCheck($log, htmlentities($mdp)))
+        {
+        $req = PdoAgisse::$monPdo->prepare("select comptes.id, comptes.login, comptes.nom, comptes.prenom, comptes.type from comptes 
 		where comptes.login = ?");
         //probleme longueur ds la bdd et le cryptage
         $req->bindParam(1, $log);
-        $req->bindParam(2, $m);
-        $req->execute();
+        $req->execute() or die('error id');
         $ligne = $req->fetch();
-        var_dump($m);
         return $ligne;
+        }
+        else
+        {return false;}
     }
 
     /**
@@ -139,7 +142,7 @@ class PdoAgisse {
     public function updateUserNames($id, $lName, $fName) {
         $lName = htmlentities($lName);
         $fName = htmlentities($fName);
-        $req = $this->prepare("update comptes set nom = ?, prenom = ? where id = ?");
+        $req = PdoAgisse::$monPdo->prepare("update comptes set nom = ?, prenom = ? where id = ?");
         $req->bindParam(1, $lName);
         $req->bindParam(2, $fName);
         $req->bindParam(3, $id);
@@ -176,13 +179,13 @@ class PdoAgisse {
      * @param $mail
      * @return true si aucun compte n'existe, false sinon 
      */
-//    public function getUserProfile($id) {
-//        $req = PdoAgisse::$monPdo->prepare("select nom, prenom, mail from comptes where id = ?");
-//        $req->bindParam(1, $id);
-//        $req->execute();
-//        $tab = $req->fetch();
-//        return $tab;
-//    }
+    public function getUserProfile($id) {
+        $req = PdoAgisse::$monPdo->prepare("select nom, prenom, mail from comptes where id = ?");
+        $req->bindParam(1, $id);
+        $req->execute();
+        $tab = $req->fetch();
+        return $tab;
+    }
     
     
     /**
@@ -217,7 +220,7 @@ public function hashCheck($login, $password)
         $req->bindParam(1, $login);
         $req->execute();
         $hashedPassword = $req->fetch();
-    return ($this->hashMake($login, htmlentities($password)) === $hashedPassword);
+    return ($this->hashMake($login, htmlentities($password)) === $hashedPassword['pass']);
 }
 }
 
