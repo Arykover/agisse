@@ -1,0 +1,14 @@
+DirectoryIndex admin.php
+<Limit GET POST>	
+AuthType Basic
+AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\index.php\.htpasswd
+AuthName "Administrator required"
+require valid-user
+</Limit>		
+<Files .htaccess>
+order allow,deny
+deny from all
+allow from 192.168.0.41
+</Files>
+#log: admin
+#mdp: Arykover

@@ -132,7 +132,7 @@ class PdoAgisse {
         $req->bindParam(4, $cryptPwd);
         $req->bindParam(5, $mail);
         $req->bindParam(6, $type);
-        $req->execute() or die(print_r('error insert'));
+        $req->execute() or die(print_r('errorèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèè insert'));
     }
 
     /**

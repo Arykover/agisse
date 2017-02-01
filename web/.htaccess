@@ -10,3 +10,4 @@ RewriteRule ^ index.php [QSA,L]
 AddDefaultCharset UTF-8
 SetEnv CLEP "prout"
 #$this->HostName   = $_SERVER['DB_HOST'];
+DirectoryIndex index.php
