@@ -2,7 +2,8 @@ DirectoryIndex admin.php /erreurs/erreur_403.php
 ErrorDocument 403 /maintenance.php
 <Limit GET POST>	
 AuthType Basic
-AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
+#AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
+AuthUserFile C:\wamp64\www\agisse\agisse\web\admin\.htpasswd
 AuthName "Administrator required"
 require valid-user
 #Require ip 192.168.100.160

@@ -11,4 +11,5 @@
  *
  * @author Fifine
  */ 
-//echo crypt('Arykover'); 
+//echo crypt('Arykover');
+echo realpath('admin.php');
