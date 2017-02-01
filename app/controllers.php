@@ -90,6 +90,7 @@ class GuestController {
             $_SESSION['nom'] = $user['nom'];
             $_SESSION['prenom'] = $user['prenom'];
             $_SESSION['type'] = $user['type'];
+            $_SESSION['login'] = $user['login'];
             return $app->redirect($app["url_generator"]->generate("homepage"));
         }
 
@@ -108,6 +109,7 @@ class StudentController {
 
     public function init() {
         $this->id = $_SESSION['id'];
+        $this->login = $_SESSION['login'];
         $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         require_once __DIR__ . '/../web/views/v_header.php';
@@ -146,7 +148,7 @@ class StudentController {
 
     public function editUserProfile(Application $app) {
         $this->init();
-        $userInfo = $this->pdo->getUserProfile($this->id);
+//        $userInfo = $this->pdo->getUserProfile($this->id);
         $lName = strtolower($_REQUEST['lastName']);
         $fName = strtolower($_REQUEST['firstName']);
         $pwdOld = $_REQUEST['passwordOld'];
@@ -165,7 +167,7 @@ class StudentController {
             //si c'est le cas, mettre à jour le nouveau mail entré
             if (isset($_REQUEST['togPwd'])) {
                 $pwdNew = $_REQUEST['password'];
-                $pdo->updateUserPwd($this->id, $pwdNew);
+                $pdo->updateUserPwd($this->id, $this->login, $pwdNew);
             }
             echo('Les modifications ont bien été enregistrées !');
         } 

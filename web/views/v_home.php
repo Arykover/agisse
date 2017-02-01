@@ -4,6 +4,7 @@
 
 
 echo 'Hello coucou';
-echo crypt('admin');
+echo ($_SERVER['CLEP']);
+//echo crypt('admin');
 
 ?>

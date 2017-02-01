@@ -14,9 +14,9 @@ $app->get('/hello/{name}', function($name) use($app) {
 $app->match('/', "GuestController::home")
         ->bind('homepage');
 $app->match('/home', "GuestController::home");
-$app->get('/signIn', "GuestController::signIn")
+$app->match('/signIn', "GuestController::signIn")
         ->bind('signin');
-$app->get('/inscription', "GuestController::inscription")
+$app->match('/inscription', "GuestController::inscription")
         ->bind('inscription');
 $app->match('/login', "GuestController::login")
         ->bind('login');
