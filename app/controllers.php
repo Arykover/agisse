@@ -141,6 +141,7 @@ class StudentController {
         //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
         require_once __DIR__ . '/../web/views/v_fiche.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }

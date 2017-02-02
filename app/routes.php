@@ -32,7 +32,7 @@ $app->match('/profile', "StudentController::profile")
         ->bind('profile');
 $app->match('/editUserProfile', "StudentController::editUserProfile")
         ->bind('editUserProfile');
-$app->match('/fiche', "StudentController::Fiche")
+$app->match('/Fiche', "StudentController::Fiche")
         ->bind('Fiche');
 
 
