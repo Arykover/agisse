@@ -92,7 +92,7 @@
 
 <table class='table table-condensed col-md-offset-1 col-md-9 col-md-offset-2'>
     <tr>
-        <th>Commentaires : </th>
+        <th class='col-md-offset-1'>Commentaires : </th>
     </tr>
     <tr>
         <td>Commentaire etudiant : </td>
@@ -104,11 +104,15 @@
     </tr>
 </table>
 
+</br></br></br></br>
+
+<div class='container col-md-offset-2 col-md-10'>
         Etat de la fiche : 
+      
             <?php if($_SESSION['type'] == '3' ){ 
                             echo($fiche['libelle_etat']);   ?>
-                            </br></br>
-                            <button class='btn-success'>Valider Fiche</button>
+                            </br></br></br></br>
+                            <button class='btn-success col-md-2 col-md-offset-3'>Valider Fiche</button>
             <?php } else if($_SESSION['type'] == 'GESTIONNAIRE' ){ ?>
 
     <form  id='EtatFicheForm' method='POST' action='/etatFiche' class='col-md-offset-1 col-md-10 col-md-offset-1'>
@@ -118,9 +122,10 @@
                         </SELECT>
     </form>                    
                        <?php } ?>
-                            </br></br>
+                           
 
-        <button class='btn-success'>Modifier Fiche</button>
+        <button class='btn-success col-md-2 col-md-offset-2'>Modifier Fiche</button>
+        
 
-
+</div>
 </div>
