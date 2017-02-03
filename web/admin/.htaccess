@@ -1,18 +1,29 @@
+RewriteEngine On
+<IfModule mod_rewrite.c>
+Options -MultiViews
+Options -Indexes
+RewriteEngine On
+#RewriteBase /path/to/app
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ admin.php [QSA,L]
+</IfModule>
 DirectoryIndex admin.php /erreurs/erreur_403.php
 ErrorDocument 403 /maintenance.php
-<Limit GET POST>	
+Options -Indexes
+
+
 AuthType Basic
-#AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
-AuthUserFile C:\wamp64\www\agisse\agisse\web\admin\.htpasswd
 AuthName "Administrator required"
+AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
+#AuthUserFile C:\wamp64\www\agisse\agisse\web\admin\.htpasswd
 require valid-user
-#Require ip 192.168.100.160
+Require ip 192.168.100.160
 #order allow
-#allow from 192.168.100.160
-</Limit>		
+#allow from 192.168.100.160		
 #log: admin
 #mdp: Arykover
 <FilesMatch "\.(htaccess|htpasswd)$">
 order allow,deny
 deny from all
-<FilesMatch>
+</FilesMatch>
