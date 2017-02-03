@@ -10,7 +10,9 @@
 
 
 /* Routes AdministratorController*/
-$app->match('/', "AdministratorController::administrate");
+$app->match('/', "AdministratorController::home");
+$app->match('/Home', "AdministratorController::home")
+        ->bind('Home');
 $app->match('/GestionAffil', "AdministratorController::GestionAffil")
         ->bind('GestionAffil');
 $app->match('/GestionRegimes', "AdministratorController::GestionRegimes")

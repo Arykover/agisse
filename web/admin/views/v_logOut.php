@@ -27,7 +27,7 @@
 <br/>
 <?php
 
-header('WWW-Authenticate: Basic realm="Administrator required"');
+header('WWW-Authenticate: Basic realm="Vous etes deconnecte"');
 header('HTTP/1.0 401 Unauthorized');
 //header("Location: http://deconnexion:deconnexion@localhost/silexAgisse/web/admin/deconnexion.php");
 exit();

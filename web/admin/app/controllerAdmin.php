@@ -15,9 +15,12 @@ class AdministratorController {
         $pdo = PdoAgisse::getPdoAgisse();
     }
     
-    public function administrate()
+    public function home()
     {
-        
+        //require_once __DIR__.'/../vues/v_connexion.php';
+        require_once __DIR__ . '/../views/v_home.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
     }
     
     public function manageAffiliation()
@@ -38,7 +41,6 @@ class AdministratorController {
         require_once __DIR__ . '/../views/v_logOut.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
-
     }
 }
 ?>

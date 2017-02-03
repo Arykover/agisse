@@ -12,7 +12,7 @@
             <ul class="nav navbar-nav">
                 
                 <li class="smenu">
-                    <a href="admin.php" title="">Accueil</a>
+                    <a href="Home" title="">Accueil</a>
                 </li>
                 <li class="smenu">
                     <a href='GestionAffil' title=''>Affiliations</a>

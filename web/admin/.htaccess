@@ -14,15 +14,18 @@ Options -Indexes
 
 
 AuthType Basic
-AuthName "Administrator required"
+AuthName "Vous etes deconnecte"
 AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
 #AuthUserFile C:\wamp64\www\agisse\agisse\web\admin\.htpasswd
 require valid-user
-Require ip 192.168.100.160
-#order allow
-#allow from 192.168.100.160		
+### log pour valid-user ###
 #log: admin
 #mdp: Arykover
+
+### autoriser une adresse ip en particulier###
+### ATTENTION, la déconnexion ne fonctionnera pas si vous êtes connecté avec une adresse ip autorisée
+#require ip 192.168.100.1
+#satisfy any		
 <FilesMatch "\.(htaccess|htpasswd)$">
 order allow,deny
 deny from all
