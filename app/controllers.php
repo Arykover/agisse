@@ -66,15 +66,9 @@ class GuestController {
     }
 
     public function logOut(Application $app) {
-
-        if (isset($_COOKIE[session_name()])) {
-            setcookie(session_name(), '', time() - 42000, '/');
-        }
-        session_unset();
-        session_destroy();
-        return $app->redirect($app["url_generator"]->generate("homepage"));
-        $view = ob_get_clean(); // récupère le contenu du flux et le vide
-        return $view;     // retourne le flux 
+        $app['services']->logout($app);
+        ob_get_clean(); // récupère le contenu du flux et le vide
+        return $app->redirect($app["url_generator"]->generate("homepage")); 
     }
 
     public function identification(Application $app) {
@@ -108,8 +102,8 @@ class StudentController {
     private $pdo;
 
     public function init() {
-        $this->id = $_SESSION['id'];
-        $this->login = $_SESSION['login'];
+//        $_SESSION['id'] = $_SESSION['id'];
+//        $_SESSION['login'] = $_SESSION['login'];
         $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         require_once __DIR__ . '/../web/views/v_header.php';
@@ -118,18 +112,31 @@ class StudentController {
 
     public function profile() {
         $this->init();
-        $userInfo = $this->pdo->getUserProfile($this->id);
+        $userInfo = $this->pdo->getUserProfile($_SESSION['id']);
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
-        //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
+        //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
         require_once __DIR__ . '/../web/views/v_profile.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
     
-        public function Fiche() {
+    public function Auth(Application $app) {
+        // Verification des autorisations eleve
+        if (!isset($_SESSION['type']) || $_SESSION['type'] != 'ELEVE' || $_SESSION['type'] != 'ELEVE' ) {
+                $app['services']->logout($app);
+                echo "vous n'etes pas connecté";
+                ob_get_clean(); // récupère le contenu du flux et le vide
+                exit();
+                
+
+        }
+    }
+    
+        public function Fiche(Application $app) {
+        $this->Auth($app);
         $this->init();
-        if($_SESSION['type'] == 3){
+        if($_SESSION['type'] == 'ELEVE'){
             $id = $_SESSION['id'];
         }
         else{
@@ -138,36 +145,92 @@ class StudentController {
         $pdo = PdoAgisse::getPdoAgisse();
         $fiche = $this->pdo->getFiche($id);
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
-        //PersonalInfos = $this->pdo->getPersonalInfos($this->idAccount);
+        //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
         require_once __DIR__ . '/../web/views/v_fiche.php';
         require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
-
-    public function editUserProfile(Application $app) {
+    
+     public function sauvFiche(Application $app) {
+        $this->Auth($app);
         $this->init();
-        $userInfo = $this->pdo->getUserProfile($this->id);
+        $id = $_REQUEST['id'];
+        $civilite = $_REQUEST['civilite'];
+        $nomUsage = $_REQUEST['nomUsage'];
+        $communeNaiss = $_REQUEST['communeNaiss'];
+        $deptNaiss = $_REQUEST['deptNaiss'];
+        $dateNaiss = $_REQUEST['dateNaiss'];
+        $discipline = $_REQUEST['discipline'];
+        $nation = $_REQUEST['nation'];
+        $adresse = $_REQUEST['adresse'];
+        $CP = $_REQUEST['CP'];
+        $adresseComp = $_REQUEST['adresseComp'];
+        $ville = $_REQUEST['ville'];
+        $numSecu = $_REQUEST['numSecu'];
+        $telephone = $_REQUEST['telephone'];
+        $centre = $_REQUEST['centre'];
+        $commEtudiant = $_REQUEST['commEtudiant'];
+        $commGestionnaire = $_REQUEST['commGestionnaire'];
+        
+        $this->pdo->updateFiche($id,$civilite,$nomUsage,$communeNaiss,$deptNaiss,$dateNaiss,$dateNaiss,$discipline,$nation,$adresse,$CP,$adresseComp,$ville,$numSecu,$telephone,$centre,$commEtudiant,$commGestionnaire);
+       
+        
+
+        ob_get_clean(); // récupère le contenu du flux et le vide
+        return $app->redirect($app["url_generator"]->generate("Fiche"));
+    }
+    
+    public function modifFiche(Application $app) {
+        $this->Auth($app);
+        $this->init();
+        if($_SESSION['type'] == 'ELEVE'){
+            $id = $_SESSION['id'];
+        }
+        else{
+            $id = $_REQUEST['id'];
+        }
+        $pdo = PdoAgisse::getPdoAgisse();
+        $fiche = $this->pdo->getFiche($id);
+        $nationalites = $this->pdo->getNationalites();
+        $centres = $this->pdo->getCentres();
+        $disciplines = $this->pdo->getDisciplines();
+        $statuts = $this->pdo->getStatuts();
+        //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
+        //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
+        //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
+        require_once __DIR__ . '/../web/views/v_modifFiche.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
+    
+
+    
+    public function editUserProfile(Application $app) {
+        $this->Auth($app);
+        $this->init();
+        $userInfo = $this->pdo->getUserProfile($_SESSION['id']);
         $lName = strtolower($_REQUEST['lastName']);
         $fName = strtolower($_REQUEST['firstName']);
         $pwdOld = $_REQUEST['passwordOld'];
         $pdo = PdoAgisse::getPdoAgisse();
         // appel de la fonction determinant si l'ancien mdp correspond au compte connecté
-        if ($pdo->hashCheck($this->login, $pwdOld)) {
+        if ($pdo->hashCheck($_SESSION['login'], $pwdOld)) {
             //mise à jour du nom et du prénom
-            $pdo->updateUserNames($this->id, $lName, $fName);
+            $pdo->updateUserNames($_SESSION['id'], $lName, $fName);
             //verifier que le checkbox pour modifier le mail est coché,
             //si c'est le cas, mettre à jour le nouveau mail entré
             if (isset($_REQUEST['togMail'])) {
                 $mail = $_REQUEST['mail'];
-                $pdo->updateUserMail($this->id, $mail);
+                $pdo->updateUserMail($_SESSION['id'], $mail);
             }
             //verifier que le checkbox pour modifier le mot de passe est coché, 
             //si c'est le cas, mettre à jour le nouveau mail entré
             if (isset($_REQUEST['togPwd'])) {
                 $pwdNew = $_REQUEST['password'];
-                $pdo->updateUserPwd($this->id, $this->login, $pwdNew);
+                $pdo->updateUserPwd($_SESSION['id'], $_SESSION['login'], $pwdNew);
             }
             echo('Les modifications ont bien été enregistrées !');
         } 
@@ -188,7 +251,7 @@ class ManagerController {
     private $pdo;
 
     public function init() {
-        $this->id = $_SESSION['id'];
+        $_SESSION['id'] = $_SESSION['id'];
         $this->pdo = PdoGsb::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         Auth();
@@ -196,8 +259,8 @@ class ManagerController {
         require_once __DIR__ . '/../web/views/v_home.php';
     }
 
-    public function Auth() {
-        if ($_SESSION['type'] != 2 || $_SESSION['type'] != 1) {
+    public function Auth(Application $app) {
+        if ($_SESSION['type'] != 'GESTION' ) {
             return $app->redirect($app["url_generator"]->generate("logout"));
         }
     }
@@ -211,7 +274,7 @@ class AdministratorController {
     private $pdo;
 
     public function init() {
-        $this->id = $_SESSION['id'];
+        $_SESSION['id'] = $_SESSION['id'];
         $this->pdo = PdoGsb::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         Auth();
@@ -219,7 +282,7 @@ class AdministratorController {
         require_once __DIR__ . '/../web/views/v_home.php';
     }
 
-    public function Auth() {
+    public function Auth(Application $app) {
         if ($_SESSION['type'] != 1) {
             return $app->redirect($app["url_generator"]->generate("logout"));
         }

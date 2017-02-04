@@ -25,7 +25,7 @@ $app->match('/identification', "GuestController::identification")
 $app->match('/contact', "GuestController::contact")
         ->bind('contact');
 $app->match('/logOut', "GuestController::logOut")
-        ->bind('logout');
+        ->bind('logOut');
 
 /* Routes Student controller*/
 $app->match('/profile', "StudentController::profile")
@@ -34,6 +34,8 @@ $app->match('/editUserProfile', "StudentController::editUserProfile")
         ->bind('editUserProfile');
 $app->match('/Fiche', "StudentController::Fiche")
         ->bind('Fiche');
+$app->match('/modifFiche', "StudentController::modifFiche")
+        ->bind('modifFiche');
 
 
 

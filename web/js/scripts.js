@@ -77,8 +77,42 @@ function checkMail()
 
 }
 
-// 
+//fonction de conformite du numero de securite sociale avec l'annee de naissance
 
+function checkSecu()
+{
+    var secu = document.getElementById('secu');
+    var dateN = document.getElementById('dateNaiss');
+    var message = document.getElementById('confirmMessageMail');
+    secu = secu.text.substring(1,3);
+    // dateN =  dateN.Value.parse
+    alert(dateN.value.parse);
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    var result = false;
+
+            if(secu == date){
+                message.style.color = goodColor;
+                message.innerHTML = "Numero de securite sociale conforme a la date de naissance";
+                result = true;
+            }else{
+                message.style.color = badColor;
+                message.innerHTML = "Numero de securite sociale non conforme a la date de naissance";
+            }
+    
+            return result;
+}
+
+// cette fonction vide le champ securite sociale au moment de la validation du formulaire
+// si le champ n'est pas conforme a l'année de naissance
+
+function SubmitCheckSecu()
+{
+    var secu = document.getElementById('secu');
+    if(!checkSecu()){
+        secu.value = '';
+    }
+}
     window.onload = function () {
         
         document.getElementById('togPwd').onchange = function () {

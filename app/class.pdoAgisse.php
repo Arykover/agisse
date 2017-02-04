@@ -1,4 +1,4 @@
-f
+
 ﻿<?php
 
 /**
@@ -64,7 +64,6 @@ class PdoAgisse {
 
         $log = htmlentities($login);
 //        $m = $this->hashMake($log, htmlentities($mdp));
-        echo $mdp;
         if($this->hashCheck($log, htmlentities($mdp)))
         {
         $req = PdoAgisse::$monPdo->prepare("select comptes.id, comptes.login, comptes.nom, comptes.prenom, comptes.type from comptes 
@@ -173,6 +172,20 @@ class PdoAgisse {
         $req->bindParam(3, $login);
         $req->execute();
     }
+    
+        /**
+     * Mets à jour les infos de la fiche
+     * @param $id,$civilite,$nomUsage,$communeNaiss,$deptNaiss,$dateNaiss,$dateNaiss,$discipline,$nation,$adresse,$CP,$adresseComp,$ville,$numSecu,$telephone,$centre,$commEtudiant,$commGestionnaire
+     */
+    public function updateFiche($id,$civilite,$nomUsage,$communeNaiss,$deptNaiss,$dateNaiss,$dateNaiss,$discipline,$nation,$adresse,$CP,$adresseComp,$ville,$numSecu,$telephone,$centre,$commEtudiant,$commGestionnaire) {
+        $cryptPwd = $this->hashMake($login, htmlentities($pwd));
+        $req = PdoAgisse::$monPdo->prepare("update fiches set pass = ? 
+                                            where id = ? and login = ?");
+        $req->bindParam(1, $cryptPwd);
+        $req->bindParam(2, $id);
+        $req->bindParam(3, $login);
+        $req->execute();
+    }
 
     /**
      * Verifie si un compte utilisant cet email existe deja
@@ -187,7 +200,33 @@ class PdoAgisse {
         return $tab;
     }
     
+        public function getDisciplines() {
+        $req = PdoAgisse::$monPdo->prepare("select * from discipline");
+        $req->execute();
+        $tab = $req->fetchAll();
+        return $tab;
+    }
     
+        public function getStatuts() {
+        $req = PdoAgisse::$monPdo->prepare("select * from statut");
+        $req->execute();
+        $tab = $req->fetchAll();
+        return $tab;
+    }
+    
+        public function getCentres() {
+        $req = PdoAgisse::$monPdo->prepare("select * from mutuelle");
+        $req->execute();
+        $tab = $req->fetchAll();
+        return $tab;
+    }
+    
+        public function getNationalites() {
+        $req = PdoAgisse::$monPdo->prepare("select * from nationalite");
+        $req->execute();
+        $tab = $req->fetchAll();
+        return $tab;
+    }
         public function getFiche($id) {
         $req = PdoAgisse::$monPdo->prepare("select * from fiches f 
                                            left join discipline d on f.discipline=d.id_discipline

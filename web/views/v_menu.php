@@ -16,7 +16,7 @@
                     </li>
                     <?php if(isset($_SESSION['type'])){ 
                         switch($_SESSION['type']){
-                            case 1: ?>
+                            case 'admin' : ?>
                     
                 <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion</a>
@@ -61,7 +61,7 @@
                     
                     <?php
                                 break;
-                            case 2:  ?>
+                            case 'GESTION':  ?>
                     
                 <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion</a>
@@ -84,7 +84,7 @@
                     
                     <?php
                                 break;
-                            case 3:  ?>
+                            case 'ELEVE':  ?>
                     
                     <li class="smenu">
                         <a href="Fiche" title="">Ma fiche</a>

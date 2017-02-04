@@ -106,7 +106,7 @@
 
 </br></br></br></br>
 
-<div class='container col-md-offset-2 col-md-10'>
+    <div class='container col-md-offset-2 col-md-10'>
         Etat de la fiche : 
       
             <?php if($_SESSION['type'] == '3' ){ 
@@ -115,17 +115,17 @@
                             <button class='btn-success col-md-2 col-md-offset-3'>Valider Fiche</button>
             <?php } else if($_SESSION['type'] == 'GESTIONNAIRE' ){ ?>
 
-    <form  id='EtatFicheForm' method='POST' action='/etatFiche' class='col-md-offset-1 col-md-10 col-md-offset-1'>
-    
-                        <SELECT name='etat'>
-                            <OPTION value=""> </OPTION>
-                        </SELECT>
-    </form>                    
-                       <?php } ?>
+            <form  id='EtatFicheForm' method='POST' action='/etatFiche' class='col-md-offset-1 col-md-10 col-md-offset-1'>
+
+                                <SELECT name='etat'>
+                                    <OPTION value=""> </OPTION>
+                                </SELECT>
+            </form>                    
+                               <?php } ?>
                            
 
-        <button class='btn-success col-md-2 col-md-offset-2'>Modifier Fiche</button>
+        <a href='modifFiche'><button class='btn-success col-md-2 col-md-offset-2'>Modifier Fiche</button></a>
         
 
-</div>
+    </div>
 </div>
