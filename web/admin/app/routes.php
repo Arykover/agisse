@@ -19,7 +19,7 @@ $app->match('/GestionRegimes', "AdministratorController::GestionRegimes")
         ->bind('GestionRegimes');
 $app->match('/GestionNationalite', "AdministratorController::GestionNationalite")
         ->bind('GestionNationalite');
-$app->match('/GestionEtablissement', "AdministratorController::GestionEtablissement")
+$app->match('/GestionEtablissement', "AdministratorController::manageSchool")
         ->bind('GestionEtablissement');
 $app->match('/Reboot', "AdministratorController::Reboot")
         ->bind('Reboot');
