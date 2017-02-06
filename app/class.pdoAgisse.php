@@ -177,14 +177,46 @@ class PdoAgisse {
      * Mets à jour les infos de la fiche
      * @param $id,$civilite,$nomUsage,$communeNaiss,$deptNaiss,$dateNaiss,$dateNaiss,$discipline,$nation,$adresse,$CP,$adresseComp,$ville,$numSecu,$telephone,$centre,$commEtudiant,$commGestionnaire
      */
-    public function updateFiche($id,$civilite,$nomUsage,$communeNaiss,$deptNaiss,$dateNaiss,$dateNaiss,$discipline,$nation,$adresse,$CP,$adresseComp,$ville,$numSecu,$telephone,$centre,$commEtudiant,$commGestionnaire) {
-        $cryptPwd = $this->hashMake($login, htmlentities($pwd));
-        $req = PdoAgisse::$monPdo->prepare("update fiches set pass = ? 
-                                            where id = ? and login = ?");
-        $req->bindParam(1, $cryptPwd);
-        $req->bindParam(2, $id);
-        $req->bindParam(3, $login);
-        $req->execute();
+    public function updateFiche($param,$id) {
+        
+        $sql = "update fiches set ";
+        $first = false;
+        
+        $input = array( ':id' => $id );
+        foreach($param as $key => $value ){        
+            if($first){
+                $sql = $sql.", ";
+            }       
+            $sql = $sql.$key."= :".$key." ";
+            $input[':' . $key] = $value;
+            $first = 'true';
+        }
+        
+        $sql = $sql."where id = :id ";
+        echo $sql;
+        var_dump($input);
+        $req = PdoAgisse::$monPdo->prepare($sql);
+        /*
+        $req->bindParam(1, $nomNaiss);
+        $req->bindParam(2, $adresse);
+        $req->bindParam(3, $adresseComp);
+        $req->bindParam(4, $ville);
+        $req->bindParam(5, $CP);
+        $req->bindParam(6, $dateNaiss);
+        $req->bindParam(7, $deptNaiss);
+        $req->bindParam(8, $communeNaiss);
+        $req->bindParam(9, $numSecu);
+        $req->bindParam(10, $telephone);
+        $req->bindParam(11, $commEtudiant);
+        $req->bindParam(12, $commGestionnaire);
+        $req->bindParam(13, $discipline);
+        $req->bindParam(14, $statut);
+        $req->bindParam(15, $nation);
+        $req->bindParam(16, $civilite);
+        $req->bindParam(17, $centre);
+        $req->bindParam(18, $id);
+         */
+        $req->execute($input) or die(print_r('error insert')) ;
     }
 
     /**
@@ -236,7 +268,7 @@ class PdoAgisse {
                                            left join mutuelle m on f.mutuelle = m.code_mutuelle
                                            where f.id = ?");
         $req->bindParam(1, $id);
-        $req->execute();
+        $req->execute() or die(print_r('error'));
         $tab = $req->fetch();
         return $tab;
     }

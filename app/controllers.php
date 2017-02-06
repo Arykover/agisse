@@ -52,7 +52,7 @@ class GuestController {
             $login = $Lname . "_" . $Fname[0] . $pdo->nbUser($Lname, $Fname[0]);
 
             // appel de la fonction d'insertion dans la base de données
-            $pdo->insertUser($login, $pwd, $Lname, $Fname, $mail, 3);
+            $pdo->insertUser($login, $pwd, $Lname, $Fname, $mail, 'ELEVE');
 
             return $app->redirect($app["url_generator"]->generate("homepage"));
         } else {
@@ -98,18 +98,16 @@ class GuestController {
 //********************************************Contrôleur eleve*****************//
 class StudentController {
 
-    private $id;
     private $pdo;
 
     public function init() {
-//        $_SESSION['id'] = $_SESSION['id'];
-//        $_SESSION['login'] = $_SESSION['login'];
         $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         require_once __DIR__ . '/../web/views/v_header.php';
         require_once __DIR__ . '/../web/views/v_menu.php';
     }
 
+    
     public function profile() {
         $this->init();
         $userInfo = $this->pdo->getUserProfile($_SESSION['id']);
@@ -123,7 +121,7 @@ class StudentController {
     
     public function Auth(Application $app) {
         // Verification des autorisations eleve
-        if (!isset($_SESSION['type']) || $_SESSION['type'] != 'ELEVE' || $_SESSION['type'] != 'ELEVE' ) {
+        if (!!empty($_SESSION['type']) || $_SESSION['type'] != 'ELEVE' || $_SESSION['type'] != 'ELEVE' ) {
                 $app['services']->logout($app);
                 echo "vous n'etes pas connecté";
                 ob_get_clean(); // récupère le contenu du flux et le vide
@@ -154,27 +152,49 @@ class StudentController {
     }
     
      public function sauvFiche(Application $app) {
+         
         $this->Auth($app);
         $this->init();
         $id = $_REQUEST['id'];
-        $civilite = $_REQUEST['civilite'];
-        $nomUsage = $_REQUEST['nomUsage'];
-        $communeNaiss = $_REQUEST['communeNaiss'];
-        $deptNaiss = $_REQUEST['deptNaiss'];
-        $dateNaiss = $_REQUEST['dateNaiss'];
-        $discipline = $_REQUEST['discipline'];
-        $nation = $_REQUEST['nation'];
-        $adresse = $_REQUEST['adresse'];
-        $CP = $_REQUEST['CP'];
-        $adresseComp = $_REQUEST['adresseComp'];
-        $ville = $_REQUEST['ville'];
-        $numSecu = $_REQUEST['numSecu'];
-        $telephone = $_REQUEST['telephone'];
-        $centre = $_REQUEST['centre'];
-        $commEtudiant = $_REQUEST['commEtudiant'];
-        $commGestionnaire = $_REQUEST['commGestionnaire'];
         
-        $this->pdo->updateFiche($id,$civilite,$nomUsage,$communeNaiss,$deptNaiss,$dateNaiss,$dateNaiss,$discipline,$nation,$adresse,$CP,$adresseComp,$ville,$numSecu,$telephone,$centre,$commEtudiant,$commGestionnaire);
+        
+        
+        if(!empty($_REQUEST['civilite'])){$param['civilite'] = htmlentities($_REQUEST['civilite']);}
+
+        if(!empty($_REQUEST['nomNaiss'])){$param['nom_naiss'] = htmlentities($_REQUEST['nomNaiss']);}
+
+        if(!empty($_REQUEST['communeNaiss'])){$param['commune_naiss'] = htmlentities($_REQUEST['communeNaiss']);}
+
+        if(!empty($_REQUEST['deptNaiss'])){$param['dept_naiss'] = htmlentities($_REQUEST['deptNaiss']);}
+        
+        if(!empty($_REQUEST['dateNaiss'])){$param['date_naiss'] = htmlentities($_REQUEST['dateNaiss']);}
+
+        if(!empty($_REQUEST['discipline'])){$param['discipline'] = htmlentities($_REQUEST['discipline']);}
+
+        if(!empty($_REQUEST['nation'])){$param['nationalite'] = htmlentities($_REQUEST['nation']);}
+
+        if(!empty($_REQUEST['adresse'])){$param['adresse'] = htmlentities($_REQUEST['adresse']);}
+
+        if(!empty($_REQUEST['CP'])){$param['cp'] = htmlentities($_REQUEST['CP']);}
+
+        if(!empty($_REQUEST['adresseComp'])){$param['comp_adresse'] = htmlentities($_REQUEST['adresseComp']);}
+
+        if(!empty($_REQUEST['ville'])){$param['ville'] = htmlentities($_REQUEST['ville']);}
+
+        if(!empty($_REQUEST['numSecu'])){$param['num_secu'] = htmlentities($_REQUEST['numSecu']);}
+ 
+        if(!empty($_REQUEST['telephone'])){$param['telephone'] = htmlentities($_REQUEST['telephone']);}
+
+        if(!empty($_REQUEST['centre'])){$param['mutuelle'] = htmlentities($_REQUEST['centre']);}
+
+        if(!empty($_REQUEST['statut'])){$param['statut'] = htmlentities($_REQUEST['statut']);}
+
+        if(!empty($_REQUEST['commEtudiant'])){$param['observations_eleve'] = htmlentities($_REQUEST['commEtudiant']);}
+
+        if(!empty($_REQUEST['commGestionnaire'])){$param['observations_gest'] = htmlentities($_REQUEST['commGestionnaire']);}
+
+
+        $this->pdo->updateFiche($param,$id);
        
         
 
@@ -222,13 +242,13 @@ class StudentController {
             $pdo->updateUserNames($_SESSION['id'], $lName, $fName);
             //verifier que le checkbox pour modifier le mail est coché,
             //si c'est le cas, mettre à jour le nouveau mail entré
-            if (isset($_REQUEST['togMail'])) {
+            if (!empty($_REQUEST['togMail'])) {
                 $mail = $_REQUEST['mail'];
                 $pdo->updateUserMail($_SESSION['id'], $mail);
             }
             //verifier que le checkbox pour modifier le mot de passe est coché, 
             //si c'est le cas, mettre à jour le nouveau mail entré
-            if (isset($_REQUEST['togPwd'])) {
+            if (!empty($_REQUEST['togPwd'])) {
                 $pwdNew = $_REQUEST['password'];
                 $pdo->updateUserPwd($_SESSION['id'], $_SESSION['login'], $pwdNew);
             }

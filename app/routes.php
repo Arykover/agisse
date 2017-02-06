@@ -36,6 +36,8 @@ $app->match('/Fiche', "StudentController::Fiche")
         ->bind('Fiche');
 $app->match('/modifFiche', "StudentController::modifFiche")
         ->bind('modifFiche');
+$app->match('/sauvFiche', "StudentController::sauvFiche")
+        ->bind('sauvFiche');
 
 
 

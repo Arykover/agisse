@@ -1,5 +1,5 @@
 <div class='container'>
-    <form  id='ModifFicheForm' method='POST' action='/sauvFiche' >
+    <form  id='ModifFicheForm' method='POST' action='sauvFiche' >
         
         <div class='container col-md-offset-2 col-md-8'>
             <table class='table table-condensed'>
@@ -26,7 +26,7 @@
 
                 <tr>
                     <td>Nom de naissance : (si different)</td>
-                    <td> <input name="nomUsage" type='text'   value='<?php if(!empty($fiche['nom_naiss'])){echo($fiche['nom_naiss']);}; ?>'></td>
+                    <td> <input name="nomnNaiss" type='text'   value='<?php if(!empty($fiche['nom_naiss'])){echo($fiche['nom_naiss']);}; ?>'></td>
                 </tr>
 
                 <tr>
@@ -104,7 +104,7 @@
 
             <table class='table table-condensed'>
                 <tr>
-                    <th>Affiliation au régime étudiant de Sécurité Sociale : <?php echo $_SESSION['type'] ?></th>
+                    <th>Affiliation au régime étudiant de Sécurité Sociale : </th>
                 </tr>
                 <tr>
                     <td>Centre payeur :</td>
