@@ -175,26 +175,26 @@ class PdoAgisse {
     
         /**
      * Mets à jour les infos de la fiche
-     * @param $id,$civilite,$nomUsage,$communeNaiss,$deptNaiss,$dateNaiss,$dateNaiss,$discipline,$nation,$adresse,$CP,$adresseComp,$ville,$numSecu,$telephone,$centre,$commEtudiant,$commGestionnaire
+     * @param $param (tableau de parametres)
      */
     public function updateFiche($param,$id) {
         
-        $sql = "update fiches set ";
+        $sql = "update fiches set "; //initialisation de la requete
         $first = false;
         
-        $input = array( ':id' => $id );
-        foreach($param as $key => $value ){        
-            if($first){
+        $input = array( ':id' => $id ); //initialisation du tableau de parametres à bind pdo
+        
+        foreach($param as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
+            
+            if($first){                            // pour le premier champ, ne pas mettre de virgule
                 $sql = $sql.", ";
             }       
             $sql = $sql.$key."= :".$key." ";
-            $input[':' . $key] = $value;
+            $input[':' . $key] = $value;           // ajout du parametre a bind
             $first = 'true';
         }
         
-        $sql = $sql."where id = :id ";
-        echo $sql;
-        var_dump($input);
+        $sql = $sql."where id = :id ";            // cloture requete
         $req = PdoAgisse::$monPdo->prepare($sql);
         /*
         $req->bindParam(1, $nomNaiss);

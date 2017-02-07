@@ -1,5 +1,6 @@
 // fonction interdisant les couper/copier/coller dans les champs de confirmation
 
+
 $(document).ready(function(){
       $('#pwdConfirmation').bind("cut copy paste",function(e) {
           e.preventDefault();
@@ -78,28 +79,31 @@ function checkMail()
 }
 
 //fonction de conformite du numero de securite sociale avec l'annee de naissance
-
 function checkSecu()
 {
     var secu = document.getElementById('secu');
-    var dateN = document.getElementById('dateNaiss');
-    var message = document.getElementById('confirmMessageMail');
-    secu = secu.text.substring(1,3);
-    // dateN =  dateN.Value.parse
-    alert(dateN.value.parse);
+    var date = document.getElementById('dateNaiss');
+    var message = document.getElementById('confirmMessageSecu');
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
     var result = false;
-
-            if(secu == date){
-                message.style.color = goodColor;
-                message.innerHTML = "Numero de securite sociale conforme a la date de naissance";
-                result = true;
-            }else{
-                message.style.color = badColor;
-                message.innerHTML = "Numero de securite sociale non conforme a la date de naissance";
-            }
     
+        if(secu.value.length == 15){
+            if(secu.value.substring(1,3) == date.value.substring(2,4)){
+                message.style.color = goodColor;
+                message.innerHTML = "Conforme a la date de naissance";
+                result = true;
+            }
+            else{
+                message.style.color = badColor;
+                message.innerHTML = "Non conforme a la date de naissance";
+                result = false;
+            }
+        }
+        else{
+            message.innerHTML = " ";
+            result = false;
+        }
             return result;
 }
 

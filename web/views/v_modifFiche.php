@@ -26,12 +26,12 @@
 
                 <tr>
                     <td>Nom de naissance : (si different)</td>
-                    <td> <input name="nomnNaiss" type='text'   value='<?php if(!empty($fiche['nom_naiss'])){echo($fiche['nom_naiss']);}; ?>'></td>
+                    <td> <input name="nomNaiss" type='text'   value='<?php if(!empty($fiche['nom_naiss'])){echo($fiche['nom_naiss']);}; ?>'></td>
                 </tr>
 
                 <tr>
                     <td td>Commune de naissance :</td>
-                    <td> <input name="communeNaiss" type='text'   value='<?php if(!empty($fiche['commune_naissance'])){echo($fiche['commune_naissance']);}; ?>'></td>
+                    <td> <input name="communeNaiss" type='text'   value='<?php if(!empty($fiche['commune_naiss'])){echo($fiche['commune_naiss']);}; ?>'></td>
                 </tr>
 
                 <tr>
@@ -41,7 +41,7 @@
 
                 <tr>
                     <td>Date de naissance :  </td>  <!-- date de naissance avec un maximum 10 ans plus tot qu'aujourdhui -->
-                <td> <input name="dateNaiss" id='dateNaiss' type='date' max="<?php echo(date('Y-m-d',mktime(0, 0, 0, date("m"), date("d"),date("Y")-10))); ?>"    value='<?php  if(!empty($fiche['date_naiss'])){$fiche['date_naiss'];}; ?>'></td>
+                <td> <input name="dateNaiss" onchange="checkSecu();" id='dateNaiss' type='date' max="<?php echo(date('Y-m-d',mktime(0, 0, 0, date("m"), date("d"),date("Y")-10))); ?>"    value='<?php  if(!empty($fiche['date_naiss'])){echo($fiche['date_naiss']);}; ?>'></td>
                 </tr>
 
                 <tr>
@@ -88,11 +88,11 @@
 
                 <tr>
                     <td>Numero de securité sociale :</td>
-                    <td><input onkeyup="checkSecu(); return false;" id='secu' name="numSecu" type='text' maxlength="15" value='<?php if(!empty($fiche['num_secu'])){echo($fiche['num_secu']);} ?>'></td>
+                    <td><input oninput="checkSecu();" id='secu' name="numSecu" type='text' maxlength="15" value='<?php if(!empty($fiche['num_secu'])){echo($fiche['num_secu']);} ?>'></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><span id="confirmMessageSecu" class="confirmMessageSecu"></span></td>
+                    <td><span id="confirmMessageSecu" class="confirmMessageSecu"> </span></td>
                 </tr>
                 <tr>
                     <td>Telephone :</td>

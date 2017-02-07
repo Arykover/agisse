@@ -3,11 +3,12 @@
 <table class='table table-condensed col-md-offset-1 col-md-9 col-md-offset-2'>
     <tr>
         <th >Votre identité :</th>
+        <td width='70%'><?php if(!empty($fiche['civilite'])){echo($fiche['civilite']);}; ?></td>
     </tr>
     
     <tr>
         <td width='25%'>Prenom : </td>
-        <td width='70%'><?php if(!empty($fiche['civilite'])){echo($civilite);}; ?> <?php echo($_SESSION['prenom']); ?></td>
+        <td width='70%'><?php echo($_SESSION['prenom']); ?></td>
     </tr>
     
     <tr>
@@ -22,7 +23,7 @@
     
     <tr>
         <td class='col-md-4'td>Commune de naissance :</td>
-        <td ><?php if(!empty($fiche['commune_naissance'])){echo($fiche['commune_naissance']);}; ?></td>
+        <td ><?php if(!empty($fiche['commune_naiss'])){echo($fiche['commune_naiss']);}; ?></td>
     </tr>
     
     <tr>
@@ -32,7 +33,7 @@
     
     <tr>
         <td class='col-md-4'>Date de naissance : </td>
-        <td ><?php if(!empty($fiche['date_naiss'])){$fiche['date_naiss'];}; ?></td>
+        <td ><?php if(!empty($fiche['date_naiss'])){echo(substr($fiche['date_naiss'],-2)."/".substr($fiche['date_naiss'],-5,2)."/".substr($fiche['date_naiss'],0,4));}; ?></td>
     </tr>
     
     <tr>
@@ -42,7 +43,7 @@
     
     <tr>
         <td class='col-md-4'>Nationalité :</td>
-        <td ><?php if(!empty($fiche['nationalite'])){echo($nationalite);}; ?></td>
+        <td ><?php if(!empty($fiche['nationalite'])){echo($fiche['libelle_nationalite']);}; ?></td>
     </tr>
     
     <tr>
