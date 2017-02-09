@@ -2,7 +2,7 @@
     <form  id='ModifFicheForm' method='POST' action='sauvFiche' >
         
         <div class='container col-md-offset-2 col-md-8'>
-            <table class='table table-condensed'>
+            <table class='table table-bordered table-condensed table-responsive'>
                 <tr>
                     <th >Votre identité :</th>
                 </tr>
@@ -100,9 +100,10 @@
                 </tr>
 
             </table>
-        
+            
+            </br></br>
 
-            <table class='table table-condensed'>
+            <table class='table table-bordered table-condensed table-responsive'>
                 <tr>
                     <th>Affiliation au régime étudiant de Sécurité Sociale : </th>
                 </tr>
@@ -127,8 +128,10 @@
                     </td>
                 </tr>
             </table>
-
-            <table class='table table-condensed'>
+            
+            </br></br>
+            
+            <table class='table table-bordered table-condensed table-responsive'>
                 <tr>
                     <th class='col-md-offset-1'>Commentaires : </th>
                 </tr>
@@ -136,13 +139,13 @@
                     <td>Commentaire etudiant : </td>
                 </tr>
                 <tr>
-                    <td> <textarea name="commEtudiant" maxlength="250" cols="75" rows="4" <?php if($_SESSION['type'] != 'ELEVE'){ ?>disabled<?php } ?> > <?php if(!empty($fiche['observations_eleve'])){echo($fiche['observations_eleve']);} ?></textarea></td>
+                    <td> <textarea name="commEtudiant" maxlength="250" cols="75" rows="4" <?php if($_SESSION['type'] != 'ELEVE'){ ?>disabled<?php } ?> ><?php if(!empty($fiche['observations_eleve'])){echo($fiche['observations_eleve']);} ?></textarea></td>
                 </tr>
                 <tr>
                     <td>Commentaire gestionnaire : </td>
                 </tr>
                 <tr>
-                    <td> <textarea name="commGestionnaire" maxlength="250" cols="75" rows="4" <?php if($_SESSION['type'] != 'GESTION'){ ?>disabled<?php } ?> > <?php if(!empty($fiche['observations_gest'])){echo($fiche['observations_gest']);} ?></textarea></td>
+                    <td> <textarea name="commGestionnaire" maxlength="250" cols="75" rows="4" <?php if($_SESSION['type'] != 'GESTION'){ ?>disabled<?php } ?> ><?php if(!empty($fiche['observations_gest'])){echo($fiche['observations_gest']);} ?></textarea></td>
                 </tr>
             </table>
             

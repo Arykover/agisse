@@ -239,6 +239,13 @@ class PdoAgisse {
         return $tab;
     }
     
+            public function getEtats() {
+        $req = PdoAgisse::$monPdo->prepare("select * from etat");
+        $req->execute();
+        $tab = $req->fetchAll();
+        return $tab;
+    }
+    
         public function getStatuts() {
         $req = PdoAgisse::$monPdo->prepare("select * from statut");
         $req->execute();
@@ -260,7 +267,8 @@ class PdoAgisse {
         return $tab;
     }
         public function getFiche($id) {
-        $req = PdoAgisse::$monPdo->prepare("select * from fiches f 
+        $req = PdoAgisse::$monPdo->prepare("select * from fiches f
+                                           left join comptes c on f.id = c.id 
                                            left join discipline d on f.discipline=d.id_discipline
                                            left join etat e on f.etat=e.code_etat
                                            left join statut s on f.statut = s.id_statut

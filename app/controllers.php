@@ -142,10 +142,36 @@ class StudentController {
         }
         $pdo = PdoAgisse::getPdoAgisse();
         $fiche = $this->pdo->getFiche($id);
+        $etat = $this->pdo->getEtats();
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
         //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
         require_once __DIR__ . '/../web/views/v_fiche.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
+    
+     public function MailFiche(Application $app) {
+        $this->Auth($app);
+        $this->pdo = PdoAgisse::getPdoAgisse();
+        ob_start();
+        if($_SESSION['type'] == 'ELEVE'){
+            $id = $_SESSION['id'];
+        }
+        else{
+            $id = $_REQUEST['id'];
+        }
+        $fiche = $this->pdo->getFiche($id);
+        //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
+        //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
+        //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
+        require_once __DIR__ . '/../web/views/v_editerFiche.php';
+        $content = ob_get_clean(); 
+        require_once('../lib/html2pdf-4.5.1/html2pdf.class.php'); 
+        $pdf = new HTML2PDF('P','A4','fr', false, 'ISO-8859-15', array(mL, mT, mR, mB)); 
+        $pdf->writeHTML($content); 
+        $pdf->Output();
         require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -167,7 +193,17 @@ class StudentController {
 
         if(!empty($_REQUEST['deptNaiss'])){$param['dept_naiss'] = htmlentities($_REQUEST['deptNaiss']);}
         
-        if(!empty($_REQUEST['dateNaiss'])){$param['date_naiss'] = htmlentities($_REQUEST['dateNaiss']);}
+        if(!empty($_REQUEST['dateNaiss'])){$param['date_naiss'] = htmlentities($_REQUEST['dateNaiss']);
+            if(!empty($_REQUEST['numSecu'])){
+                
+                // controle php du numero de secu avec la date de naissance
+                
+                if(substr($_REQUEST['numSecu'],1,2) == substr($_REQUEST['dateNaiss'],2,2)){
+                     $param['num_secu'] = htmlentities($_REQUEST['numSecu']);
+                }
+                else{die();}
+            }
+        }
 
         if(!empty($_REQUEST['discipline'])){$param['discipline'] = htmlentities($_REQUEST['discipline']);}
 
@@ -180,8 +216,6 @@ class StudentController {
         if(!empty($_REQUEST['adresseComp'])){$param['comp_adresse'] = htmlentities($_REQUEST['adresseComp']);}
 
         if(!empty($_REQUEST['ville'])){$param['ville'] = htmlentities($_REQUEST['ville']);}
-
-        if(!empty($_REQUEST['numSecu'])){$param['num_secu'] = htmlentities($_REQUEST['numSecu']);}
  
         if(!empty($_REQUEST['telephone'])){$param['telephone'] = htmlentities($_REQUEST['telephone']);}
 
