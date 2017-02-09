@@ -1,5 +1,7 @@
 {
     "require": {
-        "silex/silex": "~2.0"
+        "silex/silex": "~2.0",
+        "spipu/html2pdf": "dev-master",
+        "ensepar/html2pdf": "dev-master"
     }
 }

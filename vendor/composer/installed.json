@@ -37,7 +37,7 @@
             "symfony/http-foundation": "For using a Symfony Request object",
             "symfony/yaml": "For using the YAML loader"
         },
-        "time": "2017-01-02 20:32:22",
+        "time": "2017-01-02T20:32:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -94,7 +94,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2016-10-10 12:19:37",
+        "time": "2016-10-10T12:19:37+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -151,7 +151,7 @@
             "symfony/class-loader": "~2.8|~3.0",
             "symfony/http-kernel": "~2.8|~3.0"
         },
-        "time": "2017-01-02 20:32:22",
+        "time": "2017-01-02T20:32:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -205,7 +205,7 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2016-11-14 01:06:16",
+        "time": "2016-11-14T01:06:16+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -267,7 +267,7 @@
         "require-dev": {
             "symfony/expression-language": "~2.8|~3.0"
         },
-        "time": "2017-01-08 20:47:33",
+        "time": "2017-01-08T20:47:33+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -329,7 +329,7 @@
             "symfony/dependency-injection": "",
             "symfony/http-kernel": ""
         },
-        "time": "2017-01-02 20:32:22",
+        "time": "2017-01-02T20:32:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -413,7 +413,7 @@
             "symfony/finder": "",
             "symfony/var-dumper": ""
         },
-        "time": "2017-01-12 21:36:33",
+        "time": "2017-01-12T21:36:33+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -464,7 +464,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2015-09-11 15:10:35",
+        "time": "2015-09-11T15:10:35+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -548,7 +548,7 @@
             "symfony/var-dumper": "~2.8|^3.0",
             "twig/twig": "~1.27|~2.0"
         },
-        "time": "2016-11-06 18:09:06",
+        "time": "2016-11-06T18:09:06+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -580,5 +580,177 @@
         "keywords": [
             "microframework"
         ]
+    },
+    {
+        "name": "tecnickcom/tcpdf",
+        "version": "6.2.12",
+        "version_normalized": "6.2.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tecnickcom/TCPDF.git",
+            "reference": "2f732eaa91b5665274689b1d40b285a7bacdc37f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/2f732eaa91b5665274689b1d40b285a7bacdc37f",
+            "reference": "2f732eaa91b5665274689b1d40b285a7bacdc37f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2015-09-12T10:08:34+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "fonts",
+                "config",
+                "include",
+                "tcpdf.php",
+                "tcpdf_parser.php",
+                "tcpdf_import.php",
+                "tcpdf_barcodes_1d.php",
+                "tcpdf_barcodes_2d.php",
+                "include/tcpdf_colors.php",
+                "include/tcpdf_filters.php",
+                "include/tcpdf_font_data.php",
+                "include/tcpdf_fonts.php",
+                "include/tcpdf_images.php",
+                "include/tcpdf_static.php",
+                "include/barcodes/datamatrix.php",
+                "include/barcodes/pdf417.php",
+                "include/barcodes/qrcode.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPLv3"
+        ],
+        "authors": [
+            {
+                "name": "Nicola Asuni",
+                "email": "info@tecnick.com",
+                "homepage": "http://nicolaasuni.tecnick.com"
+            }
+        ],
+        "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
+        "homepage": "http://www.tcpdf.org/",
+        "keywords": [
+            "PDFD32000-2008",
+            "TCPDF",
+            "barcodes",
+            "datamatrix",
+            "pdf",
+            "pdf417",
+            "qrcode"
+        ]
+    },
+    {
+        "name": "spipu/html2pdf",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spipu/html2pdf.git",
+            "reference": "6993d67097b77769f916ba7c0b3a27a064307426"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spipu/html2pdf/zipball/6993d67097b77769f916ba7c0b3a27a064307426",
+            "reference": "6993d67097b77769f916ba7c0b3a27a064307426",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2",
+            "tecnickcom/tcpdf": "~6.2.0"
+        },
+        "require-dev": {
+            "phake/phake": "~2.0",
+            "phpunit/phpunit": ">=4.5.0",
+            "squizlabs/php_codesniffer": "~2"
+        },
+        "suggest": {
+            "ext-gd": "Allows to embed images into the PDF",
+            "fagundes/zff-html2pdf": "if you need to integrate Html2Pdf with Zend Framework 2 (zf2)"
+        },
+        "time": "2016-05-18T09:14:51+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Spipu\\Html2Pdf\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Spipu",
+                "homepage": "https://github.com/spipu",
+                "role": "Developer"
+            }
+        ],
+        "description": "Html2Pdf is a HTML to PDF converter written in PHP5 (it uses TCPDF). OFFICIAL PACKAGE",
+        "homepage": "http://html2pdf.fr/",
+        "keywords": [
+            "html",
+            "html2pdf",
+            "pdf"
+        ]
+    },
+    {
+        "name": "ensepar/html2pdf",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/OwlyCode/html2pdf.git",
+            "reference": "ea8a080f9d910aec194049bddd2d5287c1234424"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/OwlyCode/html2pdf/zipball/ea8a080f9d910aec194049bddd2d5287c1234424",
+            "reference": "ea8a080f9d910aec194049bddd2d5287c1234424",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2",
+            "tecnickcom/tcpdf": "~6.2"
+        },
+        "time": "2015-11-10T12:08:45+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "HTML2PDF": "."
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Spipu",
+                "homepage": "http://sourceforge.net/users/spipu",
+                "role": "Developer"
+            },
+            {
+                "name": "OwlyCode",
+                "homepage": "http://www.github.com/OwlyCode",
+                "role": "Developer"
+            }
+        ],
+        "description": "Unofficial fork of 'html2pdf' with Composer support. (Fixed composer dependency problem)",
+        "homepage": "https://github.com/jwronsky/html2pdf",
+        "keywords": [
+            "html",
+            "html2pdf",
+            "pdf"
+        ],
+        "abandoned": "spipu/html2pdf"
     }
 ]

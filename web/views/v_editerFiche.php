@@ -8,7 +8,7 @@ table{
    border-radius: 15px 50px;
 }    
 table, th {
-   border: 1px solid black;
+   border: solid 1mm #000000;
 }
 
 td, th {
