@@ -167,14 +167,33 @@ class StudentController {
         //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
         require_once __DIR__ . '/../web/views/v_editerFiche.php';
-        $content = ob_get_clean(); 
-        require_once('../lib/html2pdf-4.5.1/html2pdf.class.php'); 
-        $pdf = new HTML2PDF('P','A4','fr', false, 'ISO-8859-15', array(mL, mT, mR, mB)); 
+        $content = ob_get_clean();
+        ob_end_clean();
+        $pdf = new HTML2PDF('P','A4','fr', false, 'ISO-8859-15',array(15, 5, 15, 5)); 
         $pdf->writeHTML($content); 
-        $pdf->Output();
-        require_once __DIR__ . '/../web/views/v_footer.php';
-        $view = ob_get_clean(); // récupère le contenu du flux et le vide
-        return $view;     // retourne le flux 
+      
+$transport = Swift_MailTransport::newInstance();
+$mailer = Swift_Mailer::newInstance($transport);
+        
+        // Create the message
+$message = Swift_Message::newInstance()
+// Give the message a subject
+->setSubject('Fiche')
+// Set the From address with an associative array
+->setFrom(array('agisse@noreply.com' => 'agisse'))
+// Set the To addresses with an associative array
+->setTo(array('arky@yopmail.com' => 'arky'))
+// Give it a body
+->setBody('Fiche en pdf')
+// And optionally an alternative body
+->addPart('<q>Here is the message itself</q>', 'text/html')
+// Optionally add any attachments
+->attach(Swift_Attachment::newInstance($pdf->Output('Fiche.pdf'), 'LAFICHE.pdf', 'application/pdf'));
+
+        $mailer->send($message);
+      // $pdf->Output('Fiche.pdf');
+        
+         return $app->redirect($app["url_generator"]->generate("Fiche"));
     }
     
      public function sauvFiche(Application $app) {
@@ -343,3 +362,5 @@ class AdministratorController {
     }
 
 }
+
+?>

@@ -1,22 +1,25 @@
 <style>
     
 table{
-   margin-left : 10%;
-   margin-right : 10%;
-   padding : 0px 0px 0px 0px;
-   width: 80%;
-   border-radius: 15px 50px;
-}    
-table, th {
-   border: solid 1mm #000000;
+   margin-left : 1%;
+   margin-right : 1%;
+   margin-bottom: 20px;
+   padding : 30px 30px 30px 30px;
+   width: 200mm;
+   border-radius: 15px;
+   border: solid 2px #000000;
+}
+td, th{
+    padding :  0px 3px 5px 3px;
+}
+th{
+    height: 40px;
+}
+td{
+    height: 20px;
 }
 
-td, th {
-    height: 30px;
-    padding : 10px 80px 10px 80px;
-}
-</style>
-<?php
+</style><?php
  $civilite = $fiche['civilite'];
  $prenom = $fiche['prenom'];
  $nom = $fiche['nom'];
@@ -38,111 +41,108 @@ td, th {
  $observations_eleve  = $fiche['observations_gest'];
  $observations_gest = $fiche['prenom'];
         
-$tableEdit ="
-    <table>
+?>
+    <table  style="border: solid 1px #440000; width: 90%;"    cellspacing="0">
         <tr>
             <th COLSPAN='2'>Votre identité :</th>
         </tr>
 
         <tr>
-            <td>Civilité : </td>
-            <td>".$civilite."</td>
+            <td style="width: 50%">Civilité : </td>
+            <td style="width: 50%"><?php echo($civilite); ?></td>
         </tr>
 
         <tr>
-            <td>Prenom : </td>
-            <td>".$prenom."</td>
+            <td style="width: 50%">Prenom : </td>
+            <td style="width: 50%"><?php echo($prenom); ?></td>
         </tr>
 
         <tr>
-            <td>Nom :</td>
-            <td >".$nom."</td>
+            <td style="width: 50%">Nom :</td>
+            <td ><?php echo($nom); ?></td>
         </tr>
 
         <tr>
-            <td>Nom de naissance : (si different)</td>
-            <td >".$nom_naiss."</td>
+            <td style="width: 50%">Nom de naissance : (si different)</td>
+            <td ><?php echo($nom_naiss); ?></td>
         </tr>
 
         <tr>
-            <td>Lieu de naissance :</td>
-            <td >".$commune_naiss." ".$dept_naiss."</td>
+            <td style="width: 50%">Lieu de naissance :</td>
+            <td ><?php echo($commune_naiss); ?> <?php echo($dept_naiss); ?></td>
         </tr>
 
         <tr>
-            <td>Date de naissance : </td>
-            <td >".substr($date_naiss,-2)."/".substr($date_naiss,-5,2)."/".substr($date_naiss,0,4)."</td>
+            <td style="width: 50%">Date de naissance : </td>
+            <td ><?php echo(substr($date_naiss,-2)); ?>/<?php echo(substr($date_naiss,-5,2)); ?>/<?php echo(substr($date_naiss,0,4)); ?></td>
         </tr>
 
         <tr>
-            <td>Discipline : </td>
-            <td >".$libelle_discipline."</td>
+            <td style="width: 50%">Discipline : </td>
+            <td ><?php echo($libelle_discipline); ?></td>
         </tr>
 
         <tr>
-            <td>Nationalité :</td>
-            <td >".$libelle_nationalite."</td>
+            <td style="width: 50%">Nationalité :</td>
+            <td ><?php echo($libelle_nationalite); ?></td>
         </tr>
 
         <tr>
-            <td>Adresse : </td>
-            <td >".$adresse."</td>
+            <td style="width: 50%">Adresse : </td>
+            <td ><?php echo($adresse); ?></td>
         </tr>
 
         <tr>
-            <td>Complement adresse : </td>
-            <td >".$comp_adresse."</td>
+            <td style="width: 50%">Complement adresse : </td>
+            <td ><?php echo($comp_adresse); ?></td>
         </tr>
 
         <tr>
-            <td>Code postal :</td>
-            <td >".$cp."</td>
+            <td style="width: 50%">Code postal :</td>
+            <td ><?php echo($cp); ?></td>
         </tr>
 
         <tr>
-            <td>Ville :</td>
-            <td >".$ville."</td>
+            <td style="width: 50%">Ville :</td>
+            <td ><?php echo($ville); ?></td>
         </tr>
 
         <tr>
-            <td>Numero de securité sociale :</td>
-            <td >".$num_secu."</td>
+            <td style="width: 50%">Numero de securité sociale :</td>
+            <td ><?php echo($num_secu); ?></td>
         </tr>
         <tr>
-            <td>Telephone :</td>
-            <td >".$telephone."</td>
+            <td style="width: 50%">Telephone :</td>
+            <td ><?php echo($telephone); ?></td>
         </tr>
 
     </table>
-</br> 
-    <table>
+
+    <table  style="border: solid 1px #440000; width: 90%;"    cellspacing="0">
         <tr>
             <th COLSPAN='2'>Votre Affiliation au régime étudiant de Sécurité Sociale :</th>
         </tr>
         <tr>
-            <td>Centre payeur :</td>
-            <td>".$mutuelle."</td>
+            <td style="width: 50%">Centre payeur :</td>
+            <td style="width: 50%"><?php echo($mutuelle); ?></td>
         </tr>
         <tr>
-            <td>Statut :</td>
-            <td>".$libelle_statut."</td>
+            <td style="width: 50%">Statut :</td>
+            <td style="width: 50%"><?php echo($libelle_statut); ?></td>
         </tr>
     </table>
-</br>
-    <table>
-        <tr>
-            <th COLSPAN='2'>Commentaire etudiant : </th>
-        </tr>
-        <tr>
-            <td COLSPAN='2'>".$observations_eleve."</td>
-        </tr>
-        <tr>
-            <th COLSPAN='2'>Commentaire gestionnaire : </th>
-        </tr>
-        <tr>
-            <td COLSPAN='2'>".$observations_gest."</td>
-        </tr>
-    </table>";
 
-echo $tableEdit;
-?>
+    <table  style="border: solid 1px #440000; width: 90%;"    cellspacing="0">
+        <tr>
+            <th>Commentaire etudiant : </th>
+        </tr>
+        <tr>
+            <td style="width: 100%"><?php echo($observations_eleve); ?></td>
+        </tr>
+        <tr>
+            <th>Commentaire gestionnaire : </th>
+        </tr>
+        <tr>
+            <td style="width: 100%"><?php echo($observations_gest); ?></td>
+        </tr>
+    </table>

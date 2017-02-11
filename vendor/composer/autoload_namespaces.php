@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'HTML2PDF' => array($vendorDir . '/ensepar/html2pdf'),
+    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
 );

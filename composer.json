@@ -2,6 +2,7 @@
     "require": {
         "silex/silex": "~2.0",
         "spipu/html2pdf": "dev-master",
-        "ensepar/html2pdf": "dev-master"
+        "ensepar/html2pdf": "dev-master",
+        "swiftmailer/swiftmailer": "dev-master"
     }
 }
