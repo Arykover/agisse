@@ -1,4 +1,5 @@
     <div class ="container" id ="dataTable">
+        <?php echo $sTable ?>
 <table cellpadding="1" cellspacing="1" id="users" class="table table-striped table-bordered dataTable no-footer" width="100%">
 <thead>
     <tr id="colName"> 

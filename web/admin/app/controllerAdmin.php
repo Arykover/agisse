@@ -8,11 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 //********************************************Contrôleur Super User*****************//
 class AdministratorController {
 
+    private $pdo;
+    private $sTable;
+    private $data;
+    private $columnsName;
+    
     public function __construct() {
         ob_start();             // démarre le flux de sortie
         require_once __DIR__ . '/../views/v_header.php';
         require_once __DIR__ . '/../views/v_menu.php';
-        $pdo = PdoAgisse::getPdoAgisse();
+        $this->pdo = PdoAgisse::getPdoAgisse();
     }
     
     public function home()
@@ -30,7 +35,12 @@ class AdministratorController {
     
     public function manageSchool()
     {
-        //require_once __DIR__.'/../vues/v_connexion.php';
+        $this->sTable = 'info_etablissmeent';
+        $sTable = $this->sTable;
+        $this->data = $this->pdo->getDataEtablissements();
+        $this->formDatatable();
+        $columnsName = $this->columnsName;
+//        var_dump($columnsName);
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -44,6 +54,11 @@ class AdministratorController {
         require_once __DIR__ . '/../views/v_logOut.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
+    }
+    public function formDatatable()
+    {
+        $this->columnsName = $this->pdo->getColumnsName($this->sTable);
+        require_once __DIR__ . '/../views/v_formEditDatatable.php';
     }
 }
 ?>

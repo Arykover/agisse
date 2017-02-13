@@ -2,35 +2,11 @@
                    
 $(document).ready(function () {
     
-   var table = $('#table_data').DataTable({
-//        "columns": [
-//            {"data": "id"},
-//            {"data": "denomination"},
-//            {"data": "caisse_prim"},
-//            {"data": "n_agrement"},
-//            {"data": "annee_scolaire"},
-//            {"data": "code_grand_regime"}
-//        ],
-//        "bProcessing": true,
-//        "bServerSide": true,
-//        "sServerMethod": "GET",
-//        "sAjaxSource": "controllerDatatable/getTable",
-//        "ajax": {
-//            url: 'controllerDatatable.php',
-//            type: 'POST'
-//        },
-                "bProcessing": true,
-	        "bServerSide": true,
-	        "sServerMethod": "GET",
-	        "sAjaxSource": "controllerAdmin/getTable",
-	        "iDisplayLength": 10,
-	        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-	        "aaSorting": [[0, 'asc']],
-	        "aoColumns": [
-			{ "bVisible": true, "bSearchable": true, "bSortable": true },
-			{ "bVisible": true, "bSearchable": true, "bSortable": true },
-			{ "bVisible": true, "bSearchable": true, "bSortable": true }
-                ],
+   var table = $('#users').DataTable({
+       "sServerMethod": "POST", 
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": "datatable.php",
         select: {
             style: 'multi',
             items: 'row'
