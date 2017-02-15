@@ -172,9 +172,14 @@ class StudentController {
         $pdf = new HTML2PDF('P','A4','fr', false, 'ISO-8859-15',array(15, 5, 15, 5)); 
         $pdf->writeHTML($content); 
       
-$transport = Swift_MailTransport::newInstance();
+$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 25)
+  ->setUsername('fwelscher@gmail.com')
+  ->setPassword('FLOflo64')
+  ;
+//Supposed to allow local domain sending to work from what I read
+// $transport->setLocalDomain('[127.0.0.1]');
+
 $mailer = Swift_Mailer::newInstance($transport);
-        
         // Create the message
 $message = Swift_Message::newInstance()
 // Give the message a subject
@@ -186,14 +191,28 @@ $message = Swift_Message::newInstance()
 // Give it a body
 ->setBody('Fiche en pdf')
 // And optionally an alternative body
-->addPart('<q>Here is the message itself</q>', 'text/html')
+->addPart('<q>Here is the message itself</q>', 'text/html');
 // Optionally add any attachments
-->attach(Swift_Attachment::newInstance($pdf->Output('Fiche.pdf'), 'LAFICHE.pdf', 'application/pdf'));
+// ->attach(Swift_Attachment::newInstance($pdf->Output('Fiche.pdf'), 'LAFICHE.pdf', 'application/pdf'));
 
-        $mailer->send($message);
+       if ($mailer->send($message))
+
+{
+
+echo "The message was sent successfully!";
+
+}
+
+else
+
+{
+
+echo "Error sending email message";
+
+}
       // $pdf->Output('Fiche.pdf');
-        
-         return $app->redirect($app["url_generator"]->generate("Fiche"));
+        return ob_get_clean();
+        // return $app->redirect($app["url_generator"]->generate("Fiche"));
     }
     
      public function sauvFiche(Application $app) {

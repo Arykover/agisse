@@ -29,7 +29,7 @@ $gaSql['server']   = 'localhost';
 $gaSql['port']     = 3306; // 3306 is the default MySQL port
     
 // Input method (use $_GET, $_POST or $_REQUEST)
-$input =& $_GET;
+$input =& $_POST;
     
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * If you just want to use the basic configuration for DataTables with PHP server-side, there is
