@@ -13,7 +13,7 @@ mb_internal_encoding('UTF-8');
  * Array of database columns which should be read and sent back to DataTables. Use a space where
  * you want to insert a non-database field (for example a counter or static image)
  */
-$aColumns = array( 'id', 'denomination', 'caisse_prim', 'n_agrement', 'annee_scolaire', 'code_grand_regime' );
+$aColumns = $_POST['aColumns'];
     
 // Indexed column (used for fast and accurate table cardinality)
 $sIndexColumn = 'id';
