@@ -41,6 +41,7 @@ class AdministratorController {
         $this->formDatatable();
         $columnsName = $this->columnsName;
 //        var_dump($columnsName);
+        require_once __DIR__ . '/../views/v_tabLink.php';
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
