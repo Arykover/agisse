@@ -1,18 +1,13 @@
 //alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
- 
-                 
+                   
 $(document).ready(function () {
-     alert(sTable+"rr"); 
+    
    var table = $('#users').DataTable({
        "sServerMethod": "POST", 
         "bProcessing": true,
         "bServerSide": true,
         "sAjaxSource": "datatable.php",
         
-        "data": function ( d ) {
-       d.table_name = sTable; 
-
-    },
         
         select: {
             style: 'multi',
