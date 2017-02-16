@@ -2,7 +2,7 @@
                    
    
 $(document).ready(function () {
- 
+ alert(sTable);
 //    dump($('#table_id'));
    var table = $('#users').DataTable({
 //       "type": "POST", 
@@ -14,6 +14,7 @@ $(document).ready(function () {
             "type": "POST",
             "data": function ( d ) {
             d.sTable =  sTable;
+            d.aColumns = aColumns;
             }
         },
 //        "data": function ( d ) {
