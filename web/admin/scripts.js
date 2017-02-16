@@ -1,14 +1,28 @@
 //alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
                    
+    alert('<?php echo $sTable; ?>');
 $(document).ready(function () {
-    
+    var sTable ='info_etablissmeent';
+//    dump($('#table_id'));
    var table = $('#users').DataTable({
-       "sServerMethod": "POST", 
-        "bProcessing": true,
-        "bServerSide": true,
-        "sAjaxSource": "datatable.php",
-        
-        
+//       "type": "POST", 
+        "processing": true,
+        "serverSide": true,
+//        "sAjaxSource": "datatable.php",
+        "ajax": {
+            "url": "datatable.php",
+            "type": "POST",
+            "data": function ( d ) {
+            d.sTable =  sTable;
+            }
+        },
+//        "data": function ( d ) {
+//            
+////    alert(sTable);
+//       d.table_name = $('#table_id').val();
+//  
+//    },
+//                    data: { sTable : sTable },
         select: {
             style: 'multi',
             items: 'row'

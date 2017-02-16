@@ -19,7 +19,8 @@ $aColumns = array( 'id', 'denomination', 'caisse_prim', 'n_agrement', 'annee_sco
 $sIndexColumn = 'id';
     
 // DB table to use
-	$sTable = $_POST['table_name'];
+//	$sTable = "info_etablissmeent";
+	$sTable = $_POST['sTable'];
             
 // Database connection information
 $gaSql['user']     = 'root';
