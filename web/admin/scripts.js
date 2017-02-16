@@ -1,8 +1,8 @@
 //alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
                    
-    alert('<?php echo $sTable; ?>');
+   
 $(document).ready(function () {
-    var sTable ='info_etablissmeent';
+ 
 //    dump($('#table_id'));
    var table = $('#users').DataTable({
 //       "type": "POST", 
