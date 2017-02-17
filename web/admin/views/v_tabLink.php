@@ -1,11 +1,11 @@
 <script type="text/javascript">
-      var aColumns = new Array();
+      var aColumns = [];
 <?php
-  foreach($columnsName as $c){
+
+   foreach($columnsName as $c){
       echo("aColumns[aColumns.length] = '".$c[0]."';");
   }
-  
   echo("var sTable = '".$sTable."';");
 ?>
- 
+
 </script>
