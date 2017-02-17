@@ -1,6 +1,7 @@
 //alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
              
 $(document).ready(function () {
+       alert(aColumns[0]);
    var table = $('#users').DataTable({
         "processing": true,
         "serverSide": true,

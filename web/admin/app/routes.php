@@ -17,7 +17,7 @@ $app->match('/GestionAffil', "AdministratorController::GestionAffil")
         ->bind('GestionAffil');
 $app->match('/GestionRegimes', "AdministratorController::GestionRegimes")
         ->bind('GestionRegimes');
-$app->match('/GestionNationalite', "AdministratorController::GestionNationalite")
+$app->match('/GestionNationalite', "AdministratorController::manageNationalite")
         ->bind('GestionNationalite');
 $app->match('/GestionEtablissement', "AdministratorController::manageSchool")
         ->bind('GestionEtablissement');
