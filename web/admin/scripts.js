@@ -1,14 +1,9 @@
 //alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
-                   
-   
+             
 $(document).ready(function () {
- alert(sTable);
-//    dump($('#table_id'));
    var table = $('#users').DataTable({
-//       "type": "POST", 
         "processing": true,
         "serverSide": true,
-//        "sAjaxSource": "datatable.php",
         "ajax": {
             "url": "datatable.php",
             "type": "POST",
@@ -17,17 +12,11 @@ $(document).ready(function () {
             d.aColumns = aColumns;
             }
         },
-//        "data": function ( d ) {
-//            
-////    alert(sTable);
-//       d.table_name = $('#table_id').val();
-//  
-//    },
-//                    data: { sTable : sTable },
         select: {
             style: 'multi',
             items: 'row'
-        }
+        },
+        responsive:true
     });
     new $.fn.dataTable.Buttons( table, {
         name: 'selection',
@@ -37,11 +26,6 @@ $(document).ready(function () {
             'selectAll',
             'selectNone',
             'selectRows'
-            //                    {extend: 'selectedSingle',
-            //                        text: 'Log selected data',
-            //                        action: function ( e, dt, button, config ) {
-            //                            console.log( dt.row( { selected: true } ).data() );
-            //                        }},
         ]
     } );    
     new $.fn.dataTable.Buttons( table, {
@@ -50,11 +34,7 @@ $(document).ready(function () {
             {
                 text: 'Ajouter',
                 action: function () {
-                    
-//console.log(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
-
-                    //                $('#trigger').trigger('click');
-                    ////                alert('hi');
+                    $('#trigger').trigger('click');
                 }
             },
             {
@@ -90,23 +70,6 @@ $(document).ready(function () {
     } );  
     table.buttons( ['alter'], null ).containers().appendTo( '.dataTable' );
 });
-
-function columnsName() {
-//console.log(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
-	var colNames = new Array();
-    	oTH = document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th'); 
-//	
-	for(var i in oTH){
-//		oTH = oTH[ i ].getElementsByTagName('th');
-		colNames = oTH[ i ].textContent;
-	}
-        return colNames;
-//        var arr = [ "one", "two", "three", "four", "five" ];
-//var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
-// 
-//document.getElementById('users').each( arr, function( i, val ) {
-//  $( "#" + val ).text( "Mine is " + val + "." );
-};
 
 
 //EQUIVALENT D'UN VAR_DUMP en php, très utile !!!

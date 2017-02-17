@@ -7,6 +7,5 @@
   
   echo("var sTable = '".$sTable."';");
 ?>
-  alert(aColumns[0]);
  
 </script>
