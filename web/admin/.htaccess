@@ -15,8 +15,8 @@ Options -Indexes
 
 AuthType Basic
 AuthName "Vous etes deconnecte"
-#AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
-AuthUserFile C:\wamp64\www\agisse\agisse\web\admin\.htpasswd
+AuthUserFile I:\AppsPortable\UwAmp\www\silexAgisse\web\admin\.htpasswd
+#AuthUserFile C:\wamp64\www\agisse\agisse\web\admin\.htpasswd
 require valid-user
 ### log pour valid-user ###
 #log: admin

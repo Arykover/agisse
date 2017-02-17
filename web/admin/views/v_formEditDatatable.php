@@ -1,4 +1,4 @@
-
+ 
     <?php
 //        $fName = $userInfo['nom'];
 //        $lName = $userInfo['prenom'];
@@ -7,11 +7,10 @@
         <input type='hidden' name='id' value='<?php echo 'hehe' ?>'>
     <button type="submit" id="sub" class="btn btn-default">valider</button>
     <!--onclick="SubmitCheckSecu()-->
-    </div>
 </form>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-  Launch demo modal
+<button id='trigger' type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style='display:none;'>
+  Modal Trigger Button
 </button>
 
 <!-- Modal -->
