@@ -2,6 +2,7 @@
              
 $(document).ready(function () {
        alert(aColumns[0]);
+       alert(sTable);
    var table = $('#users').DataTable({
         "processing": true,
         "serverSide": true,
