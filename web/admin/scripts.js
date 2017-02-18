@@ -1,7 +1,6 @@
 //alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
              
 $(document).ready(function () {
-       alert(aColumns[0]);
    var table = $('#users').DataTable({
         "processing": true,
         "serverSide": true,
@@ -42,6 +41,53 @@ $(document).ready(function () {
                 extend: 'selectedSingle',
                 text: 'Editer',
                 action: function () {
+//                    console.log(table.row( { selected: true } ).data());
+                    var infos = [];
+                    infos= table.row( { selected: true } ).data();
+                    dump(infos);
+                    
+                    $.ajax({
+                        url: "views/v_formEditDatatable.php",
+//                        data: infos,
+                        data: 'sTable=' + sTable,
+                        type: 'post'
+//                        success: function(data) {
+//                            alert(data);
+//                        }
+                    });
+                    
+//                    $.post( "maintenance.php", { 'infos': infos } );
+                    
+//                    $.ajax({
+//                        type: "POST",
+//                        data: {infos:infos},
+//                        url: "maintenance.php",
+//                        success: function(msg){
+//                            $('.answer').html(msg);
+//                        }
+//                    });
+                    
+//                    $.ajax({
+//                        type: 'POST',
+//                        url: 'views/v_formEditDatatable.php',
+////                      data: 'infos=' + infos
+//                        "data": function ( d ) {
+//                            d.infos = 'infos=' + infos;
+//                        }
+//                        
+//                        var login = $("#result1").html();
+//    $.post("views/v_formEditDatatable.php", {'infos': infos}, function(response) {
+//         console.log(response);
+//         $.post("views/v_formEditDatatable.php", {'infos': infos}, function( data ) {
+//  $( ".result" ).html( data );
+         
+//                        data: function ( d ) {
+//                        d.infos = infos;
+//                        }
+//                    });
+                    $('#trigger').trigger('click');
+//         document.getElementById("FormDataTab").style.display = 'block';
+//
 //                    var infos= table.row( { selected: true } ).data();
 //                    dump(table.row( { selected: true } ).data());
 //                    
@@ -51,7 +97,7 @@ $(document).ready(function () {
 //popup = window.open('/formDt', 'popup','width=400,height=400,directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,');
 //                        edit(table.row( { selected: true } ).data());
                         
-                $('#trigger').trigger('click');
+//                $('#trigger').trigger('click');
                 }
             },
             {
