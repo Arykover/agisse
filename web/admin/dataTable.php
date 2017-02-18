@@ -21,7 +21,6 @@ $sIndexColumn = 'id';
 // DB table to use
 //	$sTable = "info_etablissmeent";
 	$sTable = $_POST['sTable'];
-            
 // Database connection information
 $gaSql['user']     = 'root';
 $gaSql['password'] = 'root';
