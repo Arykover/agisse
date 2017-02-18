@@ -25,7 +25,6 @@ $app->match('/Reboot', "AdministratorController::Reboot")
         ->bind('Reboot');
 $app->match('/logOut', "AdministratorController::logOut")
         ->bind('logout');
-
 /*
  * $app->get('/redirect', function () use ($app) { 
  * return $app->redirect(dirname("../web/index.php"));

@@ -22,24 +22,26 @@
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
-          <form id='FormDataTab' method='POST' action='update' style='display:none;'>
+          <form id='FormDataTab' method='POST' action='update' >
+              <!--//style='display:none;'-->
         <table class='table table-condensed'>
+            <!--halouf-->
+            <?php 
+//            $infos = $_POST['infos'];
+            echo $_POST['sTable'];
+            if ( (isset($_POST['infos'])) ) {echo 'oui';};?>
+            <?php 
+            foreach ($columnsName as $c)
+            {
+            ?>
             <tr>
-                <td> X : </td>
-                <td><?php echo 'hehe' ?></td>
+                <td> <?php echo $c['column_name'];?> </td>
+                <!--<td> <input type='text'   value='<?php // if(!empty($VARIABLERECUP[$NumLineSelect])){echo($fiche['commune_naiss']);}; ?>'></td>-->
+                <td> <input type='text'   value=''></td>
             </tr>
-            <tr>
-                <td> X : </td>
-                <td><?php echo 'hehe' ?></td>
-            </tr>
-            <tr>
-                <td> X : </td>
-                <td><?php echo 'hehe' ?></td>
-            </tr>
-            <tr>
-                <td> X : </td>
-                <td><?php echo 'hehe' ?></td>
-            </tr>
+            <?php
+            }
+            ?>
         </table>
           </form>
       </div>

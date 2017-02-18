@@ -74,6 +74,7 @@ class AdministratorController {
     public function formDatatable()
     {
         $this->columnsName = $this->pdo->getColumnsName($this->sTable);
+        $columnsName = $this->columnsName;
         require_once __DIR__ . '/../views/v_formEditDatatable.php';
     }
 }
