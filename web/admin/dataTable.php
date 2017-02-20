@@ -16,7 +16,7 @@ mb_internal_encoding('UTF-8');
 $aColumns = $_POST['aColumns'];
     
 // Indexed column (used for fast and accurate table cardinality)
-$sIndexColumn = 'id';
+//$sIndexColumn = 'id';
     
 // DB table to use
 //	$sTable = "info_etablissmeent";
@@ -143,7 +143,7 @@ $rResultFilterTotal = $db->query( $sQuery ) or die($db->error);
 list($iFilteredTotal) = $rResultFilterTotal->fetch_row();
     
 // Total data set length
-$sQuery = "SELECT COUNT(`".$sIndexColumn."`) FROM `".$sTable."`";
+$sQuery = "SELECT COUNT(`".$aColumns[0]."`) FROM `".$sTable."`";
 $rResultTotal = $db->query( $sQuery ) or die($db->error);
 list($iTotal) = $rResultTotal->fetch_row();
     
@@ -171,6 +171,5 @@ while ( $aRow = $rResult->fetch_assoc() ) {
     }
     $output['aaData'][] = $row;
 }
-    
 echo json_encode( $output );	
 ?>

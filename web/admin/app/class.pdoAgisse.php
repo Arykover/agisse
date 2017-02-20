@@ -55,7 +55,17 @@ class PdoAgisse {
     
     public function getColumnsName($tableName)
     {
+//        switch($tableName)
+//        {
+//            case info_etablissmeent : 
+//                $tab = ['denomination', 'caisse primaire', 'numero agrément', 'annee scolaire', 'code grand regime'];
+//                break;
+//            case nationalite : break;
+//            case comptes : break;
+//        }
+        
         $req = PdoAgisse::$monPdo->prepare("select column_name from information_schema.columns where table_name= ?");
+        //alias manuel ?
         $req->bindParam(1, $tableName);
         $req->execute();
         $tab = $req->fetchAll();
@@ -131,5 +141,9 @@ class PdoAgisse {
     $array = array('recordsTotal' => $recordsTotal, 19, 3 => 13);
     return $recordsFiltered;
     /* END SEARCH */
+    }
+    public function updateDataTable()
+    {
+        echo 'hiii';
     }
 }

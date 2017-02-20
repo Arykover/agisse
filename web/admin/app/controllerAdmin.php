@@ -7,19 +7,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 //********************************************Contrôleur Super User*****************//
 class AdministratorController {
-
+    
     private $pdo;
     private $sTable;
     private $data;
     private $columnsName;
-    
+    private $titles;
+        
     public function __construct() {
         ob_start();             // démarre le flux de sortie
         require_once __DIR__ . '/../views/v_header.php';
         require_once __DIR__ . '/../views/v_menu.php';
         $this->pdo = PdoAgisse::getPdoAgisse();
     }
-    
+        
     public function home()
     {
         //require_once __DIR__.'/../vues/v_connexion.php';
@@ -27,12 +28,12 @@ class AdministratorController {
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
-    
+        
     public function manageAffiliation()
     {
         
     }
-    
+        
     public function manageSchool()
     {
         $this->sTable = 'info_etablissmeent';
@@ -46,7 +47,7 @@ class AdministratorController {
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
-    
+        
         public function manageNationalite()
     {
         $this->sTable = 'nationalite';
@@ -60,7 +61,7 @@ class AdministratorController {
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
-    
+        
     public function manageApplication()
     {
         
@@ -77,5 +78,13 @@ class AdministratorController {
         $columnsName = $this->columnsName;
         require_once __DIR__ . '/../views/v_formEditDatatable.php';
     }
+//    public function updateDataTable(Application $app)
+//    {
+//            $titles = $_POST['titles'];
+//            var_dump($titles);
+//            
+//        return $app->redirect($app["url_generator"]->generate("GestionEtablissement"));
+////            $this->manageSchool();
+//    }
 }
 ?>

@@ -13,5 +13,4 @@
     </tr>
     </thead>
 </table>
-<?php include 'maintenance.php' ?>
     <!--</div>-->
