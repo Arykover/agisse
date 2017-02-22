@@ -63,10 +63,11 @@ class PdoAgisse {
 //            case nationalite : break;
 //            case comptes : break;
 //        }
-        
-        $req = PdoAgisse::$monPdo->prepare("select column_name from information_schema.columns where table_name= ?");
+        $tableSchema = 'gisse';
+        $req = PdoAgisse::$monPdo->prepare("select column_name from information_schema.columns where table_name= ? AND `table_schema` = ?");
         //alias manuel ?
         $req->bindParam(1, $tableName);
+        $req->bindParam(2, $tableSchema);
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
@@ -141,9 +142,5 @@ class PdoAgisse {
     $array = array('recordsTotal' => $recordsTotal, 19, 3 => 13);
     return $recordsFiltered;
     /* END SEARCH */
-    }
-    public function updateDataTable()
-    {
-        echo 'hiii';
     }
 }

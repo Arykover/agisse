@@ -13,9 +13,9 @@
 $app->match('/', "AdministratorController::home");
 $app->match('/Home', "AdministratorController::home")
         ->bind('Home');
-$app->match('/GestionAffil', "AdministratorController::GestionAffil")
+$app->match('/GestionAffil', "AdministratorController::manageAffiliation")
         ->bind('GestionAffil');
-$app->match('/GestionRegimes', "AdministratorController::GestionRegimes")
+$app->match('/GestionRegimes', "AdministratorController::manageRegime")
         ->bind('GestionRegimes');
 $app->match('/GestionNationalite', "AdministratorController::manageNationalite")
         ->bind('GestionNationalite');

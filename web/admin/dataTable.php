@@ -14,7 +14,6 @@ mb_internal_encoding('UTF-8');
  * you want to insert a non-database field (for example a counter or static image)
  */
 $aColumns = $_POST['aColumns'];
-    
 // Indexed column (used for fast and accurate table cardinality)
 //$sIndexColumn = 'id';
     
@@ -146,8 +145,11 @@ list($iFilteredTotal) = $rResultFilterTotal->fetch_row();
 $sQuery = "SELECT COUNT(`".$aColumns[0]."`) FROM `".$sTable."`";
 $rResultTotal = $db->query( $sQuery ) or die($db->error);
 list($iTotal) = $rResultTotal->fetch_row();
-    
-    
+
+//$sQuery = "
+//    SELECT SQL_CALC_FOUND_ROWS `".implode("`, `", $aQueryColumns)."`
+//    FROM `".$sTable."`".$sWhere.$sOrder.$sLimit;
+
 /**
  * Output
  */
@@ -172,4 +174,17 @@ while ( $aRow = $rResult->fetch_assoc() ) {
     $output['aaData'][] = $row;
 }
 echo json_encode( $output );	
+    
+/**
+ * SQL queries
+ * Update/Insert/Delete
+ */
+//if(isset ($_POST['edit']))
+//{
+//    $Columns = $aColumns;
+//    array_splice($Columns,0,1);
+//    $infos = $_POST['edit'];
+//    $insertQuery = "insert into ".$sTable."(".implode(",", $Columns).") values ('".implode("','",$infos)."')";
+//    $db->query( $insertQuery ) or die($db->error);
+//}
 ?>

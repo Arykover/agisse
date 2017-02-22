@@ -38,6 +38,8 @@ $(document).ready(function () {
                     table.rows().deselect();
                     $('#trigger').trigger('click');
                     $('#FormDataTab')[0].reset();
+                     formElement = document.forms['FormDataTab'].elements[0];
+                    $(formElement).val( false );
                 }
             },
             {
@@ -82,11 +84,21 @@ $(document).ready(function () {
     
     $('#save').on("click", function () {
         var input = '';
-        for (var i in infos)
-        {
-            console.log($('input[name^=titles]').value);
-        }
-        alert('heyarki');
+        var edit = new Array();
+        //            dump($('input[name^=titles]').each(function(){$(this).val();}));
+        $('input[name^=titles]').each(function(){
+            edit.push($(this).val());
+            //    $.post( "views/v_formEditDatatable.php", { 'edit': edit } );
+            
+            $.ajax({
+                url:'views/v_formEditDatatable.php',
+                data: {edit:edit},
+                type: 'post',
+                success: function(data) {
+                    alert(data);
+                }
+            });
+        });
         //        var rowNode = table
         //                .row.add( [ 'Fiona White', 32, 'Edinburgh' ] )
         //                .draw()
