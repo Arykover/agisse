@@ -171,43 +171,13 @@ class StudentController {
         ob_end_clean();
         $pdf = new HTML2PDF('P','A4','fr', false, 'ISO-8859-15',array(15, 5, 15, 5)); 
         $pdf->writeHTML($content); 
-      
-$transport = Swift_SmtpTransport::newInstance('smtp.free.fr', 25);
+        
+        $body = 'Votre fiche de securiteé sociale';
+        $user = $this->pdo->getUserProfile($id);
+        $app['services']->sendMail($body, $user['mail'] ,$user['nom']." ".$user['prenom'], 'Fiche Securite sociale', $pdf);
+        
 
-$mailer = Swift_Mailer::newInstance($transport);
-        // Create the message
-$message = Swift_Message::newInstance()
-// Give the message a subject
-->setSubject('Fiche')
-// Set the From address with an associative array
-->setFrom(array('agisse@noreply.com' => 'agisse'))
-// Set the To addresses with an associative array
-->setTo(array('arky@yopmail.com' => 'arky'))
-// Give it a body
-->setBody('Fiche en pdf')
-// And optionally an alternative body
-->addPart('<q>Here is the message itself</q>', 'text/html')
-// Optionally add any attachments
-->attach(Swift_Attachment::newInstance($pdf->Output('Fiche.pdf','S'), 'LAFICHE.pdf', 'application/pdf'));
-
-       if ($mailer->send($message))
-
-{
-
-echo "The message was sent successfully!";
-
-}
-
-else
-
-{
-
-echo "Error sending email message";
-
-}
-      // $pdf->Output('Fiche.pdf');
-        return ob_get_clean();
-        // return $app->redirect($app["url_generator"]->generate("Fiche"));
+               return $app->redirect($app["url_generator"]->generate("Fiche"));
     }
     
      public function sauvFiche(Application $app) {
@@ -299,30 +269,65 @@ echo "Error sending email message";
         $this->Auth($app);
         $this->init();
         $userInfo = $this->pdo->getUserProfile($_SESSION['id']);
-        $lName = strtolower($_REQUEST['lastName']);
-        $fName = strtolower($_REQUEST['firstName']);
+        $nom = strtolower($_REQUEST['lastName']);
+        $prenom = strtolower($_REQUEST['firstName']);
         $pwdOld = $_REQUEST['passwordOld'];
         $pdo = PdoAgisse::getPdoAgisse();
-        // appel de la fonction determinant si l'ancien mdp correspond au compte connecté
-        if ($pdo->hashCheck($_SESSION['login'], $pwdOld)) {
-            //mise à jour du nom et du prénom
-            $pdo->updateUserNames($_SESSION['id'], $lName, $fName);
-            //verifier que le checkbox pour modifier le mail est coché,
-            //si c'est le cas, mettre à jour le nouveau mail entré
-            if (!empty($_REQUEST['togMail'])) {
-                $mail = $_REQUEST['mail'];
-                $pdo->updateUserMail($_SESSION['id'], $mail);
+        
+        // si la modification est faite par l'eleve 
+        
+        if($_SESSION['type'] == 'ELEVE'){
+                
+            $id = $_SESSION['id'];
+                // appel de la fonction determinant si l'ancien mdp correspond au compte connecté
+                if ($pdo->hashCheck($_SESSION['login'], $pwdOld)) {
+                    //mise à jour du nom et du prénom
+                    $pdo->updateUserNames($id, $nom, $prenom);
+                    //verifier que le checkbox pour modifier le mail est coché,
+                    //si c'est le cas, mettre à jour le nouveau mail entré
+                    if (!empty($_REQUEST['togMail'])) {
+                        $mail = $_REQUEST['mail'];
+                        $pdo->updateUserMail($id, $mail);
+                    }
+                    //verifier que le checkbox pour modifier le mot de passe est coché, 
+                    //si c'est le cas, mettre à jour le nouveau mail entré
+                    if (!empty($_REQUEST['togPwd'])) {
+                        $pwdNew = $_REQUEST['password'];
+                        $pdo->updateUserPwd($id, $_SESSION['login'], $pwdNew);
+                    }
+                    echo('Les modifications ont bien été enregistrées !');
+                } 
+                else {
+                    echo('Mot de passe actuel invalide !');
+                }
+        }
+        
+        // Si la modification est faite par un gestionnaire
+        
+        else if($_SESSION['type'] == 'GESTION'){
+                    
+                    $id = $_REQUEST['id'];
+                    $pdo->updateUserNames($id, $nom, $prenom);
+                    //verifier que le checkbox pour modifier le mail est coché,
+                    //si c'est le cas, mettre à jour le nouveau mail entré
+                    $mail = $_REQUEST['mail'];
+                    $pdo->updateUserMail($id, $mail);
+            
+        }
+            if(isset($_REQUEST['pwdGen'])){
+                if($_REQUEST['pwdGen']){
+                    $pwd = $app['services']->pwdGenerator();
+                    $user = $this->pdo->getUserProfile($id);
+                    $body = '@Gisse
+                            Un nouveau mot de passe pour votre compte a été generé, voici vos identifiants :
+                            Identifiant : '.$user['login'].' 
+                            Mot de passe : '.$pwd;
+                            
+                    
+                    $app['services']->sendMail($body, $user['mail'] ,$user['nom']." ".$user['prenom'], 'Generatio nde mot de passe', false);
+                    $pdo->updateUserPwd($id, $user['login'], $pwd);
             }
-            //verifier que le checkbox pour modifier le mot de passe est coché, 
-            //si c'est le cas, mettre à jour le nouveau mail entré
-            if (!empty($_REQUEST['togPwd'])) {
-                $pwdNew = $_REQUEST['password'];
-                $pdo->updateUserPwd($_SESSION['id'], $_SESSION['login'], $pwdNew);
-            }
-            echo('Les modifications ont bien été enregistrées !');
-        } 
-        else {
-            echo('Mot de passe actuel invalide !');
+            
         }
         require_once __DIR__ . '/../web/views/v_profile.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
@@ -338,12 +343,10 @@ class ManagerController {
     private $pdo;
 
     public function init() {
-        $_SESSION['id'] = $_SESSION['id'];
-        $this->pdo = PdoGsb::getPdoAgisse();
+        $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
-        Auth();
         require_once __DIR__ . '/../web/views/v_header.php';
-        require_once __DIR__ . '/../web/views/v_home.php';
+        require_once __DIR__ . '/../web/views/v_menu.php';
     }
 
     public function Auth(Application $app) {
@@ -352,6 +355,68 @@ class ManagerController {
         }
     }
 
+    
+           public function GestionEleves(Application $app) {
+        $datatable = true;
+        $this->Auth($app);
+        $this->init();
+
+        
+        $comptes = $this->pdo->getUsers();
+        //Récup les data des compte eleves dans la bdd 
+        
+        $sTable ='comptes';
+        $data = $this->pdo->getComptesEleves();
+        $columnsName = $this->pdo->getColumnsName($sTable);
+
+        array_splice($columnsName,-2,2);
+        array_splice($columnsName,2,1);
+        
+//        require_once __DIR__ . '/../web/views/v_tabLink.php';
+//        require_once __DIR__ . '/../web/views/v_dataTable.php';
+        require_once __DIR__ . '/../web/views/v_gestionEleve.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
+    
+    public function GestionFiches(Application $app) {
+        $datatable = true;
+        $this->Auth($app);
+        $this->init();
+
+        
+        $comptes = $this->pdo->getUsers();
+        //Récup les data des compte eleves dans la bdd 
+        
+        $sTable ='fiches';
+        $columnsName = $this->pdo->getColumnsName($sTable);
+//
+//        array_splice($columnsName,-2,2);
+//        array_splice($columnsName,2,1);
+//        
+        require_once __DIR__ . '/../web/views/v_tabLink.php';
+        require_once __DIR__ . '/../web/views/v_dataTable.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
+    
+       public function GestionProfil(Application $app) {
+        $this->Auth($app);
+        $this->init();
+
+            $id = $_REQUEST['id'];
+        
+        $userInfo = $this->pdo->getUserProfile($id);
+        //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
+        //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
+        //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
+        require_once __DIR__ . '/../web/views/v_gestionProfil.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
 }
 
 //********************************************Contrôleur Super User*****************//
@@ -362,7 +427,7 @@ class AdministratorController {
 
     public function init() {
         $_SESSION['id'] = $_SESSION['id'];
-        $this->pdo = PdoGsb::getPdoAgisse();
+        $this->pdo = PdoAgisse::getPdoAgisse();
         ob_start();             // démarre le flux de sortie
         Auth();
         require_once __DIR__ . '/../web/views/v_header.php';

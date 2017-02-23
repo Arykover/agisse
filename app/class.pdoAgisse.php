@@ -196,26 +196,7 @@ class PdoAgisse {
         
         $sql = $sql."where id = :id ";            // cloture requete
         $req = PdoAgisse::$monPdo->prepare($sql);
-        /*
-        $req->bindParam(1, $nomNaiss);
-        $req->bindParam(2, $adresse);
-        $req->bindParam(3, $adresseComp);
-        $req->bindParam(4, $ville);
-        $req->bindParam(5, $CP);
-        $req->bindParam(6, $dateNaiss);
-        $req->bindParam(7, $deptNaiss);
-        $req->bindParam(8, $communeNaiss);
-        $req->bindParam(9, $numSecu);
-        $req->bindParam(10, $telephone);
-        $req->bindParam(11, $commEtudiant);
-        $req->bindParam(12, $commGestionnaire);
-        $req->bindParam(13, $discipline);
-        $req->bindParam(14, $statut);
-        $req->bindParam(15, $nation);
-        $req->bindParam(16, $civilite);
-        $req->bindParam(17, $centre);
-        $req->bindParam(18, $id);
-         */
+
         $req->execute($input) or die(print_r('error insert')) ;
     }
 
@@ -229,6 +210,13 @@ class PdoAgisse {
         $req->bindParam(1, $id);
         $req->execute();
         $tab = $req->fetch();
+        return $tab;
+    }
+    
+        public function getUsers() {
+        $req = PdoAgisse::$monPdo->prepare("select id, nom, prenom, mail from comptes");
+        $req->execute();
+        $tab = $req->fetchAll();
         return $tab;
     }
     
@@ -266,6 +254,8 @@ class PdoAgisse {
         $tab = $req->fetchAll();
         return $tab;
     }
+    
+    // recupère une fiche depuis l'id , param : $id
         public function getFiche($id) {
         $req = PdoAgisse::$monPdo->prepare("select * from fiches f
                                            left join comptes c on f.id = c.id 
@@ -278,6 +268,34 @@ class PdoAgisse {
         $req->bindParam(1, $id);
         $req->execute() or die(print_r('error'));
         $tab = $req->fetch();
+        return $tab;
+    }
+    
+      public function getFiches() {
+        $req = PdoAgisse::$monPdo->prepare("select * from fiches f
+                                           left join comptes c on f.id = c.id 
+                                           left join discipline d on f.discipline=d.id_discipline
+                                           left join etat e on f.etat=e.code_etat
+                                           left join statut s on f.statut = s.id_statut
+                                           left join nationalite n on f.nationalite = n.code_nationalite
+                                           left join mutuelle m on f.mutuelle = m.code_mutuelle
+                                           ");
+        $req->execute() or die(print_r('error'));
+        $tab = $req->fetchAll();
+        return $tab;
+    }
+    public function getComptesEleves() {
+        $req = PdoAgisse::$monPdo->prepare("select login, nom, prenom, mail from comptes where type = 'eleve'");
+        $req->execute();
+        $tab = $req->fetchAll();
+        return $tab;
+    }
+    public function getColumnsName($tableName)
+    {
+        $req = PdoAgisse::$monPdo->prepare("select column_name from information_schema.columns where table_name= ?");
+        $req->bindParam(1, $tableName);
+        $req->execute();
+        $tab = $req->fetchAll();
         return $tab;
     }
     //salt => généré et stock ds fichier htaccess, compo de login+cléDur

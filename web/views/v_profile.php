@@ -15,34 +15,42 @@
             <label for="fName">Prenom :</label>
             <input type="text" class="form-control" id="fName" name="firstName" value="<?php echo $fName ?>" required>
         </div> 
-        <input type="checkbox" name="togMail" value="true" id="togMail" >Modifier son email</p>
-        <div id="editMail" style='display:none;'>
+       
             <div class="form-group">
                 <label for="mail">Email :</label>
                 <input type="email" class="form-control" id="mail" name="mail" value="<?php echo $mail ?>">
             </div>
-        </div>
 
 
-    <input type="checkbox" name="togPwd" value="true" id="togPwd" >Modifier son mot de passe</p>
+    <?php  if ($_SESSION['type'] == 'ELEVE' ){ ?>
 
-    <div id="editPwd" style='display:none;'>
-        <div class="form-group">
-            <label for="pwd">Nouveau mot de passe :</label>
-            <input type="password" class="form-control" id="pwd" name="password" onkeyup="checkPass();
-                    return false;">
-        </div>
-        <div class="form-group">
-            <label for="pwdconf">Confirmer Mot de passe :</label>
-            <input type="password" class="form-control" id="pwdConfirmation"  onkeyup="checkPass();
-                    return false;">
-            <span id="confirmMessagePass" class="confirmMessagePass"></span>
-        </div>
-    </div>
+            <input type="checkbox" name="togPwd" value="true" id="togPwd" >Modifier son mot de passe</p>
 
-    <div class="form-group">
-        <label for="pwdOld"><abbr title="Champs obligatoire pour effectuer toute modification">Mot de passe actuel :</abbr></label>
-        <input type="password" class="form-control" id="pwdOld" name="passwordOld" required>
-    </div>
-    <button type="submit" id="sub" class="btn btn-default">valider</button> 
+            <div id="editPwd" style='display:none;'>
+                <div class="form-group">
+                    <label for="pwd">Nouveau mot de passe :</label>
+                    <input type="password" class="form-control" id="pwd" name="password" onkeyup="checkPass();
+                            return false;">
+                </div>
+                <div class="form-group">
+                    <label for="pwdconf">Confirmer Mot de passe :</label>
+                    <input type="password" class="form-control" id="pwdConfirmation"  onkeyup="checkPass();
+                            return false;">
+                    <span id="confirmMessagePass" class="confirmMessagePass"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pwdOld"><abbr title="Champs obligatoire pour effectuer toute modification">Mot de passe actuel :</abbr></label>
+                <input type="password" class="form-control" id="pwdOld" name="passwordOld" required>
+            </div>
+            <button type="submit" id="sub" class="btn btn-default">valider</button> 
+
+    <?php }
+    else if($_SESSION['type'] == 'GESTION' ){ ?>
+            
+            <button type="submit" class="btn btn-default" name='pwdGen' value='false'>valider</button>
+            <button type="submit" class="btn btn-default" name='pwdGen' value='true'>Generer un nouveau mot de passe</button> 
+            
+    <?php } ?>
 </form>
