@@ -32,7 +32,7 @@ class AdministratorController {
         $sTable = 'mutuelle';
         $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-        require_once __DIR__ . '/../views/v_tabLink.php';
+        $data = $this->pdo->getDataAffiliations();
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -43,7 +43,7 @@ class AdministratorController {
         $sTable = 'statut';
         $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-        require_once __DIR__ . '/../views/v_tabLink.php';
+        $data = $this->pdo->getDataRegimes();
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -54,7 +54,7 @@ class AdministratorController {
         $sTable = 'nationalite';
         $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-        require_once __DIR__ . '/../views/v_tabLink.php';
+        $data = $this->pdo->getDataNationalites();
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -65,8 +65,7 @@ class AdministratorController {
         $sTable = 'info_etablissmeent';
         $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-        $this->hide = true;
-        require_once __DIR__ . '/../views/v_tabLink.php';
+        $data = $this->pdo->getDataEtablissements();
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -94,7 +93,6 @@ class AdministratorController {
     public function updateDataTable(Application $app)
     {
            var_dump($_POST['titles']);
-            echo'hii';
 //        return $app->redirect($app["url_generator"]->generate("GestionEtablissement"));
 //            $this->manageSchool();
     }

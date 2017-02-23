@@ -1,45 +1,11 @@
-//alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
-             
-$(document).ready(function () {
+       $(document).ready(function () {
     var table = $('#users').DataTable({
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-            "url": "datatable.php",
-            "type": "POST",
-            "data": function ( d ) {
-                d.sTable =  sTable;
-                d.aColumns = aColumns;
-            }
-//        "sServerMethod": "POST", 
-//        "bProcessing": true,
-//        "bServerSide": true,
-//        "sAjaxSource": {
-//            "url": "datatable.php",
-//            "type": "POST",
-//            "data": function ( d ) {
-//                d.sTable =  sTable;
-//                d.aColumns = aColumns;}
-        },
-            "bSearchable": true,
-            "bSortable":true,
         select: {
             style: 'multi',
             items: 'row'
         },
         responsive:true
     });
-    //    dump($output);
-    new $.fn.dataTable.Buttons( table, {
-        name: 'selection',
-        buttons: [
-            'selected',
-            'selectedSingle',
-            'selectAll',
-            'selectNone',
-            'selectRows'
-        ]
-    } );    
     new $.fn.dataTable.Buttons( table, {
         name: 'alter',
         buttons: [

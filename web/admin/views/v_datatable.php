@@ -12,5 +12,24 @@
         ?>
     </tr>
     </thead>
+    <tbody>
+        <?php
+	foreach ($data as $d)
+        {
+        ?>        
+            <tr>
+             <?php
+                foreach ($columnsName as $c)
+                { 
+                ?>
+                     <td> <?php echo $d[$c['column_name']];?> </td>
+                     <!--<td> <?php // echo $c['column_name'];?> </td>-->
+                <?php
+                }
+                ?>
+            </tr>
+        <?php
+        }
+        ?>
+    </tbody>
 </table>
-    <!--</div>-->
