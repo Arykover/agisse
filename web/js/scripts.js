@@ -119,7 +119,7 @@ function SubmitCheckSecu()
 }
     window.onload = function () {
         
-        document.getElementById('togPwd').onchange = function () {
+        document.getElementById('togPwd').onChange = function () {
             
         // si la checkbox est cochée, la validation se bloque(debloquage avec la confirmation password)
         // l'entrée du champ ancien mot de passe devient REQUIRED
