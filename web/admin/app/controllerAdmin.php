@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 class AdministratorController {
     
     private $pdo;
-    private $sTable;
-    private $data;
     private $columnsName;
 //    private $titles;
         
@@ -30,12 +28,10 @@ class AdministratorController {
     }
         public function manageAffiliation()
     {
-        $this->sTable = 'mutuelle';
-        $sTable = $this->sTable;
-        $this->data = $this->pdo->getDataAffiliations();
-        $this->formDatatable();
+        $hide = true;
+        $sTable = 'mutuelle';
+        $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-//        var_dump($columnsName);
         require_once __DIR__ . '/../views/v_tabLink.php';
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
@@ -43,12 +39,10 @@ class AdministratorController {
     }    
     public function manageRegime()
     {
-        $this->sTable = 'statut';
-        $sTable = $this->sTable;
-        $this->data = $this->pdo->getDataRegimes();
-        $this->formDatatable();
+        $hide = true;
+        $sTable = 'statut';
+        $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-//        var_dump($columnsName);
         require_once __DIR__ . '/../views/v_tabLink.php';
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
@@ -56,12 +50,10 @@ class AdministratorController {
     }    
         public function manageNationalite()
     {
-        $this->sTable = 'nationalite';
-        $sTable = $this->sTable;
-        $this->data = $this->pdo->getDataNationalites();
-        $this->formDatatable();
+        $hide = false;
+        $sTable = 'nationalite';
+        $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-//        var_dump($columnsName);
         require_once __DIR__ . '/../views/v_tabLink.php';
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
@@ -69,12 +61,11 @@ class AdministratorController {
     }    
     public function manageSchool()
     {
-        $this->sTable = 'info_etablissmeent';
-        $sTable = $this->sTable;
-        $this->data = $this->pdo->getDataEtablissements();
-        $this->formDatatable();
+        $hide = true;
+        $sTable = 'info_etablissmeent';
+        $this->formDatatable($sTable,$hide);
         $columnsName = $this->columnsName;
-//        var_dump($columnsName);
+        $this->hide = true;
         require_once __DIR__ . '/../views/v_tabLink.php';
         require_once __DIR__ . '/../views/v_datatable.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
@@ -93,9 +84,10 @@ class AdministratorController {
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
-    public function formDatatable()
+    public function formDatatable($sTable, $hide)
     {
-        $this->columnsName = $this->pdo->getColumnsName($this->sTable);
+        
+        $this->columnsName = $this->pdo->getColumnsName($sTable);
         $columnsName = $this->columnsName;
         require_once __DIR__ . '/../views/v_formEditDatatable.php';
     }

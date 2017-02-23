@@ -11,7 +11,18 @@ $(document).ready(function () {
                 d.sTable =  sTable;
                 d.aColumns = aColumns;
             }
+//        "sServerMethod": "POST", 
+//        "bProcessing": true,
+//        "bServerSide": true,
+//        "sAjaxSource": {
+//            "url": "datatable.php",
+//            "type": "POST",
+//            "data": function ( d ) {
+//                d.sTable =  sTable;
+//                d.aColumns = aColumns;}
         },
+            "bSearchable": true,
+            "bSortable":true,
         select: {
             style: 'multi',
             items: 'row'
@@ -76,7 +87,6 @@ $(document).ready(function () {
         var formElement = '';
         for (var i in infos)
         {
-            //     $('input[name^=titles]').val( infos[i] );
             formElement = document.forms['FormDataTab'].elements[i];
             $(formElement).val( infos[i] );
         }
@@ -85,30 +95,10 @@ $(document).ready(function () {
     $('#save').on("click", function () {
         var input = '';
         var edit = new Array();
-        //            dump($('input[name^=titles]').each(function(){$(this).val();}));
         $('input[name^=titles]').each(function(){
             edit.push($(this).val());
-            //    $.post( "views/v_formEditDatatable.php", { 'edit': edit } );
             
-            $.ajax({
-                url:'views/v_formEditDatatable.php',
-                data: {edit:edit},
-                type: 'post',
-                success: function(data) {
-                    alert(data);
-                }
-            });
         });
-        //        var rowNode = table
-        //                .row.add( [ 'Fiona White', 32, 'Edinburgh' ] )
-        //                .draw()
-        //                .node();
-        //        
-        //        $( rowNode )
-        //                .css( 'color', 'red' )
-        //                .animate( { color: 'black' } );
-        //    });
-        //    
     });
 });
 
