@@ -1,2 +1,4 @@
 HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-<?php $infos = $_POST['infos']; ?>
+<?php 
+//$infos = $_POST['infos']; 
+?>

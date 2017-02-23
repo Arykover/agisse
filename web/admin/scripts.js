@@ -1,23 +1,35 @@
 //alert(document.getElementsByTagName('table')[0].getElementsByTagName('thead')[0].getElementsByTagName('th')[0].textContent);
              
 $(document).ready(function () {
-   var table = $('#users').DataTable({
+    var table = $('#users').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": "datatable.php",
             "type": "POST",
             "data": function ( d ) {
-            d.sTable =  sTable;
-            d.aColumns = aColumns;
+                d.sTable =  sTable;
+                d.aColumns = aColumns;
             }
+//        "sServerMethod": "POST", 
+//        "bProcessing": true,
+//        "bServerSide": true,
+//        "sAjaxSource": {
+//            "url": "datatable.php",
+//            "type": "POST",
+//            "data": function ( d ) {
+//                d.sTable =  sTable;
+//                d.aColumns = aColumns;}
         },
+            "bSearchable": true,
+            "bSortable":true,
         select: {
             style: 'multi',
             items: 'row'
         },
         responsive:true
     });
+    //    dump($output);
     new $.fn.dataTable.Buttons( table, {
         name: 'selection',
         buttons: [
@@ -34,90 +46,61 @@ $(document).ready(function () {
             {
                 text: 'Ajouter',
                 action: function () {
+                    table.rows().deselect();
                     $('#trigger').trigger('click');
+                    $('#FormDataTab')[0].reset();
+                     formElement = document.forms['FormDataTab'].elements[0];
+                    $(formElement).val( false );
                 }
             },
             {
                 extend: 'selectedSingle',
                 text: 'Editer',
                 action: function () {
-//                    console.log(table.row( { selected: true } ).data());
-                    var infos = [];
-                    infos= table.row( { selected: true } ).data();
-                    dump(infos);
-                    
-                    $.ajax({
-                        url: "views/v_formEditDatatable.php",
-//                        data: infos,
-                        data: 'sTable=' + sTable,
-                        type: 'post'
-//                        success: function(data) {
-//                            alert(data);
-//                        }
-                    });
-                    
-//                    $.post( "maintenance.php", { 'infos': infos } );
-                    
-//                    $.ajax({
-//                        type: "POST",
-//                        data: {infos:infos},
-//                        url: "maintenance.php",
-//                        success: function(msg){
-//                            $('.answer').html(msg);
-//                        }
-//                    });
-                    
-//                    $.ajax({
-//                        type: 'POST',
-//                        url: 'views/v_formEditDatatable.php',
-////                      data: 'infos=' + infos
-//                        "data": function ( d ) {
-//                            d.infos = 'infos=' + infos;
-//                        }
-//                        
-//                        var login = $("#result1").html();
-//    $.post("views/v_formEditDatatable.php", {'infos': infos}, function(response) {
-//         console.log(response);
-//         $.post("views/v_formEditDatatable.php", {'infos': infos}, function( data ) {
-//  $( ".result" ).html( data );
-         
-//                        data: function ( d ) {
-//                        d.infos = infos;
-//                        }
-//                    });
                     $('#trigger').trigger('click');
-//         document.getElementById("FormDataTab").style.display = 'block';
-//
-//                    var infos= table.row( { selected: true } ).data();
-//                    dump(table.row( { selected: true } ).data());
-//                    
-//window.location.href = '/path'
-//var landingUrl = "http://" + $window.location.host + "/login";
-//$window.location.href = landingUrl;
-//popup = window.open('/formDt', 'popup','width=400,height=400,directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,');
-//                        edit(table.row( { selected: true } ).data());
-                        
-//                $('#trigger').trigger('click');
+                    
+                    
                 }
             },
             {
                 extend: 'selected',
                 text: 'Supprimer',
                 action: function () {
-                    table.rows().deselect();
+                    
+                    //        var infos = table.rows( { selected: true } ).data();
+                    //var infos =table.rows('.selected').data();
+                    //        dump(infos);
                 }
             },
             {
-				text: 'Actualiser',
-				action: function () {
-					table.ajax.reload();
-				}
-			}
+                text: 'Actualiser',
+                action: function () {
+                    table.ajax.reload();
+                }
+            }
         ]
     } );  
     table.buttons( ['alter'], null ).containers().appendTo( '.dataTable' );
+    
+    $('#trigger').on("click", function () {
+        var infos = table.row( { selected: true } ).data();
+        var formElement = '';
+        for (var i in infos)
+        {
+            formElement = document.forms['FormDataTab'].elements[i];
+            $(formElement).val( infos[i] );
+        }
+    });
+    
+    $('#save').on("click", function () {
+        var input = '';
+        var edit = new Array();
+        $('input[name^=titles]').each(function(){
+            edit.push($(this).val());
+            
+        });
+    });
 });
-
 
 //EQUIVALENT D'UN VAR_DUMP en php, très utile !!!
 function dump(obj) {
@@ -125,12 +108,12 @@ function dump(obj) {
     for (var i in obj) {
         out += i + ": " + obj[i] + "\n";
     }
-
-//    alert(out);
-
+    
+    //    alert(out);
+    
     // or, if you wanted to avoid alerts...
-
+    
     var pre = document.createElement('pre');
     pre.innerHTML = out;
     document.body.appendChild(pre);
-}
+};

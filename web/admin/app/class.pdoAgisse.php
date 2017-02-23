@@ -55,8 +55,19 @@ class PdoAgisse {
     
     public function getColumnsName($tableName)
     {
-        $req = PdoAgisse::$monPdo->prepare("select column_name from information_schema.columns where table_name= ?");
+//        switch($tableName)
+//        {
+//            case info_etablissmeent : 
+//                $tab = ['denomination', 'caisse primaire', 'numero agrément', 'annee scolaire', 'code grand regime'];
+//                break;
+//            case nationalite : break;
+//            case comptes : break;
+//        }
+        $tableSchema = 'gisse';
+        $req = PdoAgisse::$monPdo->prepare("select column_name from information_schema.columns where table_name= ? AND `table_schema` = ?");
+        //alias manuel ?
         $req->bindParam(1, $tableName);
+        $req->bindParam(2, $tableSchema);
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;

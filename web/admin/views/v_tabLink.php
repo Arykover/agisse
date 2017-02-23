@@ -7,5 +7,4 @@
   }
   echo("var sTable = '".$sTable."';");
 ?>
-
 </script>
