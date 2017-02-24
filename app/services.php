@@ -31,11 +31,59 @@ class services{
         return $result;
     }
     
+    public function pwdGenerator(){  
+        
+        $password = '';
+        $nb = rand(8, 15);
+        $caract = "abcdefghijklmnopqrstuvwyxz0123456789@!:;,§/?*µ$=+";
+        $len = strlen($caract);
+        for($i = 1; $i <= $nb; $i++) {
+          $password += $caract[mt_rand(0,(strlen($caract)-1))];
+      }
+      return $password;
+    }
+    
     public function FichePdf($fiche){
         
         return $result;
     }
-        
+    
+        public function sendMail($body, $Mail ,$Name, $Subject, $attach){
+            
+            $transport = Swift_SmtpTransport::newInstance('smtp.free.fr', 25);
+
+        $mailer = Swift_Mailer::newInstance($transport);
+                // Create the message
+        $message = Swift_Message::newInstance()
+        // Give the message a subject
+        ->setSubject($Subject)
+        // Set the From address with an associative array
+        ->setFrom(array('agisse@noreply.com' => 'agisse'))
+        // Set the To addresses with an associative array
+        ->setTo(array($Mail => $Name))
+        // Give it a body
+        ->setBody($body);
+        // Optionally add any attachments
+        if($attach){
+               $message->attach(Swift_Attachment::newInstance($attach->Output('Fiche.pdf','S'), 'Fiche cerfa secu.pdf', 'application/pdf'));
+        }
+               if ($mailer->send($message))
+
+        {
+
+        echo "The message was sent successfully!";
+
+        }
+
+        else
+
+        {
+
+        echo "Error sending email message";
+
+        }
+            
+    }
         
     }
     

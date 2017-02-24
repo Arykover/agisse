@@ -41,6 +41,11 @@ $app->match('/sauvFiche', "StudentController::sauvFiche")
 $app->match('/MailFiche', "StudentController::MailFiche")
         ->bind('MailFiche');
 
+/* Routes manager controller*/
+$app->match('/GestionEleves', "ManagerController::GestionEleves")
+        ->bind('GestionEleves');
+$app->match('/GestionFiches', "ManagerController::GestionFiches")
+        ->bind('GestionFiches');
 
 
 /*

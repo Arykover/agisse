@@ -119,7 +119,7 @@ function SubmitCheckSecu()
 }
     window.onload = function () {
         
-        document.getElementById('togPwd').onchange = function () {
+        document.getElementById('togPwd').onChange = function () {
             
         // si la checkbox est cochée, la validation se bloque(debloquage avec la confirmation password)
         // l'entrée du champ ancien mot de passe devient REQUIRED
@@ -158,5 +158,13 @@ function SubmitCheckSecu()
     };
 }
     
+$("#search").keyup(function() {
+    var value = this.value;
+
+    $("#searchTable").find("tr").each(function(index) {
+        if (index === 0) return;
+        var id = $(this).find("td").text();
+        $(this).toggle(id.indexOf(value) !== -1);
+    });
+});
     
- 

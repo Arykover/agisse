@@ -16,68 +16,20 @@
                     </li>
                     <?php if(isset($_SESSION['type'])){ 
                         switch($_SESSION['type']){
-                            case 'admin' : ?>
-                    
-                <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion</a>
-                <ul class="dropdown-menu">                
-                             <li>
-                                     <a href='GestionFiches' title=''>Fiches</a>
-                             </li>
-                             <li>
-                                     <a href='GestionEleves' title=''>Comptes Eleves</a>
-                             </li>
-                             <li>
-                                     <a href='GestionEleves' title=''>Comptes Gestionnaire</a>
-                             </li>
-                             <li>
-                                     <a href='GestionClasses' title=''>Classes</a>
-                             </li>
-                             
-                </ul>
-              </li>
-              
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administration</a>
-                <ul class="dropdown-menu">
-                            <li>
-                                     <a href='GestionAffil' title=''>Affiliations</a>
-                             </li>
-                             <li>
-                                     <a href='GestionRegimes' title=''>Regimes</a>
-                             </li>
-                             <li>
-                                     <a href='GestionNationalite' title=''>Nationalités</a>
-                             </li>
-                             <li>
-                                     <a href='GestionEtablissement' title=''>Etablissements</a>
-                             </li>
-                             <li>
-                                     <a href='Reboot' title=''>Reinitialiser Application</a>
-                             </li>
-                             
-                </ul>
-              </li>
-                    
-                    <?php
-                                break;
+                           
                             case 'GESTION':  ?>
-                    
-                <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion</a>
-                <ul class="dropdown-menu">                
-                             <li>
+                                 
+                             <li class="smenu">
                                      <a href='GestionFiches' title=''>Fiches</a>
                              </li>
-                             <li>
+                             <li class="smenu">
                                      <a href='GestionEleves' title=''>Comptes Eleves</a>
                              </li>
-                             <li>
+                             <li class="smenu">
                                      <a href='GestionClasses' title=''>Classes</a>
                              </li>
                              
-                </ul>
-              </li>
+
                     <li class="smenu">
                         <a href="profile" title="">Mon profil</a>
                     </li>
@@ -111,15 +63,12 @@
                     </li>
                     <li class="smenu">
                         <a href="login" title="Log in">Se connecter</a>
-                    </li>
-                    <?php } ?>
-                    
-                 
-                    
+                    </li> 
+ 
                     <li class="smenu">
                         <a href="contact" title="Contact">Contact</a>
                     </li>
-                    
+                    <?php } ?>
               </ul>
             </div>
         </div>
