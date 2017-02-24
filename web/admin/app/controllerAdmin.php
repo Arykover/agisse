@@ -93,35 +93,21 @@ class AdministratorController {
     public function updateDataTable(Application $app)
     {
         $data = $_POST['data'];
-//        $primaryKey = $_POST[];
+        $primaryKey = $_POST['primaryKey'];
         $table = $_POST['table'];
-           var_dump($data);
-//         foreach($data as $key => $value ){
-//             echo $key.' '.$value.' ';
-//         }
+        //Récupérer le nom et la valeur de la clé primaire(1ère entrée de $data)
+        $primary_key_value = reset($primaryKey);
+        $primary_key_name = key($primaryKey);
+        //tester si first_key et sa value existe dans la bdd
+        $exist = $this->pdo->VerifExiste($table, $primary_key_name, $primary_key_value);
+        echo $exist;
            //Updata entry
-           if(isset ($id) && ($id != false))
+        //Si la clé primaire est déjà existante, on fait un update
+        if($exist)
            {
-               $sql = "update :table set "; //initialisation de la requete
-        $first = false;
-        
-        $input = array( ':table' =>$table, ':id' => $id ); //initialisation du tableau de parametres à bind pdo
-        
-        foreach($data as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
-            
-            if($first){                            // pour le premier champ, ne pas mettre de virgule
-                $sql = $sql.", ";
-            }       
-            $sql = $sql.$key."= :".$key." ";
-            $input[':' . $key] = $value;           // ajout du parametre a bind
-            $first = 'true';
-        }
-        
-        $sql = $sql."where id = :id ";            // cloture requete
-        echo $sql;
-//               $this->pdo->updateDataRow($id,$table,$data);
+               $this->pdo->updateDataRow($primary_key_name, $primary_key_value ,$table, $data);
            }
-//        return $app->redirect($app["url_generator"]->generate("GestionEtablissement"));
+        return $app->redirect($app["url_generator"]->generate("GestionEtablissement"));
 //            $this->manageSchool();
     }
 }

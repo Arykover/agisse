@@ -16,12 +16,12 @@
           <form id='FormDataTab' method='POST'
               action='updateDataTable' >
         <table class='table table-condensed'>
-            <?php 
+            <?php
             if($hide)
             {
                 
             ?>
-            <input type='hidden' name="data[<?php echo $columnsName[0];?>]" value=false>
+            <input type='hidden' name="primaryKey[<?php echo $columnsName[0][0];?>]" value=false>
             <?php 
             unset($columnsName[0]);
             }

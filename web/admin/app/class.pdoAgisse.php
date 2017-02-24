@@ -55,17 +55,8 @@ class PdoAgisse {
     
     public function getColumnsName($tableName)
     {
-//        switch($tableName)
-//        {
-//            case info_etablissmeent : 
-//                $tab = ['denomination', 'caisse primaire', 'numero agrément', 'annee scolaire', 'code grand regime'];
-//                break;
-//            case nationalite : break;
-//            case comptes : break;
-//        }
         $tableSchema = 'gisse';
         $req = PdoAgisse::$monPdo->prepare("select column_name from information_schema.columns where table_name= ? AND `table_schema` = ?");
-        //alias manuel ?
         $req->bindParam(1, $tableName);
         $req->bindParam(2, $tableSchema);
         $req->execute();
@@ -104,27 +95,40 @@ class PdoAgisse {
         return $tab;
     }
     
-    public function updateDataRow($id,$table,$data)
+    public function VerifExiste($table, $primary_key_name, $primary_key_value) {
+        $result = false;
+        $value = htmlentities($primary_key_value);
+        $sql ="select * from $table where $primary_key_name = ?";
+        $req = PdoAgisse::$monPdo->prepare($sql);
+        $req->bindParam(1, $value);
+        $req->execute() or die(print_r('cannot ch')) ;
+        $tab = $req->fetch();
+        if (!empty($tab)) {
+            $result = true;
+        }
+        return $result;
+    }
+    
+    public function updateDataRow($primary_key_name,$primary_key_value,$table,$data)
     {
-         $sql = "update :table set "; //initialisation de la requete
+        $pKvalue = htmlentities($primary_key_value);
+         $sql = "update $table set "; //initialisation de la requete
         $first = false;
-        
-        $input = array( ':table' =>$table, ':id' => $id ); //initialisation du tableau de parametres à bind pdo
-        
-        foreach($data as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
+            $pKname = ":$primary_key_name";
+        $input = array($pKname =>$pKvalue ); //initialisation du tableau de parametres à bind pdo
             
+        foreach($data as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
+            $val = htmlentities($value);
             if($first){                            // pour le premier champ, ne pas mettre de virgule
                 $sql = $sql.", ";
             }       
             $sql = $sql.$key."= :".$key." ";
-            $input[':' . $key] = $value;           // ajout du parametre a bind
+            $input[':' . $key] = $val;           // ajout du parametre a bind
             $first = 'true';
         }
-        
-        $sql = $sql."where id = :id ";            // cloture requete
+            
+        $sql = $sql."where ".$primary_key_name." = :".$primary_key_name;            // cloture requete
         $req = PdoAgisse::$monPdo->prepare($sql);
-        $req->execute();
-        $data = $req->fetchAll();
-        return $data;
+        $req->execute($input) or die(print_r('error update')) ;
     }
 }
