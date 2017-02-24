@@ -1,21 +1,5 @@
 
-
-
-
-
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-
-<div class='container'>
-    <div class='container col-md-offset-2 col-md-8'>
-        <div class="form-group">
-            <input type="text" id="search" placeholder="Search..." class="form-control">
-        </div>
-        <br>
-<table id="example" class="display" cellspacing="0" width="100%">
+<table cellpadding="1" cellspacing="1" id="users" class="table table-striped table-bordered dataTable no-footer" width="100%">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -50,5 +34,3 @@
             <?php } ?>
             </tbody>
         </table>
-    </div>
-</div>
