@@ -10,7 +10,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel"><?php echo $sTable; ?></h4>
       </div>
       <div class="modal-body">
           <form id='FormDataTab' method='POST'
@@ -21,7 +21,7 @@
             {
                 
             ?>
-            <input type='hidden' name="titles['id']" value=''>
+            <input type='hidden' name="data[<?php echo $columnsName[0];?>]" value=false>
             <?php 
             unset($columnsName[0]);
             }
@@ -30,7 +30,7 @@
             ?>
             <tr>
                 <td> <?php echo $c['column_name'];?> </td>
-                <td> <input type='text' name="titles[<?php echo $c['column_name'];?>]" value=''></td>
+                <td> <input type='text' name="data[<?php echo $c['column_name'];?>]" value='' required></td>
             </tr>
             <?php
             }
@@ -38,6 +38,7 @@
         </table>
       </div>
       <div class="modal-footer">
+          <input type='hidden' name="table" value=<?php echo $sTable; ?>>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" id="save">Save changes</button>
       </div>

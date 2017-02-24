@@ -92,9 +92,39 @@ class AdministratorController {
     }
     public function updateDataTable(Application $app)
     {
-           var_dump($_POST['titles']);
+        $data = $_POST['data'];
+//        $primaryKey = $_POST[];
+        $table = $_POST['table'];
+           var_dump($data);
+//         foreach($data as $key => $value ){
+//             echo $key.' '.$value.' ';
+//         }
+           //Updata entry
+           if(isset ($id) && ($id != false))
+           {
+               $sql = "update :table set "; //initialisation de la requete
+        $first = false;
+        
+        $input = array( ':table' =>$table, ':id' => $id ); //initialisation du tableau de parametres à bind pdo
+        
+        foreach($data as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
+            
+            if($first){                            // pour le premier champ, ne pas mettre de virgule
+                $sql = $sql.", ";
+            }       
+            $sql = $sql.$key."= :".$key." ";
+            $input[':' . $key] = $value;           // ajout du parametre a bind
+            $first = 'true';
+        }
+        
+        $sql = $sql."where id = :id ";            // cloture requete
+        echo $sql;
+//               $this->pdo->updateDataRow($id,$table,$data);
+           }
 //        return $app->redirect($app["url_generator"]->generate("GestionEtablissement"));
 //            $this->manageSchool();
     }
 }
 ?>
+
+

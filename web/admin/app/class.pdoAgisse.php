@@ -103,44 +103,28 @@ class PdoAgisse {
         $tab = $req->fetchAll();
         return $tab;
     }
-    public function getData($sql)
+    
+    public function updateDataRow($id,$table,$data)
     {
-         $req = PdoAgisse::$monPdo->prepare($sql);
+         $sql = "update :table set "; //initialisation de la requete
+        $first = false;
+        
+        $input = array( ':table' =>$table, ':id' => $id ); //initialisation du tableau de parametres à bind pdo
+        
+        foreach($data as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
+            
+            if($first){                            // pour le premier champ, ne pas mettre de virgule
+                $sql = $sql.", ";
+            }       
+            $sql = $sql.$key."= :".$key." ";
+            $input[':' . $key] = $value;           // ajout du parametre a bind
+            $first = 'true';
+        }
+        
+        $sql = $sql."where id = :id ";            // cloture requete
+        $req = PdoAgisse::$monPdo->prepare($sql);
         $req->execute();
         $data = $req->fetchAll();
         return $data;
-    }
-    
-    public function searchFilter()
-    {
-        $recordsTotal = count(getData("SELECT * FROM ".$MyTable));
-        /* SEARCH CASE : Filtered data */
-    if(!empty($_POST['search']['value'])){
-
-        /* WHERE Clause for searching */
-        for($i=0 ; $i<count($_POST['columns']);$i++){
-            $column = $_POST['columns'][$i]['data'];//we get the name of each column using its index from POST request
-            $where[]="$column like '%".$_POST['search']['value']."%'";
-        }
-        $where = "WHERE ".implode(" OR " , $where);// id like '%searchValue%' or name like '%searchValue%' ....
-        /* End WHERE */
-
-        $sql = sprintf("SELECT * FROM %s %s", $MyTable , $where);//Search query without limit clause (No pagination)
-
-        $recordsFiltered = count(getData($sql));//Count of search result
-
-        /* SQL Query for search with limit and orderBy clauses*/
-        $sql = sprintf("SELECT * FROM %s %s ORDER BY %s %s limit %d , %d ", $MyTable , $where ,$orderBy, $orderType ,$start,$length  );
-        $data = getData($sql);
-    }
-    else {
-        $sql = sprintf("SELECT * FROM %s ORDER BY %s %s limit %d , %d ", $MyTable ,$orderBy,$orderType ,$start , $length);
-        $data = getData($sql);
-
-        $recordsFiltered = $recordsTotal;
-    }
-    $array = array('recordsTotal' => $recordsTotal, 19, 3 => 13);
-    return $recordsFiltered;
-    /* END SEARCH */
     }
 }
