@@ -27,6 +27,9 @@ $app->match('/logOut', "AdministratorController::logOut")
         ->bind('logout');
 $app->match('/updateDataTable', "AdministratorController::updateDataTable")
         ->bind('updateDataTable');
+$app->match('/deleteDataTable', "AdministratorController::deleteDataTable")
+        ->bind('deleteDataTable');
+
 /*
  * $app->get('/redirect', function () use ($app) { 
  * return $app->redirect(dirname("../web/index.php"));
