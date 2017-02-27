@@ -121,14 +121,12 @@ class StudentController {
     
     public function Auth(Application $app) {
         // Verification des autorisations eleve
-        if (!!empty($_SESSION['type']) || $_SESSION['type'] != 'ELEVE' || $_SESSION['type'] != 'ELEVE' ) {
-                $app['services']->logout($app);
-                echo "vous n'etes pas connecté";
-                ob_get_clean(); // récupère le contenu du flux et le vide
-                exit();
-                
-
-        }
+//        if (!isset($_SESSION['type']) || $_SESSION['type'] != 'ELEVE' || $_SESSION['type'] != 'GESTION') {
+//                $app['services']->logout($app);
+//                echo "vous n'etes pas connecté";
+//                ob_get_clean(); // récupère le contenu du flux et le vide
+//                exit();          
+//        }
     }
     
         public function Fiche(Application $app) {
@@ -350,8 +348,11 @@ class ManagerController {
     }
 
     public function Auth(Application $app) {
-        if ($_SESSION['type'] != 'GESTION' ) {
-            return $app->redirect($app["url_generator"]->generate("logout"));
+        if (!isset($_SESSION['type']) || $_SESSION['type'] != 'GESTION' ) {
+                $app['services']->logout($app);
+                echo "vous n'etes pas connecté";
+                ob_get_clean(); // récupère le contenu du flux et le vide
+                exit(); 
         }
     }
 
@@ -362,18 +363,27 @@ class ManagerController {
         $this->init();
 
         
-        $comptes = $this->pdo->getUsers();
+        $data = $this->pdo->getComptesEleves();
         //Récup les data des compte eleves dans la bdd 
         
-        $sTable ='comptes';
-        $data = $this->pdo->getComptesEleves();
-        $columnsName = $this->pdo->getColumnsName($sTable);
 
-        array_splice($columnsName,-2,2);
-        array_splice($columnsName,2,1);
-        
 //        require_once __DIR__ . '/../web/views/v_tabLink.php';
 //        require_once __DIR__ . '/../web/views/v_dataTable.php';
+        require_once __DIR__ . '/../web/views/v_gestionEleve.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
+    
+               public function GestionClasses(Application $app) {
+        $datatable = true;
+        $this->Auth($app);
+        $this->init();
+
+        
+        $data = $this->pdo->getDisciplines();
+        //Récup les data des compte eleves dans la bdd 
+
         require_once __DIR__ . '/../web/views/v_gestionEleve.php';
         require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
@@ -386,17 +396,10 @@ class ManagerController {
         $this->init();
 
         
-        $comptes = $this->pdo->getUsers();
+        $data = $this->pdo->getFiches();
         //Récup les data des compte eleves dans la bdd 
-        
-        $sTable ='fiches';
-        $columnsName = $this->pdo->getColumnsName($sTable);
-//
-//        array_splice($columnsName,-2,2);
-//        array_splice($columnsName,2,1);
-//        
-        require_once __DIR__ . '/../web/views/v_tabLink.php';
-        require_once __DIR__ . '/../web/views/v_dataTable.php';
+      
+        require_once __DIR__ . '/../web/views/v_gestionFiches.php';
         require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -412,7 +415,7 @@ class ManagerController {
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
         //PersonalInfos = $this->pdo->getPersonalInfos($_SESSION['id']Account);
         //On affiche la vue avec le formulaire complété grâce aux data récup ds la bdd
-        require_once __DIR__ . '/../web/views/v_gestionProfil.php';
+        require_once __DIR__ . '/../web/views/v_profile.php';
         require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 

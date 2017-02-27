@@ -1,6 +1,7 @@
 
 <div class='container'>
     <div class='container col-md-offset-2 col-md-8'>
+    <form  id='FicheForm' method='POST' >    
     <table class='table table-bordered table-condensed table-responsive table-hover'>
         <tr>
             <th COLSPAN="2">Votre identité :</th>
@@ -111,42 +112,46 @@
             <td COLSPAN="2"><?php if(!empty($fiche['observations_gest'])){echo($fiche['observations_gest']);}else{echo('Aucun commentaire');}; ?></td>
         </tr>
         <tr>
-            <th class='col-md-4'>Etat de la fiche : </th>
-            <td>  
+            <th class='col-md-3'>Etat de la fiche : </th>
+            <td>                
+                <?php 
+                echo($fiche['libelle_etat']);   ?>
                 
-                <?php if($_SESSION['type'] == 'ELEVE' || !$app['services']->FicheComplete($fiche) ){ 
-                                echo($fiche['libelle_etat']);   ?>
-                <?php } else if($_SESSION['type'] == 'GESTIONNAIRE' ){ ?>
-                    <?php if($app['services']->FicheComplete($fiche)){ ?>
-                        <form  id='EtatFicheForm' method='POST' action='/changeEtat' class='col-md-offset-1 col-md-10 col-md-offset-1'>
+            </td>
+        </tr>
+                <?php if($_SESSION['type'] == 'GESTION' && $app['services']->FicheComplete($fiche)){ ?>
 
+        <tr>
+                            <th class='col-md-3'>Modifier Etat : </th>
+                <td>
                                 <select name="etat">
                                     <?Php foreach($etat as $i){ ?>
                                     <option value='<?php echo($i['id_etat']) ?>'<?php if($fiche['id_etat'] == $i['id_etat']){ ?> selected <?php } ?>><?php echo($i['libelle_etat']) ?></option>
                                     <?php } ?>
                                 </select>
 
-                            <button type='submit' class='btn-success pull-right'>Valider etat</button>
-                        </form>                    
-                <?php  } } ?>
-            </td>
-        </tr>
+                            <button type='submit' formaction='changeEtatFiche' name='id' value ='<?php echo($fiche['id']); ?>' class='btn btn-primary pull-right'>Valider etat</button>
+                </td>
+        </tr>     
+                <?php  } ?>
+        
     </table>
 
     </br>
         <div class='row'>  
             
             <?php if($app['services']->FicheComplete($fiche)){ ?>
-                <a href='modifFiche'><button class='btn btn-success '>Modifier Fiche</button></a>
-                <a href='imprimerPdf'><button class='btn btn-success col-md-offset-1'>Imprimer</button></a>
-                <a href='MailFiche'><button class='btn btn-success col-md-offset-1 '>Recevoir la fiche par mail</button></a>
-                <a href='envoyerFiche'><button class='btn btn-success col-md-offset-1'>Envoyer</button></a>
+                <button type='submit' formaction='modifFiche' name='id' value ='<?php echo($fiche['id']); ?>'  class='btn btn-success '>Modifier Fiche</button></a>
+                <button type='submit' formaction='imprimerPdf' name='id' value ='<?php echo($fiche['id']); ?>'  class='btn btn-success col-md-offset-1'>Imprimer</button></a>
+                <button type='submit' formaction='MailFiche' name='id' value ='<?php echo($fiche['id']); ?>'  class='btn btn-success col-md-offset-1 '>Recevoir la fiche par mail</button></a>
+                <button type='submit' formaction='envoyerFiche' name='id' value ='<?php echo($fiche['id']); ?>'  class='btn btn-success col-md-offset-1'>Envoyer</button></a>
             <?php }
                 else{ 
             ?>
                 <button class='btn btn-danger pull-left' disabled>Envoi impossible, fiche incomplete</button>
-                <a href='modifFiche'><button class='btn btn-success pull-right'>Modifier Fiche</button></a>
+                <button type='submit' formaction='modifFiche' name='id' value ='<?php echo($fiche['id']); ?>'  class='btn btn-success pull-right'>Modifier Fiche</button></a>
             <?php } ?>
-        </div>    
+        </div>  
+    </form>
     </div>
 </div>

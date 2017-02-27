@@ -255,6 +255,8 @@ class PdoAgisse {
         return $tab;
     }
     
+
+    
     // recupère une fiche depuis l'id , param : $id
         public function getFiche($id) {
         $req = PdoAgisse::$monPdo->prepare("select * from fiches f
@@ -285,7 +287,7 @@ class PdoAgisse {
         return $tab;
     }
     public function getComptesEleves() {
-        $req = PdoAgisse::$monPdo->prepare("select login, nom, prenom, mail from comptes where type = 'eleve'");
+        $req = PdoAgisse::$monPdo->prepare("select id, login, nom, prenom, mail from comptes where type = 'eleve'");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
