@@ -11,7 +11,6 @@
  * $monPdoAgisse qui contiendra l'unique instance de la classe
      
  * @package default
- * @author Cheri Bibi
  * @version    1.0
  * @link       http://www.php.net/manual/fr/book.pdo.php
  */
@@ -39,10 +38,10 @@ class PdoAgisse {
         
     /**
      * Fonction statique qui crée l'unique instance de la classe
-         
+     *   
      * Appel : $instancePdoGsb = PdoGsb::getPdoGsb();
-         
-     * @return l'unique objet de la classe PdoGsb
+     *    
+     * @return objet $PdoAgisse, l'unique objet de la classe PdoGsb
      */
     public static function getPdoAgisse() {
         
@@ -52,95 +51,142 @@ class PdoAgisse {
         }
         return PdoAgisse::$PdoAgisse;
     }
-        
-    public function getPrimaryKey($tableName)
+    
+    
+    /**
+     * Retourne le nom des clés primaires d'une table donnée
+     *
+     * @param string $nomTable
+     * 
+     * @return array $nomClePrimaire['column_name']
+    **/
+    public function getClePrimaire($nomTable)
     {
-        $tableSchema = 'gisse';
         $req = PdoAgisse::$monPdo->prepare("
             select `column_name`
             FROM `information_schema`.`columns`
-            where `table_name`= ? AND `table_schema` = ? AND `column_key` = 'PRI'");
-        $req->bindParam(1, $tableName);
-        $req->bindParam(2, $tableSchema);
+            where `table_name`= ? AND `table_schema` = 'gisse' AND `column_key` = 'PRI'");
+        $req->bindParam(1, $nomTable);
         $req->execute();
-        $primary_key_name= $req->fetch();
-        return $primary_key_name;
+        $nomClePrimaire= $req->fetch();
+        return $nomClePrimaire['column_name'];
     }
-    public function getColumnsName($tableName)
+    
+    
+    /**
+     * Retourne le nom des champs d'une table donnée
+     *
+     * @param string $nomTable
+     * 
+     * @return array $nomsColonnes
+    **/
+    public function getNomsColonnes($nomTable)
     {
-        $tableSchema = 'gisse';
         $req = PdoAgisse::$monPdo->prepare("
-                select column_name, data_type
+                select column_name
                 from information_schema.columns
-                where table_name= ? AND `table_schema` = ?");
-        $req->bindParam(1, $tableName);
-        $req->bindParam(2, $tableSchema);
+                where table_name= ? AND `table_schema` = 'gisse'");
+        $req->bindParam(1, $nomTable);
         $req->execute();
-        $tab = $req->fetchAll();
-        return $tab;
+        $nomsColonnes = $req->fetchAll();
+        return $nomsColonnes;
     }
-        
-    public function getDataAffiliations()
+    
+    
+    /**
+     * Retourne les données de la table Affiliation
+     *
+     * @return array $lesDonnees
+    **/      
+    public function getAffiliations()
     {
         $req = PdoAgisse::$monPdo->prepare("select * from mutuelle");
         $req->execute();
-        $tab = $req->fetchAll();
-        return $tab;
+        $lesDonnees = $req->fetchAll();
+        return $lesDonnees;
     }
-    public function getDataRegimes()
+    
+    
+    /**
+     * Retourne les données de la table Regime
+     *
+     * @return array $lesDonnees
+    **/  
+    public function getRegimes()
     {
         
         $req = PdoAgisse::$monPdo->prepare("select * from statut");
         $req->execute();
-        $tab = $req->fetchAll();
-        return $tab;
+        $lesDonnees = $req->fetchAll();
+        return $lesDonnees;
     }
-    public function getDataNationalites()
+    
+    
+    /**
+     * Retourne les données de la table Nationalite
+     *
+     * @return array $lesDonnees
+    **/  
+    public function getNationalites()
     {
         
         $req = PdoAgisse::$monPdo->prepare("select * from nationalite");
         $req->execute();
-        $tab = $req->fetchAll();
-        return $tab;
+        $lesDonnees = $req->fetchAll();
+        return $lesDonnees;
     }
-    public function getDataEtablissements()
+    
+    
+    /**
+     * Retourne les données de la table Etablissement
+     *
+     * @return array $lesDonnees
+    **/  
+    public function getEtablissements()
     {
         $req = PdoAgisse::$monPdo->prepare("select * from info_etablissmeent");
         $req->execute();
-        $tab = $req->fetchAll();
-        return $tab;
+        $lesDonnees = $req->fetchAll();
+        return $lesDonnees;
     }
-        
-    public function verifExiste($table, $primary_key_name, $primary_key_value) {
-        $result = false;
-        $value = htmlentities($primary_key_value);
-        $sql ="select * from $table where $primary_key_name = ?";
+    
+    
+    /**
+     * Indique s'il existe déjà une donnée avec la clé primaire donnée pour la table donnée
+     *
+     * @return bool $existe
+    **/  
+    public function verifExiste($nomTable, $nomClePrimaire, $valeurClePrimaire) 
+    {
+        $existe = false;
+        $valeur= htmlentities($valeurClePrimaire);
+        $sql ="select ".$nomClePrimaire." from $nomTable where $nomClePrimaire = ?";
         $req = PdoAgisse::$monPdo->prepare($sql);
-        $req->bindParam(1, $value);
-        $req->execute() or die(print_r('cannot ch')) ;
+        $req->bindParam(1, $valeur);
+        $req->execute() or die(print_r('erreur à la vérification')) ;
         $tab = $req->fetch();
         if (!empty($tab)) {
-            $result = true;
+            $existe = true;
         }
-        return $result;
+        return $existe;
     }
-/**
- * Mets à jour les informations d'une table pour la ligne selectionnée dans le datatable, à partir de sa clé primaire récupérée.
- * @param $primary_key_name 
- * @param $primary_key_value 
- * @param $table 
- * @param $lesInfos sous la forme d'un tableau
- * exemple: update nationalite 
- *          set code_nationalite= :code_nationalite , libelle_nationalite= :libelle_nationalite 
- *          where code_nationalite = :code_nationalite
-*/
-    public function updateLigneTable($primary_key_name,$primary_key_value,$table,$lesInfos)
+    
+    
+    /**
+     * Mets à jour la ligne avec la clé primaire donnée pour la table donnée
+     *
+     * @param string $nomClePrimaire
+     * @param string $valeurClePrimaire
+     * @param string $nomTable
+     * @param array $lesInfos
+    **/ 
+    public function majLigneTable($nomClePrimaire,$valeurClePrimaire,$nomTable,$lesInfos)
     {
-        $pKvalue = htmlentities($primary_key_value);
-         $sql = "update $table set "; //initialisation de la requete
+        $valeurCP= htmlentities($valeurClePrimaire);
+         $sql = "update $nomTable set "; //initialisation de la requete
         $first = false;
-            $pKname = ":$primary_key_name";
-        $input = array($pKname =>$pKvalue ); //initialisation du tableau de parametres à bind pdo
+            $nomCP = ":$nomClePrimaire";
+        $input = array($nomCP =>$valeurCP ); //initialisation du tableau de parametres à bind pdo
             
         foreach($lesInfos as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
             $val = htmlentities($value);
@@ -152,57 +198,74 @@ class PdoAgisse {
             $first = 'true';
         }
             
-        $sql = $sql."where ".$primary_key_name." = :".$primary_key_name;            // cloture requete
+        $sql = $sql."where ".$nomClePrimaire." = :".$nomClePrimaire;            // cloture requete
         $req = PdoAgisse::$monPdo->prepare($sql);
-        $req->execute($input) or die(print_r('error update')) ;
+        $req->execute($input) or die(print_r('error à la mise à jour')) ;
     }
-/**
- * Insère les informations dans une nouvelle ligne de la table donnée
- * @param $table 
- * @param $lesInfos sous la forme d'un tableau
- * exemple: 
- * insert into nationalite (code_nationalite, libelle_nationalite) 
- * values(:code_nationalite , :libelle_nationalite )
-*/
-    public function insertLigneTable($table,$lesInfos)
+    
+    
+    /**
+     * Insère une nouvelle ligne avec les informations données, pour la table donnée
+     *
+     * @param string $nomTable
+     * @param string $lesInfos
+    **/ 
+    public function insererLigneTable($nomTable,$lesInfos)
     {
-         $sql = "insert into $table ("; //initialisation de la requete
+         $sql = "insert into $nomTable ("; //initialisation de la requete
         $first = false;
             $champs = '';
-            $values = '';
+            $valeurs = '';
         foreach($lesInfos as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
             $val = htmlentities($value);
             if($first){                            // pour le premier champ, ne pas mettre de virgule
                 $champs = $champs.", ";
-                $values = $values.", ";
+                $valeurs = $valeurs.", ";
             }       
             $champs = $champs.$key;
-            $values = $values.":".$key." ";
+            $valeurs = $valeurs.":".$key." ";
             $input[':' . $key] = $val;           // ajout du parametre a bind
             $first = 'true';           
                 
         }
             
-        $sql = $sql.$champs.") values(".$values.")";            // cloture requete
+        $sql = $sql.$champs.") values(".$valeurs.")";            // cloture requete
         $req = PdoAgisse::$monPdo->prepare($sql);
-        $req->execute($input) or die(print_r($sql)) ;
+        $req->execute($input) or die(print_r("erreur à l'insertion")) ;
     }
-    public function deleteLignesTable($primary_key_name, $table, $ids)
+    
+    
+    /**
+     * Supprime la ligne dont la clé primaire est donnée, pour la table donnée
+     *
+     * @param string $nomClePrimaire
+     * @param string $valeurClePrimaire
+     * @param string $nomTable
+    **/ 
+    public function supprimerLigneTable($nomClePrimaire,$valeurClePrimaire, $nomTable)
     {
-        $sql= ("delete from ".$table." where ".$primary_key_name." in( ");
-                $first = false;
-                    
-        foreach($ids as $value ){        //boucle concatenant le champs a modifier dans la requete
-            $id = htmlentities($value);
-        if($first){                            // pour le premier champ, ne pas mettre de virgule
-                $sql = $sql.", ";
-            }   
-            $sql = $sql.":".$primary_key_name." ";
-            $input[':' . $primary_key_name] = $id;           // ajout du parametre a bind
-            $first = 'true';
-        }
-        $sql= $sql.");";
+        $valeur = htmlentities($valeurClePrimaire);
+        $sql ="delete from $nomTable where $nomClePrimaire = ?";
         $req = PdoAgisse::$monPdo->prepare($sql);
-        $req->execute($input) or die(print_r($sql));
+        $req->bindParam(1, $valeur);
+        $req->execute() or die(print_r("erreur à la suppression")) ;
+    }    
+    
+    
+    /**
+     * Supprime les lignes dont les clés primaires sont données, pour la table donnée
+     *
+     * @param string $nomClePrimaire
+     * @param string $valeurClePrimaire
+     * @param string $nomTable
+     * @param array $lesInfos
+    **/ 
+     public function supprimerLignesTable($nomClePrimaire, $nomTable, $ids)
+    {
+        $sql= ("delete from ".$nomTable." where ".$nomClePrimaire." in");
+        $implode = implode(',', array_fill(0, count($ids), '?'));
+        $sql = $sql."( ".$implode. " ) ";
+        $req = PdoAgisse::$monPdo->prepare($sql);
+        $req->execute($ids) or die(print_r("erreur à la suppression"));
     }
 }

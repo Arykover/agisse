@@ -26,7 +26,7 @@
 
                 <tr>
                     <td>Nom de naissance : (si different)</td>
-                    <td> <input name="nomNaiss" type='text'   value='<?php if(!empty($fiche['nom_naiss'])){echo($fiche['nom_naiss']);}; ?>'></td>
+                    <td> <input name="nomNaiss" type='text'   value='<?php if(!empty($fiche['nom_marital'])){echo($fiche['nom_marital']);}; ?>'></td>
                 </tr>
 
                 <tr>

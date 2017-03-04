@@ -200,13 +200,52 @@ class PdoAgisse {
         $req->execute($input) or die(print_r('error insert')) ;
     }
 
+    public function modifDiscipline($param,$id) {
+        
+        $sql = "update disciplines set "; //initialisation de la requete
+        $first = false;
+        
+        $input = array( ':id' => $id ); //initialisation du tableau de parametres à bind pdo
+        
+        foreach($param as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
+            
+            if($first){                            // pour le premier champ, ne pas mettre de virgule
+                $sql = $sql.", ";
+            }       
+            $sql = $sql.$key."= :".$key." ";
+            $input[':' . $key] = $value;           // ajout du parametre a bind
+            $first = 'true';
+        }
+        
+        $sql = $sql."where id_discipline = :id ";            // cloture requete
+        $req = PdoAgisse::$monPdo->prepare($sql);
+
+        $req->execute($input) or die(print_r('error insert')) ;
+    }
+    
+    
+    public function ajoutDiscipline($param) {
+        
+        $sql = "insert into disciplines (".implode(array_keys($param)," , ").") values( :".implode(array_keys($param)," , :").")"; //initialisation de la requete
+        $first = false;
+        
+        $input = array(); //initialisation du tableau de parametres à bind pdo
+        
+        foreach($param as $key => $value ){        //boucle concatenant le champs a modifier dans la requete
+            $input[':' . $key] = $value;           // ajout du parametre a bind
+        }
+        $req = PdoAgisse::$monPdo->prepare($sql);
+        
+        $req->execute($input) or die(print_r('error insert')) ;
+    }
+    
     /**
      * Verifie si un compte utilisant cet email existe deja
      * @param $mail
      * @return true si aucun compte n'existe, false sinon 
      */
     public function getUserProfile($id) {
-        $req = PdoAgisse::$monPdo->prepare("select nom, prenom, mail from comptes where id = ?");
+        $req = PdoAgisse::$monPdo->prepare("select nom, prenom, mail from comptes where id_compte = ?");
         $req->bindParam(1, $id);
         $req->execute();
         $tab = $req->fetch();
@@ -214,42 +253,42 @@ class PdoAgisse {
     }
     
         public function getUsers() {
-        $req = PdoAgisse::$monPdo->prepare("select id, nom, prenom, mail from comptes");
+        $req = PdoAgisse::$monPdo->prepare("select id_compte, nom, prenom, mail from comptes");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
     }
     
         public function getDisciplines() {
-        $req = PdoAgisse::$monPdo->prepare("select * from discipline");
+        $req = PdoAgisse::$monPdo->prepare("select * from disciplines");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
     }
     
             public function getEtats() {
-        $req = PdoAgisse::$monPdo->prepare("select * from etat");
+        $req = PdoAgisse::$monPdo->prepare("select * from etats");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
     }
     
         public function getStatuts() {
-        $req = PdoAgisse::$monPdo->prepare("select * from statut");
+        $req = PdoAgisse::$monPdo->prepare("select * from statuts");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
     }
     
         public function getCentres() {
-        $req = PdoAgisse::$monPdo->prepare("select * from mutuelle");
+        $req = PdoAgisse::$monPdo->prepare("select * from mutuelles");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
     }
     
         public function getNationalites() {
-        $req = PdoAgisse::$monPdo->prepare("select * from nationalite");
+        $req = PdoAgisse::$monPdo->prepare("select * from nationalites");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;
@@ -257,15 +296,25 @@ class PdoAgisse {
     
 
     
+    public function getDiscipline($id) {
+        $req = PdoAgisse::$monPdo->prepare("select * from disciplines d where d.id_discipline = ?");
+        $req->bindParam(1, $id);
+        $req->execute();
+        $tab = $req->fetch();
+        return $tab;
+    }
+    
     // recupère une fiche depuis l'id , param : $id
         public function getFiche($id) {
-        $req = PdoAgisse::$monPdo->prepare("select * from fiches f
+        $req = PdoAgisse::$monPdo->prepare("select *   from fiches f
                                            left join comptes c on f.id = c.id 
                                            left join discipline d on f.discipline=d.id_discipline
                                            left join etat e on f.etat=e.code_etat
                                            left join statut s on f.statut = s.id_statut
-                                           left join nationalite n on f.nationalite = n.code_nationalite
-                                           left join mutuelle m on f.mutuelle = m.code_mutuelle
+                                           left join nationalite na on f.nationalite = na.code_nationalite
+                                           left join nationalite pn on f.pays_naiss = pn.code_nationalite
+                                           left join caisses_etudiantes m on f.mutuelle = m.code_caisse
+                                           left join etablissements et on c.etablissement = et.id_etablissement
                                            where f.id = ?");
         $req->bindParam(1, $id);
         $req->execute() or die(print_r('error'));
@@ -274,20 +323,22 @@ class PdoAgisse {
     }
     
       public function getFiches() {
-        $req = PdoAgisse::$monPdo->prepare("select * from fiches f
+        $req = PdoAgisse::$monPdo->prepare("select f.id_fiche, e.libelle_etat ,  c.nom , f.nom_marital, c.prenom, f.civilite, f.date_naiss , f.dept_naiss, f.commune , pn.libelle_nationalite , na.libelle_nationalite , na.code_nationalite , d.libelle_discipline , d.annee_discipline , f.comp_adresse , f.adresse, f.cp , f.commune ,  et.denomination , f.num_secu , m.libelle_mutuelle , f.justificatif , f.telephone  from fiches f
                                            left join comptes c on f.id = c.id 
                                            left join discipline d on f.discipline=d.id_discipline
                                            left join etat e on f.etat=e.code_etat
                                            left join statut s on f.statut = s.id_statut
-                                           left join nationalite n on f.nationalite = n.code_nationalite
-                                           left join mutuelle m on f.mutuelle = m.code_mutuelle
+                                           left join nationalite na on f.nationalite = na.code_nationalite
+                                           left join nationalite pn on f.pays_naiss = pn.code_nationalite
+                                           left join caisses_etudiantes m on f.mutuelle = m.code_caisse
+                                           left join etablissements et on c.etablissement = et.id_etablissement
                                            ");
         $req->execute() or die(print_r('error'));
-        $tab = $req->fetchAll();
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
         return $tab;
     }
     public function getComptesEleves() {
-        $req = PdoAgisse::$monPdo->prepare("select id, login, nom, prenom, mail from comptes where type = 'eleve'");
+        $req = PdoAgisse::$monPdo->prepare("select id_compte, login, nom, prenom, mail from comptes where type = 'ELEVE'");
         $req->execute();
         $tab = $req->fetchAll();
         return $tab;

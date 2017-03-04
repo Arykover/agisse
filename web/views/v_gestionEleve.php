@@ -1,5 +1,6 @@
-        <form method='POST' action="Fiche">
-<table cellpadding="1" cellspacing="1" id="comptes"  class ="table table-bordered table-condensed table-responsive table-hover" width="100%">
+     
+<form method='POST' action="Fiche">
+<table cellpadding="1" cellspacing="1" id="comptes"  class ="table table-striped table-bordered dataTable no-footer table-hover" width="100%">
         <thead>
             <tr>
                 <th></th>
@@ -19,7 +20,8 @@
         <tbody>
 
             <?php
-                foreach($data as $d){           
+                foreach($data as $d){       
+                    
             ?>
             <tr>
                 <td><button type='submit' formaction="Fiche" name='id' value ='<?php echo($d['id']); ?>' class='btn btn-primary'>Voir Fiche</button>

@@ -11,7 +11,20 @@
 //    });
     
 $(document).ready(function(){
-    $('#comptes').DataTable({
-        responsive : true 
-    });
+ 
+    var table = $('#comptes').DataTable( {
+          responsive: {
+        details: {
+            type: 'column'
+        }
+    },
+        "select": true,
+    buttons: [
+        'copy', 'excel', 'csv'
+    ]
+} );
+  
+table.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
+    
 });

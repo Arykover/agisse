@@ -1,6 +1,6 @@
 <form name="formSignIn" method="POST" action="inscription">
     <div class="form-group">
-        <label for="name">Nom :</label>
+        <label for="name">Nom de naissance :</label>
         <input type="text" class="form-control" id="Lname" name="Lname" required>
     </div>
     <div class="form-group">

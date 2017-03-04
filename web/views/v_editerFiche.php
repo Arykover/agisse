@@ -23,7 +23,7 @@ td{
  $civilite = $fiche['civilite'];
  $prenom = $fiche['prenom'];
  $nom = $fiche['nom'];
- $nom_naiss  = $fiche['nom_naiss'];
+ $nom_marital  = $fiche['nom_marital'];
  $commune  = $fiche['commune'];
  $date_naiss  = $fiche['date_naiss'];
  $dept_naiss  = $fiche['dept_naiss'];
@@ -64,7 +64,7 @@ td{
 
         <tr>
             <td style="width: 50%">Nom de naissance : (si different)</td>
-            <td ><?php echo($nom_naiss); ?></td>
+            <td ><?php echo($nom_marital); ?></td>
         </tr>
 
         <tr>

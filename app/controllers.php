@@ -186,9 +186,9 @@ class StudentController {
         
         
         
-        if(!empty($_REQUEST['civilite'])){$param['civilite'] = htmlentities($_REQUEST['civilite']);}
+        if(!empty($_REQUEST['libelle'])){$param['libelle'] = htmlentities($_REQUEST['libelle']);}
 
-        if(!empty($_REQUEST['nomNaiss'])){$param['nom_naiss'] = htmlentities($_REQUEST['nomNaiss']);}
+        if(!empty($_REQUEST['annee'])){$param['annee'] = htmlentities($_REQUEST['annee']);}
 
         if(!empty($_REQUEST['commune'])){$param['commune'] = htmlentities($_REQUEST['commune']);}
 
@@ -322,7 +322,7 @@ class StudentController {
                             Mot de passe : '.$pwd;
                             
                     
-                    $app['services']->sendMail($body, $user['mail'] ,$user['nom']." ".$user['prenom'], 'Generatio nde mot de passe', false);
+                    $app['services']->sendMail($body, $user['mail'] ,$user['nom']." ".$user['prenom'], 'Generation de mot de passe', false);
                     $pdo->updateUserPwd($id, $user['login'], $pwd);
             }
             
@@ -357,26 +357,21 @@ class ManagerController {
     }
 
     
-           public function GestionEleves(Application $app) {
-        $datatable = true;
+        public function GestionEleves(Application $app) {
         $this->Auth($app);
         $this->init();
 
         
         $data = $this->pdo->getComptesEleves();
         //Récup les data des compte eleves dans la bdd 
-        
 
-//        require_once __DIR__ . '/../web/views/v_tabLink.php';
-//        require_once __DIR__ . '/../web/views/v_dataTable.php';
         require_once __DIR__ . '/../web/views/v_gestionEleve.php';
         require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
     
-               public function GestionClasses(Application $app) {
-        $datatable = true;
+        public function GestionDisciplines(Application $app) {
         $this->Auth($app);
         $this->init();
 
@@ -384,7 +379,23 @@ class ManagerController {
         $data = $this->pdo->getDisciplines();
         //Récup les data des compte eleves dans la bdd 
 
-        require_once __DIR__ . '/../web/views/v_gestionEleve.php';
+        require_once __DIR__ . '/../web/views/v_gestionDisciplines.php';
+        require_once __DIR__ . '/../web/views/v_footer.php';
+        $view = ob_get_clean(); // récupère le contenu du flux et le vide
+        return $view;     // retourne le flux 
+    }
+    
+        public function editDiscipline(Application $app) {
+        $this->Auth($app);
+        $this->init();
+        $id = $_REQUEST['id'];
+        if($id == 'false'){
+        $id = false; }
+        else{
+        $infos = $this->pdo->getDiscipline($id);
+        }
+        
+        require_once __DIR__ . '/../web/views/v_editDisciplines.php';
         require_once __DIR__ . '/../web/views/v_footer.php';
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
@@ -409,7 +420,7 @@ class ManagerController {
         $this->Auth($app);
         $this->init();
 
-            $id = $_REQUEST['id'];
+        $id = $_REQUEST['id'];
         
         $userInfo = $this->pdo->getUserProfile($id);
         //Récup les data du compte dans la bdd à partir de l'id de l'user connecté
@@ -420,29 +431,46 @@ class ManagerController {
         $view = ob_get_clean(); // récupère le contenu du flux et le vide
         return $view;     // retourne le flux 
     }
-}
+    
+    public function modifDiscipline(Application $app) {
+         
+        $this->Auth($app);
+        $this->init();
+        
+        if(!empty($_REQUEST['libelle'])){$param['libelle_discipline'] = htmlentities($_REQUEST['libelle']);}
 
-//********************************************Contrôleur Super User*****************//
-class AdministratorController {
+        if(!empty($_REQUEST['annee'])){$param['annee_discipline'] = htmlentities($_REQUEST['annee']);}
 
-    private $id;
-    private $pdo;
+        if(!empty($_REQUEST['annee_cycle'])){$param['annee_par_cycle'] = htmlentities($_REQUEST['annee_cycle']);}
 
-    public function init() {
-        $_SESSION['id'] = $_SESSION['id'];
-        $this->pdo = PdoAgisse::getPdoAgisse();
-        ob_start();             // démarre le flux de sortie
-        Auth();
-        require_once __DIR__ . '/../web/views/v_header.php';
-        require_once __DIR__ . '/../web/views/v_home.php';
-    }
+        if(!empty($_REQUEST['cycle_actuel'])){$param['cycle_etude_actuel'] = htmlentities($_REQUEST['cycle_actuel']);}
 
-    public function Auth(Application $app) {
-        if ($_SESSION['type'] != 1) {
-            return $app->redirect($app["url_generator"]->generate("logout"));
+       
+        if($_REQUEST['action'] == 'modif'){
+        $id = $_REQUEST['id'];
+        $this->pdo->modifDiscipline($param,$id);
+        } else if ($_REQUEST['action'] == 'ajout'){
+        $this->pdo->ajoutDiscipline($param);
         }
+       
+        ob_get_clean(); // récupère le contenu du flux et le vide
+        return $app->redirect($app["url_generator"]->generate("GestionDisciplines"));
+        
     }
-
+    
+        public function suppDiscipline(Application $app) {
+         
+        $this->Auth($app);
+        $this->init();
+     
+        $id = $_REQUEST['id'];
+        $this->pdo->suppDiscipline($id);
+       
+        ob_get_clean(); // récupère le contenu du flux et le vide
+        return $app->redirect($app["url_generator"]->generate("GestionDisciplines"));
+        
+    }
 }
+
 
 ?>

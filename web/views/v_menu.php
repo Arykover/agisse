@@ -26,7 +26,7 @@
                                      <a href='GestionEleves' title=''>Comptes Eleves</a>
                              </li>
                              <li class="smenu">
-                                     <a href='GestionClasses' title=''>Classes</a>
+                                     <a href='GestionDisciplines' title=''>Disciplines</a>
                              </li>
                              
 

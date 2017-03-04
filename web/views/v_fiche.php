@@ -24,7 +24,7 @@
 
         <tr>
             <td class='col-md-5'>Nom de naissance : (si different)</td>
-            <td ><?php if(!empty($fiche['nom_naiss'])){echo($fiche['nom_naiss']);}; ?></td>
+            <td ><?php if(!empty($fiche['nom_marital'])){echo($fiche['nom_marital']);}; ?></td>
         </tr>
 
         <tr>

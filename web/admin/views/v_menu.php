@@ -1,39 +1,34 @@
 <div class="banner-img">
     <img src ="../images/banner.png">
 </div>
-    
   <!--Menu haut-->
-    
 <nav class="navbar navbar-inverse" >
-        
     <div class="container-fluid">
-        
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 
                 <li class="smenu">
-                    <a href="Home" title="">Accueil</a>
+                    <a href="accueil">Accueil</a>
                 </li>
                 <li class="smenu">
-                    <a href='GestionAffil' title=''>Affiliations</a>
+                    <a href='gestionAffiliation'>Affiliations</a>
                 </li>
                 <li class="smenu">
-                    <a href='GestionRegimes' title=''>Regimes</a>
+                    <a href='gestionRegime'>Regimes</a>
                 </li>
                 <li class="smenu">
-                    <a href='GestionNationalite' title=''>Nationalités</a>
+                    <a href='gestionNationalite'>Nationalités</a>
                 </li>
                 <li class="smenu">
-                    <a href='GestionEtablissement' title=''>Etablissements</a>
+                    <a href='gestionEtablissement'>Etablissements</a>
                 </li>
                 <li class="smenu">
-                    <a href='Reboot' title=''>Reinitialiser Application</a>
+                    <a href='reinitialiser'>Reinitialiser Application</a>
                 </li>
                                  
                 <li class="smenu">
-                    <a href="logOut" title="Log out">Se déconnecter</a>
-                </li>
-                        
+                    <a href="deconnexion">Se déconnecter</a>
+                </li> 
             </ul>
         </div>
     </div>

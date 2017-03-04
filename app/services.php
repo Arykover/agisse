@@ -22,7 +22,9 @@ class services{
     public function FicheComplete($fiche){
         $result = true;
         foreach($fiche as $key => $value){
-            if( $key == 'commune' || $key == 'pays_naiss' || $key == 'civilite' || $key == 'commune' || $key == 'dept_naiss' || $key == 'date_naiss' || $key == 'discipline' || $key == 'nationalite' ||$key == 'adresse' ||$key == 'cp' ||$key == 'ville' || $key == 'num_secu' || $key == 'ville' || $key == 'telephone' || $key == 'code_mutuelle' || $key == 'id_statut' ){
+            
+            if( $key == 'commune' || $key == 'civilite' || $key == 'commune' || $key == 'dept_naiss' || $key == 'date_naiss' || $key == 'discipline' || $key == 'nationalite' ||$key == 'adresse' ||$key == 'cp' ||$key == 'ville' || $key == 'num_secu' || $key == 'ville' || $key == 'telephone' || $key == 'code_mutuelle' || $key == 'id_statut' ){
+
                     if(empty($value)){
                         $result = false;
                     }
@@ -41,11 +43,6 @@ class services{
           $password += $caract[mt_rand(0,(strlen($caract)-1))];
       }
       return $password;
-    }
-    
-    public function FichePdf($fiche){
-        
-        return $result;
     }
     
         public function sendMail($body, $Mail ,$Name, $Subject, $attach){

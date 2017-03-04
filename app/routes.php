@@ -46,10 +46,14 @@ $app->match('/GestionEleves', "ManagerController::GestionEleves")
         ->bind('GestionEleves');
 $app->match('/GestionFiches', "ManagerController::GestionFiches")
         ->bind('GestionFiches');
-$app->match('/GestionClasses', "ManagerController::GestionClasses")
-        ->bind('GestionClasses');
+$app->match('/GestionDisciplines', "ManagerController::GestionDisciplines")
+        ->bind('GestionDisciplines');
 $app->match('/GestionProfil', "ManagerController::GestionProfil")
         ->bind('GestionProfil');
+$app->match('/editDiscipline', "ManagerController::editDiscipline")
+        ->bind('editDiscipline');
+$app->match('/modifDiscipline', "ManagerController::modifDiscipline")
+        ->bind('modifDiscipline');
 
 
 /*

@@ -1,29 +1,29 @@
-<!--    <div class ="container" id ="dataTable">-->
-<table cellpadding="1" cellspacing="1" id="users" class="table table-striped table-bordered dataTable no-footer" width="100%">
-<thead>
-    <tr id="colName"> 
-        <?php
-	foreach ($columnsName as $c)
-        {
-        ?>
-            <th> <?php echo $c['column_name'];?> </th>
-        <?php
-        }
-        ?>
-    </tr>
+<table cellpadding="1" cellspacing="1" id="datatable" class="table table-striped table-bordered dataTable no-footer" width="100%">
+    <thead>
+        <tr id="colName"> 
+            <?php
+            //Liste le nom des champs dans l'entête du tableau
+            foreach ($nomsColonnes as $c)
+            {
+            ?>
+                <th> <?php echo $c['column_name'];?> </th>
+            <?php
+            }
+            ?>
+        </tr>
     </thead>
     <tbody>
         <?php
-	foreach ($data as $d)
+        //Liste toutes les données dans le tableau
+	foreach ($lesDonnees as $d)
         {
         ?>        
             <tr>
              <?php
-                foreach ($columnsName as $c)
+                foreach ($nomsColonnes as $c)
                 { 
                 ?>
                      <td> <?php echo $d[$c['column_name']];?> </td>
-                     <!--<td> <?php // echo $c['column_name'];?> </td>-->
                 <?php
                 }
                 ?>
