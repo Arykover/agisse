@@ -31,7 +31,7 @@
 
                 <tr>
                     <td td>Commune de naissance :</td>
-                    <td> <input name="communeNaiss" type='text'   value='<?php if(!empty($fiche['commune_naiss'])){echo($fiche['commune_naiss']);}; ?>'></td>
+                    <td> <input name="commune" type='text'   value='<?php if(!empty($fiche['commune'])){echo($fiche['commune']);}; ?>'></td>
                 </tr>
 
                 <tr>

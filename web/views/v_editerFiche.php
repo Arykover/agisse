@@ -24,7 +24,7 @@ td{
  $prenom = $fiche['prenom'];
  $nom = $fiche['nom'];
  $nom_naiss  = $fiche['nom_naiss'];
- $commune_naiss  = $fiche['commune_naiss'];
+ $commune  = $fiche['commune'];
  $date_naiss  = $fiche['date_naiss'];
  $dept_naiss  = $fiche['dept_naiss'];
  $libelle_discipline  = $fiche['libelle_discipline'];
@@ -69,7 +69,7 @@ td{
 
         <tr>
             <td style="width: 50%">Lieu de naissance :</td>
-            <td ><?php echo($commune_naiss); ?> <?php echo($dept_naiss); ?></td>
+            <td ><?php echo($commune); ?> <?php echo($dept_naiss); ?></td>
         </tr>
 
         <tr>

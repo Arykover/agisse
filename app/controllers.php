@@ -190,7 +190,7 @@ class StudentController {
 
         if(!empty($_REQUEST['nomNaiss'])){$param['nom_naiss'] = htmlentities($_REQUEST['nomNaiss']);}
 
-        if(!empty($_REQUEST['communeNaiss'])){$param['commune_naiss'] = htmlentities($_REQUEST['communeNaiss']);}
+        if(!empty($_REQUEST['commune'])){$param['commune'] = htmlentities($_REQUEST['commune']);}
 
         if(!empty($_REQUEST['deptNaiss'])){$param['dept_naiss'] = htmlentities($_REQUEST['deptNaiss']);}
         

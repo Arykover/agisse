@@ -29,7 +29,7 @@
 
         <tr>
             <td class='col-md-4'td>Commune de naissance :</td>
-            <td ><?php if(!empty($fiche['commune_naiss'])){echo($fiche['commune_naiss']);}; ?></td>
+            <td ><?php if(!empty($fiche['commune'])){echo($fiche['commune']);}; ?></td>
         </tr>
 
         <tr>
